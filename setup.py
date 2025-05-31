@@ -1,3 +1,4 @@
+# setup.py
 from setuptools import setup, find_packages
 
 setup(
@@ -11,6 +12,8 @@ setup(
         "python-dotenv>=1.0.1",
         "rich>=13.7.1"
     ],
+    # KRITISCHER FIX: Paketverzeichnis explizit angeben
+    package_dir={'': '.'},  # Sucht Pakete im aktuellen Verzeichnis
     entry_points={
         "console_scripts": ["cortex=cortex.cli:main"]
     }
