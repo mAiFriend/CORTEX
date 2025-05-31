@@ -1,0 +1,32 @@
+# Originale Einträge
+.env
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Critical Additions
+*.key
+*.secret
+secrets.py
+credentials/
+config.ini
+
+# IDE Protection
+.idea/
+.vscode/
+*.code-workspace
+
+# System Safeguards
+Thumbs.db
+ehthumbs.db
+
+# Output Prevention
+*.log
+logs/
+test_output/
+temp/
+
+# Python-Specific
+.pytest_cache/
+.mypy_cache/
