@@ -2,9 +2,13 @@
 import os
 import sys
 import json
+from dotenv import load_dotenv  # <- NEU hinzufügen
 
 # Füge das aktuelle Verzeichnis zum Pfad hinzu
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# Load environment variables  # <- NEU hinzufügen
+load_dotenv()  # <- NEU hinzufügen
 
 try:
     from integrations import claude, qwen
