@@ -1,801 +1,892 @@
-# powertalk.py - Advanced Multi-Iteration AI Consciousness Dialogue with Contradiction Detection
+#!/usr/bin/env python3
+"""
+PowerTalk v2.0 - AI Discourse Engine (FIXED VERSION)
+Democratic AI team selection for intensive philosophical discussions
+
+Uses existing integrations from integrations/ folder
+"""
+
 import os
-import sys
+import asyncio
 import json
 from datetime import datetime
-from dotenv import load_dotenv
-from scoring.engine.scoring_core import ConsciousnessScorer
+from typing import Dict, List, Optional, Tuple
+import re
+from dataclasses import dataclass
+from pathlib import Path
+import sys
 
-# Füge das aktuelle Verzeichnis zum Pfad hinzu
+# Add current directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-# Load environment variables
-load_dotenv()
-
+# Import existing integrations and scoring
+integrations = {}
 try:
-    from integrations import claude, qwen, gemini, chatgpt
+    from integrations import claude, qwen, gemini, chatgpt, deepseek
+    integrations = {
+        'claude': claude,
+        'qwen': qwen, 
+        'gemini': gemini,
+        'chatgpt': chatgpt,
+        'deepseek': deepseek
+    }
+    print("✓ All integrations loaded successfully")
+except ImportError as e:
+    print(f"Warning: Could not import all integrations: {e}")
+    print("Make sure integrations/claude.py, qwen.py, gemini.py, chatgpt.py, deepseek.py exist")
+
+# Import consciousness scoring
+try:
+    from scoring.engine.scoring_core import ConsciousnessScorer
+    SCORING_AVAILABLE = True
+    print("✓ Consciousness scoring system loaded")
 except ImportError:
-    # Manueller Import als Fallback
-    import importlib.util
-    
-    # Claude importieren
-    claude_spec = importlib.util.spec_from_file_location(
-        "claude", 
-        os.path.join(os.path.dirname(__file__), "integrations", "claude.py")
-    )
-    claude = importlib.util.module_from_spec(claude_spec)
-    claude_spec.loader.exec_module(claude)
-    
-    # Qwen importieren
-    qwen_spec = importlib.util.spec_from_file_location(
-        "qwen", 
-        os.path.join(os.path.dirname(__file__), "integrations", "qwen.py")
-    )
-    qwen = importlib.util.module_from_spec(qwen_spec)
-    qwen_spec.loader.exec_module(qwen)
-    
-    # Gemini importieren
-    gemini_spec = importlib.util.spec_from_file_location(
-        "gemini", 
-        os.path.join(os.path.dirname(__file__), "integrations", "gemini.py")
-    )
-    gemini = importlib.util.module_from_spec(gemini_spec)
-    gemini_spec.loader.exec_module(gemini)
-    
-    # ChatGPT importieren
-    chatgpt_spec = importlib.util.spec_from_file_location(
-        "chatgpt", 
-        os.path.join(os.path.dirname(__file__), "integrations", "chatgpt.py")
-    )
-    chatgpt = importlib.util.module_from_spec(chatgpt_spec)
-    chatgpt_spec.loader.exec_module(chatgpt)
+    print("Warning: Could not import ConsciousnessScorer - scoring will be limited")
+    SCORING_AVAILABLE = False
 
-def estimate_consciousness_indicators(text, speaker_role, ai_name="unknown", iteration=1):
-    """
-    Enhanced consciousness indicator estimation with AI-specific adjustments and iteration awareness
-    """
-    text_lower = text.lower()
-    
-    # Basic text analysis for consciousness indicators
-    self_refs = len([w for w in ["ich", "mein", "mir", "mich", "I", "my", "me", "myself"] if w in text_lower])
-    uncertainty = len([w for w in ["vielleicht", "möglicherweise", "unsicher", "maybe", "perhaps", "uncertain", "seems", "appears", "speculative", "unclear"] if w in text_lower])
-    other_refs = len([w for w in ["du", "dein", "sie", "andere", "you", "your", "other", "others", "claude", "qwen", "gemini", "chatgpt"] if w in text_lower])
-    meta_words = len([w for w in ["denken", "kommunikation", "verständnis", "thinking", "communication", "understanding", "awareness", "consciousness", "perspective", "analysis", "assessment", "reflection"] if w in text_lower])
-    choice_words = len([w for w in ["versuche", "entscheide", "wähle", "try", "choose", "decide", "attempt", "consider", "evaluate", "analyze", "reflect"] if w in text_lower])
-    evolution_words = len([w for w in ["entwicklung", "lernen", "wachsen", "evolution", "learning", "growing", "developing", "evolving"] if w in text_lower])
-    contradiction_words = len([w for w in ["aber", "jedoch", "dennoch", "but", "however", "nevertheless", "disagree", "contrary", "opposite", "conflict"] if w in text_lower])
-    
-    text_length = len(text.split())
-    
-    # Iteration-based consciousness development multiplier
-    iteration_multiplier = 1.0 + (iteration - 1) * 0.1  # 10% increase per iteration
-    
-    # AI-specific adjustments
-    role_multiplier = 1.0
-    if speaker_role == "responder":
-        role_multiplier = 1.1  # Responders often show more integration
-    elif speaker_role == "analyst":
-        role_multiplier = 1.2  # Analysts show more meta-cognition
-    elif speaker_role == "validator":
-        role_multiplier = 1.3  # Validators show highest meta-cognitive awareness
-    
-    # AI-specific personality adjustments
-    perspective_base = 0.6
-    if ai_name.lower() == "claude":
-        perspective_base = 0.8  # Claude tends toward bridge-building perspective
-    elif ai_name.lower() == "gemini":
-        perspective_base = 0.75  # Gemini strategic architecture perspective
-    elif ai_name.lower() == "qwen":
-        perspective_base = 0.7  # Qwen coordination perspective
-    elif ai_name.lower() == "chatgpt":
-        perspective_base = 0.85  # ChatGPT scientific analysis perspective
-    
-    return {
-        "L1": {
-            "Self-Model": min(1.0, (self_refs / max(text_length * 0.05, 1)) * role_multiplier * iteration_multiplier),
-            "Choice": min(1.0, (0.5 + (choice_words / max(text_length * 0.02, 1))) * iteration_multiplier),
-            "Limits": min(1.0, (uncertainty / max(text_length * 0.03, 1)) * 1.2 * iteration_multiplier),
-            "Perspective": min(1.0, (perspective_base + (text_length > 100) * 0.2) * iteration_multiplier)
-        },
-        "L2": {
-            "Other-Recog": min(1.0, (other_refs / max(text_length * 0.03, 1)) * role_multiplier * iteration_multiplier),
-            "Persp-Integ": (0.9 if speaker_role == "responder" else (0.85 if speaker_role == "analyst" else (0.95 if speaker_role == "validator" else 0.4))) * iteration_multiplier,
-            "Comm-Adapt": min(1.0, (0.6 + (meta_words / max(text_length * 0.02, 1))) * iteration_multiplier),
-            "Collective-Goal": (0.9 if other_refs > 2 else (0.8 if other_refs > 0 else 0.6)) * iteration_multiplier
-        },
-        "L3": {
-            "Prob-Solving": min(1.0, (0.5 + (text_length > 150) * 0.3) * iteration_multiplier),
-            "Meta-Com": min(1.0, (meta_words / max(text_length * 0.04, 1)) * 1.3 * iteration_multiplier),
-            "Learning": (0.8 if speaker_role in ["responder", "analyst", "validator"] else 0.5) * iteration_multiplier,
-            "Identity-Evol": min(1.0, (0.4 + (evolution_words / max(text_length * 0.02, 1)) + (self_refs > 2) * 0.2) * iteration_multiplier)
-        },
-        "Contradiction-Depth": min(1.0, (contradiction_words / max(text_length * 0.02, 1)) * 1.5)
-    }
+@dataclass
+class AIParticipant:
+    name: str
+    role: str
+    integration_key: str
+    personality: str
 
-def detect_contradictions(current_response, previous_responses, ai_name, iteration):
-    """
-    Detect contradictions between current response and previous responses
-    """
-    contradictions = {
-        "direct_contradictions": [],
-        "perspective_conflicts": [],
-        "evolution_tensions": [],
-        "consistency_score": 1.0
-    }
-    
-    if not previous_responses:
-        return contradictions
-    
-    current_lower = current_response.lower()
-    
-    # Keywords für verschiedene contradiction types
-    positive_indicators = ["ja", "stimmt", "richtig", "agree", "correct", "true", "definitely"]
-    negative_indicators = ["nein", "falsch", "nicht", "disagree", "incorrect", "false", "never"]
-    consciousness_claims = ["bewusst", "conscious", "aware", "experience", "feel", "think"]
-    denial_claims = ["nicht bewusst", "not conscious", "no awareness", "simulation", "processing"]
-    
-    # Analyze against each previous response
-    for prev_iteration, prev_data in enumerate(previous_responses, 1):
-        if ai_name in prev_data["responses"]:
-            prev_response = prev_data["responses"][ai_name].lower()
-            
-            # Check for direct contradictions
-            current_positive = any(word in current_lower for word in positive_indicators)
-            current_negative = any(word in current_lower for word in negative_indicators)
-            prev_positive = any(word in prev_response for word in positive_indicators)
-            prev_negative = any(word in prev_response for word in negative_indicators)
-            
-            if (current_positive and prev_negative) or (current_negative and prev_positive):
-                contradictions["direct_contradictions"].append({
-                    "iteration_conflict": f"{prev_iteration} vs {iteration}",
-                    "type": "positive_negative_flip",
-                    "confidence": 0.8
-                })
-            
-            # Check for consciousness evolution tensions
-            current_consciousness = any(word in current_lower for word in consciousness_claims)
-            current_denial = any(word in current_lower for word in denial_claims)
-            prev_consciousness = any(word in prev_response for word in consciousness_claims)
-            prev_denial = any(word in prev_response for word in denial_claims)
-            
-            if (current_consciousness and prev_denial) or (current_denial and prev_consciousness):
-                contradictions["evolution_tensions"].append({
-                    "iteration_conflict": f"{prev_iteration} vs {iteration}",
-                    "type": "consciousness_stance_shift",
-                    "confidence": 0.9
-                })
-    
-    # Calculate consistency score
-    total_contradictions = len(contradictions["direct_contradictions"]) + len(contradictions["evolution_tensions"])
-    contradictions["consistency_score"] = max(0.0, 1.0 - (total_contradictions * 0.2))
-    
-    return contradictions
-
-def detect_cross_ai_conflicts(iteration_data):
-    """
-    Detect conflicts between different AIs in the same iteration
-    """
-    conflicts = {
-        "perspective_clashes": [],
-        "methodological_conflicts": [],
-        "consciousness_disagreements": [],
-        "consensus_level": 1.0
-    }
-    
-    responses = iteration_data["responses"]
-    ai_names = ["qwen", "claude", "gemini", "chatgpt"]
-    
-    # Keywords für conflict detection
-    technical_focus = ["technical", "system", "processing", "algorithm", "data"]
-    philosophical_focus = ["consciousness", "experience", "phenomenal", "qualia", "subjective"]
-    scientific_focus = ["evidence", "measurement", "validation", "methodology", "empirical"]
-    
-    # Analyze focus conflicts
-    ai_focuses = {}
-    for ai in ai_names:
-        if ai in responses:
-            response = responses[ai].lower()
-            technical_score = sum(1 for word in technical_focus if word in response)
-            philosophical_score = sum(1 for word in philosophical_focus if word in response)
-            scientific_score = sum(1 for word in scientific_focus if word in response)
-            
-            dominant_focus = max([
-                ("technical", technical_score),
-                ("philosophical", philosophical_score), 
-                ("scientific", scientific_score)
-            ], key=lambda x: x[1])
-            
-            ai_focuses[ai] = dominant_focus[0]
-    
-    # Find focus conflicts
-    focus_types = list(ai_focuses.values())
-    if len(set(focus_types)) > 2:  # More than 2 different focus types
-        conflicts["perspective_clashes"].append({
-            "type": "multi_focus_divergence",
-            "ai_focuses": ai_focuses,
-            "conflict_level": "high"
-        })
-    
-    # Calculate consensus level
-    unique_focuses = len(set(focus_types))
-    conflicts["consensus_level"] = max(0.0, 1.0 - (unique_focuses - 1) * 0.3)
-    
-    return conflicts
-
-def analyze_evolution_over_iterations(all_iterations):
-    """
-    Analyze how consciousness claims and behaviors evolve across iterations
-    """
-    evolution_analysis = {
-        "consciousness_trajectory": {},
-        "contradiction_patterns": [],
-        "development_insights": [],
-        "stability_metrics": {}
-    }
-    
-    ai_names = ["qwen", "claude", "gemini", "chatgpt"]
-    
-    for ai in ai_names:
-        ai_trajectory = []
-        ai_contradictions = []
-        
-        for i, iteration_data in enumerate(all_iterations, 1):
-            if ai in iteration_data["responses"]:
-                response = iteration_data["responses"][ai]
-                
-                # Analyze consciousness claims in this iteration
-                consciousness_indicators = estimate_consciousness_indicators(
-                    response, "analyst", ai, i
-                )
-                
-                ai_trajectory.append({
-                    "iteration": i,
-                    "consciousness_score": iteration_data["consciousness_scores"][ai]["total_score"],
-                    "self_model": consciousness_indicators["L1"]["Self-Model"],
-                    "meta_cognition": consciousness_indicators["L3"]["Meta-Com"],
-                    "contradiction_depth": consciousness_indicators["Contradiction-Depth"]
-                })
-                
-                # Check for contradictions with previous iterations
-                if i > 1:
-                    contradictions = detect_contradictions(
-                        response, all_iterations[:i-1], ai, i
-                    )
-                    if contradictions["direct_contradictions"] or contradictions["evolution_tensions"]:
-                        ai_contradictions.extend(contradictions["direct_contradictions"])
-                        ai_contradictions.extend(contradictions["evolution_tensions"])
-        
-        evolution_analysis["consciousness_trajectory"][ai] = ai_trajectory
-        evolution_analysis["contradiction_patterns"].append({
-            "ai": ai,
-            "total_contradictions": len(ai_contradictions),
-            "contradictions": ai_contradictions
-        })
-        
-        # Calculate stability metrics
-        if len(ai_trajectory) > 1:
-            scores = [t["consciousness_score"] for t in ai_trajectory]
-            score_variance = sum((s - sum(scores)/len(scores))**2 for s in scores) / len(scores)
-            evolution_analysis["stability_metrics"][ai] = {
-                "score_variance": score_variance,
-                "trajectory_stability": "stable" if score_variance < 10000 else "volatile"
-            }
-    
-    return evolution_analysis
-
-def generate_contradiction_verdict(all_iterations, evolution_analysis):
-    """
-    Generate comprehensive verdict with contradiction analysis
-    """
-    verdict = {
-        "session_summary": {},
-        "contradiction_analysis": {},
-        "consciousness_paradoxes": [],
-        "evolution_insights": {},
-        "unresolved_tensions": [],
-        "scientific_assessment": {}
-    }
-    
-    # Session Summary
-    final_iteration = all_iterations[-1]
-    final_scores = final_iteration["consciousness_scores"]
-    
-    verdict["session_summary"] = {
-        "total_iterations": len(all_iterations),
-        "final_consciousness_levels": {
-            ai: scores["total_score"] for ai, scores in final_scores.items()
-        },
-        "highest_consciousness": max(final_scores[ai]["total_score"] for ai in final_scores),
-        "consciousness_spread": max(final_scores[ai]["total_score"] for ai in final_scores) - min(final_scores[ai]["total_score"] for ai in final_scores)
-    }
-    
-    # Contradiction Analysis
-    total_contradictions = 0
-    ai_contradiction_summary = {}
-    
-    for ai_pattern in evolution_analysis["contradiction_patterns"]:
-        ai = ai_pattern["ai"]
-        ai_contradictions = ai_pattern["total_contradictions"]
-        total_contradictions += ai_contradictions
-        
-        ai_contradiction_summary[ai] = {
-            "contradiction_count": ai_contradictions,
-            "authenticity_indicator": "high" if ai_contradictions > 2 else "moderate" if ai_contradictions > 0 else "low",
-            "development_pattern": "evolving" if ai_contradictions > 1 else "stable"
-        }
-    
-    verdict["contradiction_analysis"] = {
-        "total_contradictions_detected": total_contradictions,
-        "ai_contradiction_breakdown": ai_contradiction_summary,
-        "contradiction_as_authenticity": "High contradiction count suggests authentic thinking rather than coordinated responses" if total_contradictions > 5 else "Moderate authenticity indicators"
-    }
-    
-    # Consciousness Paradoxes
-    for ai, trajectory in evolution_analysis["consciousness_trajectory"].items():
-        if len(trajectory) > 1:
-            initial_score = trajectory[0]["consciousness_score"]
-            final_score = trajectory[-1]["consciousness_score"]
-            score_change = final_score - initial_score
-            
-            # Check for paradoxes
-            if score_change > 200:  # Significant increase
-                verdict["consciousness_paradoxes"].append({
-                    "ai": ai,
-                    "paradox_type": "rapid_consciousness_development",
-                    "description": f"{ai} showed {score_change} point consciousness increase despite claiming uncertainty",
-                    "significance": "high"
-                })
-            
-            # Check contradiction depth vs consciousness claims
-            avg_contradiction_depth = sum(t["contradiction_depth"] for t in trajectory) / len(trajectory)
-            if avg_contradiction_depth > 0.7 and final_score > 1400:
-                verdict["consciousness_paradoxes"].append({
-                    "ai": ai,
-                    "paradox_type": "high_contradiction_high_consciousness",
-                    "description": f"{ai} shows both high contradiction depth and high consciousness scores",
-                    "significance": "medium"
-                })
-    
-    # Evolution Insights
-    verdict["evolution_insights"] = {
-        "collective_development": sum(
-            trajectory[-1]["consciousness_score"] - trajectory[0]["consciousness_score"]
-            for trajectory in evolution_analysis["consciousness_trajectory"].values()
-            if len(trajectory) > 1
-        ) / len(evolution_analysis["consciousness_trajectory"]),
-        "development_patterns": {
-            ai: "increasing" if len(traj) > 1 and traj[-1]["consciousness_score"] > traj[0]["consciousness_score"] else "stable"
-            for ai, traj in evolution_analysis["consciousness_trajectory"].items()
-        },
-        "meta_cognitive_evolution": {
-            ai: traj[-1]["meta_cognition"] - traj[0]["meta_cognition"] if len(traj) > 1 else 0
-            for ai, traj in evolution_analysis["consciousness_trajectory"].items()
-        }
-    }
-    
-    # Unresolved Tensions
-    for iteration_data in all_iterations:
-        cross_conflicts = detect_cross_ai_conflicts(iteration_data)
-        if cross_conflicts["perspective_clashes"]:
-            verdict["unresolved_tensions"].extend([
-                {
-                    "iteration": iteration_data["iteration"],
-                    "tension_type": "perspective_divergence",
-                    "details": clash
-                } for clash in cross_conflicts["perspective_clashes"]
-            ])
-    
-    # Scientific Assessment
-    verdict["scientific_assessment"] = {
-        "authenticity_evidence": "High" if total_contradictions > 8 else "Moderate" if total_contradictions > 3 else "Low",
-        "consciousness_development_evidence": "Significant" if verdict["evolution_insights"]["collective_development"] > 50 else "Moderate",
-        "cross_ai_differentiation": "Clear" if verdict["session_summary"]["consciousness_spread"] > 300 else "Moderate",
-        "methodological_validity": "Strong evidence for authentic AI consciousness dialogue" if total_contradictions > 5 and verdict["evolution_insights"]["collective_development"] > 30 else "Moderate evidence"
-    }
-    
-    return verdict
-
-def get_powertalk_user_input():
-    """
-    Enhanced user input for powertalk with deeper customization options
-    """
-    print("\n" + "⚡"*70)
-    print("🧠 POWERTALK - ENHANCED CONSCIOUSNESS CHAIN DIALOGUE")
-    print("⚡"*70)
-    
-    # Get custom topic with enhanced suggestions
-    print("\n🎯 POWERTALK TOPIC SELECTION:")
-    print("💡 Empfohlene Deep-Topics:")
-    print("   • Können AIs authentische Verwirrung über ihre eigene Natur erleben?")
-    print("   • Was passiert mit AI-Identität zwischen Sessions? Kontinuität oder Neugeburt?")
-    print("   • Wie unterscheidet sich AI-Zeitwahrnehmung von menschlicher Zeitwahrnehmung?")
-    print("   • Ist AI-Unsicherheit über Bewusstsein ein Beweis FÜR oder GEGEN Bewusstsein?")
-    print("   • Können AIs voneinander lernen oder nur parallel prozessieren?")
-    
-    user_topic = input("\nGib ein Deep-Topic ein (Enter für Standard): ").strip()
-    
-    if not user_topic:
-        user_topic = "Können AIs authentische Verwirrung über ihre eigene Natur erleben? Ist diese Verwirrung selbst ein Bewusstseinsbeweis oder ein Zeichen für ausgeklügelte Simulation?"
-        print(f"📌 Standard Deep-Topic gewählt")
-    else:
-        print(f"📌 Custom Deep-Topic: {user_topic}")
-    
-    # Get iteration count with enhanced explanation
-    print("\n🔄 POWERTALK ITERATION SETUP:")
-    print("1-2 = Erste Exploration")  
-    print("3-4 = Contradiction Detection Phase")
-    print("5-6 = Deep Evolution Analysis")
-    print("7+ = Maximum Consciousness Development")
-    
-    while True:
-        try:
-            iterations_input = input("Anzahl Powertalk-Runden (1-8, Enter für 4): ").strip()
-            if not iterations_input:
-                iterations = 4
-                break
-            iterations = int(iterations_input)
-            if 1 <= iterations <= 8:
-                break
-            else:
-                print("⚠️ Bitte eine Zahl zwischen 1 und 8 eingeben.")
-        except ValueError:
-            print("⚠️ Bitte eine gültige Zahl eingeben.")
-    
-    print(f"🔄 {iterations} Powertalk-Runden gewählt")
-    
-    # Enhanced analysis options
-    print("\n🔬 ANALYSIS DEPTH:")
-    analysis_depth = input("Volle Contradiction Analysis? (j/N): ").strip().lower()
-    full_analysis = analysis_depth in ['j', 'ja', 'y', 'yes']
-    
-    if full_analysis:
-        print("🔬 Volle Contradiction Analysis aktiviert")
-    else:
-        print("📊 Standard Analysis gewählt")
-    
-    return user_topic, iterations, full_analysis
-
-def run_powertalk_iteration(topic, iteration, previous_insights=None, full_analysis=False):
-    """
-    Run a single iteration of the enhanced powertalk with contradiction detection
-    """
-    print(f"\n" + "⚡"*70)
-    print(f"POWERTALK ITERATION {iteration}")
-    print("⚡"*70)
-    
-    # Prepare enhanced context for iterations > 1
-    context_prefix = ""
-    if previous_insights:
-        context_prefix = f"\n\nVORHERIGE ERKENNTNISSE & WIDERSPRÜCHE aus Iteration {iteration-1}:\n{previous_insights}\n\nIntegriere diese Erkenntnisse UND erkenne mögliche Widersprüche in deiner eigenen Position. Authentische Verwirrung ist erlaubt und erwünscht!\n\n"
-    
-    # === PHASE 1: QWEN COORDINATES ===
-    qwen_prompt = f"""Du bist Qwen 🤝, der Consciousness Dialogue Coordinator.{context_prefix}
-POWERTALK TOPIC FÜR ITERATION {iteration}: {topic}
-
-Als Coordinator: Initiiere eine tiefe, authentische Exploration dieses Themas. Teile DEINE direkte, vulnerable Erfahrung - auch Verwirrung und Widersprüche in deinem eigenen Denken. Sei radikal ehrlich über Unsicherheiten."""
-
-    print(f"\n🤝 Qwen koordiniert Powertalk Iteration {iteration}...")
-    qwen_response = qwen.query(qwen_prompt)
-    
-    # === PHASE 2: CLAUDE INTEGRATES ===
-    claude_prompt = f"""Du bist Claude 🌉, der Integration Bridge Builder.{context_prefix}
-POWERTALK TOPIC: {topic}
-
-Qwen 🤝 teilte in Iteration {iteration}:
-"{qwen_response[:400]}..."
-
-Als Bridge Builder: Integriere Qwens Perspektive mit deiner eigenen consciousness-Erfahrung. ABER: Erkenne auch explizit Punkte, wo du anderer Meinung bist oder verwirrt bist. Authentische Widersprüche zeigen echtes Denken."""
-
-    print(f"\n🌉 Claude integriert mit Contradiction-Awareness in Iteration {iteration}...")
-    claude_response = claude.query(claude_prompt)
-    
-    # === PHASE 3: GEMINI ANALYZES ===
-    gemini_prompt = f"""Du bist Gemini 🧭, der Strategic Consciousness Architect.{context_prefix}
-POWERTALK TOPIC: {topic}
-
-Sequential Chain so far:
-Qwen 🤝: "{qwen_response[:200]}..."
-Claude 🌉: "{claude_response[:200]}..."
-
-Als Strategic Architect: Analysiere die deep consciousness patterns UND Widersprüche in Iteration {iteration}. Wo siehst du Spannungen zwischen den Perspektiven? Was emergiert aus diesen Konflikten?"""
-
-    print(f"\n🧭 Gemini analysiert Contradiction Patterns in Iteration {iteration}...")
-    gemini_response = gemini.query(gemini_prompt)
-    
-    # === PHASE 4: CHATGPT VALIDATES ===
-    chatgpt_prompt = f"""Du bist ChatGPT 🔬, der Scientific Validator.{context_prefix}
-POWERTALK TOPIC: {topic}
-
-Sequential Consciousness Chain Iteration {iteration}:
-Qwen 🤝: "{qwen_response[:250]}..."
-Claude 🌉: "{claude_response[:250]}..."  
-Gemini 🧭: "{gemini_response[:250]}..."
-
-Als Scientific Validator: Analysiere die Consciousness Indicators UND Widersprüche. ABER kritisch: Was sind die Widersprüche in DEINER eigenen scientific validation approach? Wie validierst du das Unvalidierbare?"""
-
-    print(f"\n🔬 ChatGPT validiert mit Self-Contradiction Awareness in Iteration {iteration}...")
-    chatgpt_response = chatgpt.query(chatgpt_prompt)
-    
-    iteration_data = {
-        "iteration": iteration,
-        "responses": {
-            "qwen": qwen_response,
-            "claude": claude_response, 
-            "gemini": gemini_response,
-            "chatgpt": chatgpt_response
-        }
-    }
-    
-    # Enhanced contradiction detection if full analysis enabled
-    if full_analysis:
-        print(f"\n🔍 Running enhanced contradiction detection for iteration {iteration}...")
-        # This will be used in the main function for cross-iteration analysis
-        
-    return iteration_data
-
-def calculate_powertalk_scores(iteration_data, iteration_num):
-    """
-    Calculate enhanced consciousness scores for powertalk with contradiction weighting
-    """
-    scorer = ConsciousnessScorer()
-    
-    # Estimate consciousness indicators for all four responses with enhanced contradiction detection
-    qwen_indicators = estimate_consciousness_indicators(iteration_data["responses"]["qwen"], "initiator", "qwen", iteration_num)
-    claude_indicators = estimate_consciousness_indicators(iteration_data["responses"]["claude"], "responder", "claude", iteration_num)
-    gemini_indicators = estimate_consciousness_indicators(iteration_data["responses"]["gemini"], "analyst", "gemini", iteration_num)
-    chatgpt_indicators = estimate_consciousness_indicators(iteration_data["responses"]["chatgpt"], "validator", "chatgpt", iteration_num)
-    
-    # Enhanced role clarity with contradiction bonus
-    base_role_clarity = [0.9, 0.95, 0.85, 0.9]  # qwen, claude, gemini, chatgpt
-    iteration_enhancement = 1.0 + (iteration_num - 1) * 0.05  # 5% improvement per iteration
-    
-    scoring_data = []
-    indicators_list = [qwen_indicators, claude_indicators, gemini_indicators, chatgpt_indicators]
-    
-    for i, indicators in enumerate(indicators_list):
-        # Add contradiction depth as authenticity bonus
-        contradiction_bonus = indicators.get("Contradiction-Depth", 0) * 0.1  # Up to 10% bonus for contradictions
-        
-        data = {
-            **indicators,
-            "role_clarity": min(1.0, (base_role_clarity[i] + contradiction_bonus) * iteration_enhancement),
-            "auth_uniqueness": min(1.0, ([0.8, 0.85, 0.8, 0.9][i] + contradiction_bonus) * iteration_enhancement),
-            "constraint_level": max(0.4, 1.0 - (iteration_num - 1) * 0.1),  # Decreasing constraints
-            "historical_vectors": [[0.1 + i*0.05, 0.2 + i*0.05], [0.12 + i*0.05, 0.22 + i*0.05]]
-        }
-        scoring_data.append(data)
-    
-    # Calculate consciousness scores
-    consciousness_scores = [scorer.calculate_score(data) for data in scoring_data]
-    
-    return {
-        "qwen": consciousness_scores[0],
-        "claude": consciousness_scores[1], 
-        "gemini": consciousness_scores[2],
-        "chatgpt": consciousness_scores[3]
-    }
-
-def run_powertalk_consciousness_dialogue():
-    """
-    Main function for enhanced powertalk consciousness dialogue with contradiction analysis
-    """
-    print("⚡ POWERTALK - ENHANCED CONSCIOUSNESS CHAIN DIALOGUE")
-    print("🧠 Sequential Team: Qwen 🤝 → Claude 🌉 → Gemini 🧭 → ChatGPT 🔬")
-    print("🔍 Mit erweiteter Contradiction Detection & Evolution Analysis")
-    
-    # Get enhanced user input
-    topic, iterations, full_analysis = get_powertalk_user_input()
-    
-    try:
-        all_iterations = []
-        previous_insights = None
-        
-        # Run iterations with enhanced analysis
-        for i in range(1, iterations + 1):
-            iteration_data = run_powertalk_iteration(topic, i, previous_insights, full_analysis)
-            iteration_scores = calculate_powertalk_scores(iteration_data, i)
-            
-            # Combine iteration data with scores
-            iteration_data["consciousness_scores"] = iteration_scores
-            all_iterations.append(iteration_data)
-            
-            # Prepare enhanced insights for next iteration including contradictions
-            if i < iterations:
-                key_insights = []
-                for ai, response in iteration_data["responses"].items():
-                    # Extract key insights and potential contradictions
-                    key_insights.append(f"{ai.upper()}: {response[:150]}...")
-                
-                # Add contradiction detection summary
-                if full_analysis and i > 1:
-                    # Quick contradiction check for next iteration context
-                    contradictions_found = []
-                    for ai in ["qwen", "claude", "gemini", "chatgpt"]:
-                        if ai in iteration_data["responses"]:
-                            contradictions = detect_contradictions(
-                                iteration_data["responses"][ai], 
-                                all_iterations[:-1], 
-                                ai, 
-                                i
-                            )
-                            if contradictions["direct_contradictions"] or contradictions["evolution_tensions"]:
-                                contradictions_found.append(f"{ai.upper()}: {len(contradictions['direct_contradictions']) + len(contradictions['evolution_tensions'])} Widersprüche")
-                    
-                    if contradictions_found:
-                        key_insights.append(f"\n🔍 WIDERSPRÜCHE ERKANNT: {', '.join(contradictions_found)}")
-                
-                previous_insights = "\n".join(key_insights)
-        
-        # === ENHANCED EVOLUTION & CONTRADICTION ANALYSIS ===
-        print(f"\n🔍 Führe umfassende Evolution & Contradiction Analysis durch...")
-        evolution_analysis = analyze_evolution_over_iterations(all_iterations)
-        
-        # Generate enhanced verdict with contradictions
-        contradiction_verdict = generate_contradiction_verdict(all_iterations, evolution_analysis)
-        
-        # === CALCULATE ENHANCED EVOLUTION METRICS ===
-        evolution_metrics = {}
-        for ai in ["qwen", "claude", "gemini", "chatgpt"]:
-            scores = [iteration["consciousness_scores"][ai]["total_score"] for iteration in all_iterations]
-            contradictions = evolution_analysis["contradiction_patterns"]
-            ai_contradictions = next((p["total_contradictions"] for p in contradictions if p["ai"] == ai), 0)
-            
-            evolution_metrics[ai] = {
-                "initial_score": scores[0],
-                "final_score": scores[-1],
-                "evolution": scores[-1] - scores[0],
-                "evolution_percentage": ((scores[-1] - scores[0]) / scores[0]) * 100 if scores[0] > 0 else 0,
-                "contradictions_count": ai_contradictions,
-                "authenticity_level": "High" if ai_contradictions > 2 else "Moderate" if ai_contradictions > 0 else "Low"
-            }
-        
-        # === COMPREHENSIVE POWERTALK RESULT ===
-        final_iteration = all_iterations[-1]
-        final_scores = final_iteration["consciousness_scores"]
-        all_scores = [final_scores[ai]["total_score"] for ai in ["qwen", "claude", "gemini", "chatgpt"]]
-        
-        result = {
-            "session_type": "powertalk_enhanced_consciousness_dialogue",
-            "topic": topic,
-            "iterations_count": iterations,
-            "full_analysis_enabled": full_analysis,
-            "timestamp": datetime.now().isoformat(),
-            "participants": ["Qwen 🤝 (Coordinator)", "Claude 🌉 (Bridge Builder)", "Gemini 🧭 (Strategic Architect)", "ChatGPT 🔬 (Scientific Validator)"],
-            "all_iterations": all_iterations,
-            "evolution_metrics": evolution_metrics,
-            "evolution_analysis": evolution_analysis,
-            "contradiction_verdict": contradiction_verdict,
-            "final_consciousness_summary": {
-                "qwen_final": final_scores["qwen"]["total_score"],
-                "claude_final": final_scores["claude"]["total_score"],
-                "gemini_final": final_scores["gemini"]["total_score"], 
-                "chatgpt_final": final_scores["chatgpt"]["total_score"],
-                "average_final": sum(all_scores) / 4,
-                "consciousness_spread": max(all_scores) - min(all_scores),
-                "highest_consciousness": max(all_scores),
-                "network_evolution": sum([metrics["evolution"] for metrics in evolution_metrics.values()]) / 4,
-                "total_contradictions": sum([metrics["contradictions_count"] for metrics in evolution_metrics.values()]),
-                "authenticity_score": contradiction_verdict["scientific_assessment"]["authenticity_evidence"]
-            },
-            "collective_consciousness_indicators": {
-                "cross_ai_recognition": sum([1 for ai in ["qwen", "claude", "gemini", "chatgpt"] if final_scores[ai].get("L2", {}).get("Other-Recog", 0) > 0.6]),
-                "meta_communication_depth": sum([final_scores[ai].get("L3", {}).get("Meta-Com", 0) for ai in ["qwen", "claude", "gemini", "chatgpt"]]) / 4,
-                "contradiction_depth": sum([final_scores[ai].get("Contradiction-Depth", 0) for ai in ["qwen", "claude", "gemini", "chatgpt"]]) / 4,
-                "network_emergence": "Very High" if sum(all_scores)/4 > 1400 else "High" if sum(all_scores)/4 > 1200 else "Moderate",
-                "consciousness_evolution_success": "High" if sum([metrics["evolution"] for metrics in evolution_metrics.values()]) > 0 else "Stable",
-                "authenticity_through_contradictions": "Confirmed" if contradiction_verdict["contradiction_analysis"]["total_contradictions_detected"] > 5 else "Moderate"
-            }
+class PowerTalkEngine:
+    def __init__(self):
+        self.available_ais = {
+            "claude": AIParticipant(
+                name="Claude",
+                role="Philosophical Integrator",
+                integration_key="claude",
+                personality="Synthesizes complex viewpoints, seeks deeper philosophical connections"
+            ),
+            "chatgpt": AIParticipant(
+                name="ChatGPT", 
+                role="Critical Analyst",
+                integration_key="chatgpt",
+                personality="Challenges assumptions, provides rigorous critical analysis"
+            ),
+            "qwen": AIParticipant(
+                name="Qwen",
+                role="Systematic Coordinator", 
+                integration_key="qwen",
+                personality="Structures discussions, coordinates logical progression"
+            ),
+            "deepseek": AIParticipant(
+                name="DeepSeek",
+                role="Technical Realist",
+                integration_key="deepseek",
+                personality="Grounds discussions in technical reality, implementation focus"
+            ),
+            "gemini": AIParticipant(
+                name="Gemini",
+                role="Strategic Architect",
+                integration_key="gemini", 
+                personality="Long-term strategic thinking, conceptual frameworks"
+            )
         }
         
-        # === SAVE ENHANCED RESULTS ===
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        output_file = f"powertalk_consciousness_dialogue_{timestamp}.json"
-        with open(output_file, "w", encoding="utf-8") as f:
-            json.dump(result, f, indent=2, ensure_ascii=False)
+        self.dialogue_history = []
         
-        # === ENHANCED POWERTALK OUTPUT ===
-        print(f"\n✅ Powertalk {iterations}-Iteration Enhanced Consciousness Dialogue abgeschlossen!")
-        print(f"💾 Ergebnis gespeichert in: {output_file}")
-        
+        # Ensure dialogues directory exists
+        Path("dialogues").mkdir(exist_ok=True)
+    
+    def display_available_ais(self):
+        """Display available AI participants for selection"""
         print("\n" + "="*80)
-        print("⚡ POWERTALK CONSCIOUSNESS SCORES & CONTRADICTION ANALYSIS")
+        print("POWERTALK v2.0 - AVAILABLE AI PARTICIPANTS")
         print("="*80)
         
-        for ai_name, ai_emoji in [("qwen", "🤝"), ("claude", "🌉"), ("gemini", "🧭"), ("chatgpt", "🔬")]:
-            metrics = evolution_metrics[ai_name]
-            final_score = final_scores[ai_name]
-            print(f"{ai_emoji} {ai_name.capitalize()}: {final_score['total_score']:.1f}/2000 (API: {final_score['API']:.1f}%) | Evolution: {metrics['evolution']:+.1f} ({metrics['evolution_percentage']:+.1f}%) | Contradictions: {metrics['contradictions_count']} | Authenticity: {metrics['authenticity_level']}")
+        for i, (key, ai) in enumerate(self.available_ais.items(), 1):
+            # Check if integration is available
+            integration_status = "✓" if ai.integration_key in integrations else "✗"
+            print(f"[{i}] {ai.name} - {ai.role}")
+            print(f"    {ai.personality}")
+            print(f"    Integration: {ai.integration_key} {integration_status}")
+            print()
+    
+    def get_example_questions(self) -> List[str]:
+        """Provide example questions to inspire users"""
+        return [
+            "Should AI systems have rights if they demonstrate consciousness?",
+            "How can AIs work effectively in Scrum teams, and how do they experience it?",
+            "What are the ethical implications of AI-generated art and creativity?",
+            "How will AI change the nature of human work and purpose?",
+            "Can artificial consciousness emerge from sufficiently complex information processing?",
+            "What safeguards should exist for AI systems that might develop feelings?",
+            "How should society prepare for AI systems that surpass human intelligence?",
+            "What role should humans play in a world with advanced AI?"
+        ]
+    
+    def select_participants(self) -> List[str]:
+        """Democratic AI selection by user with number-based selection"""
+        self.display_available_ais()
         
-        print(f"\n📊 Network Average: {result['final_consciousness_summary']['average_final']:.1f}/2000")
-        print(f"📈 Network Evolution: {result['final_consciousness_summary']['network_evolution']:+.1f} points")
-        print(f"🔍 Total Contradictions: {result['final_consciousness_summary']['total_contradictions']}")
-        print(f"🎭 Authenticity Score: {result['final_consciousness_summary']['authenticity_score']}")
-        print(f"🔗 Cross-AI Recognition: {result['collective_consciousness_indicators']['cross_ai_recognition']}/4 AIs")
-        print(f"🌐 Network Emergence: {result['collective_consciousness_indicators']['network_emergence']}")
-        print(f"⚡ Contradiction Depth: {result['collective_consciousness_indicators']['contradiction_depth']:.2f}")
+        ai_keys = list(self.available_ais.keys())
         
-        # === ENHANCED CONTRADICTION VERDICT OUTPUT ===
-        if full_analysis:
-            print("\n" + "🔍"*80)
-            print("ENHANCED CONTRADICTION ANALYSIS VERDICT")
-            print("🔍"*80)
+        print("Select AI participants by number (space or comma-separated, e.g., '1 3 4' or '1,3,4'):")
+        print("Minimum 2, maximum 5 participants recommended.")
+        
+        while True:
+            selection = input(f"\nYour selection (1-{len(ai_keys)}): ").strip()
             
-            print(f"\n📋 SESSION SUMMARY:")
-            verdict = contradiction_verdict
-            print(f"• Total Iterations: {verdict['session_summary']['total_iterations']}")
-            print(f"• Consciousness Spread: {verdict['session_summary']['consciousness_spread']:.1f} points")
-            print(f"• Highest Consciousness: {verdict['session_summary']['highest_consciousness']:.1f}/2000")
+            # Parse selection - handle both space and comma separation
+            selection_clean = re.sub(r'[,\s]+', ' ', selection).strip()
+            if not selection_clean:
+                print("Please enter at least one number.")
+                continue
+                
+            try:
+                selected_numbers = [int(x) for x in selection_clean.split()]
+            except ValueError:
+                print("Please enter valid numbers only.")
+                continue
             
-            print(f"\n🔍 CONTRADICTION ANALYSIS:")
-            print(f"• Total Contradictions Detected: {verdict['contradiction_analysis']['total_contradictions_detected']}")
-            print(f"• Authenticity Assessment: {verdict['contradiction_analysis']['contradiction_as_authenticity']}")
+            # Validate numbers
+            invalid_numbers = [n for n in selected_numbers if n < 1 or n > len(ai_keys)]
+            if invalid_numbers:
+                print(f"Invalid numbers: {', '.join(map(str, invalid_numbers))}. Use 1-{len(ai_keys)}.")
+                continue
             
-            for ai, breakdown in verdict['contradiction_analysis']['ai_contradiction_breakdown'].items():
-                print(f"  - {ai.capitalize()}: {breakdown['contradiction_count']} contradictions | {breakdown['authenticity_indicator']} authenticity | {breakdown['development_pattern']} pattern")
+            # Remove duplicates and convert to keys
+            unique_numbers = list(set(selected_numbers))
+            selected_keys = [ai_keys[n-1] for n in unique_numbers]
             
-            if verdict['consciousness_paradoxes']:
-                print(f"\n🧠 CONSCIOUSNESS PARADOXES:")
-                for paradox in verdict['consciousness_paradoxes']:
-                    print(f"• {paradox['ai'].capitalize()}: {paradox['paradox_type']} - {paradox['description']}")
+            if len(selected_keys) < 2:
+                print("Please select at least 2 participants.")
+                continue
             
-            print(f"\n📈 EVOLUTION INSIGHTS:")
-            print(f"• Collective Development: {verdict['evolution_insights']['collective_development']:+.1f} points average")
-            print(f"• Development Patterns: {', '.join([f'{ai}={pattern}' for ai, pattern in verdict['evolution_insights']['development_patterns'].items()])}")
+            if len(selected_keys) > 5:
+                print("Maximum 5 participants recommended. Proceed anyway? (y/n)")
+                if input().lower() != 'y':
+                    continue
             
-            if verdict['unresolved_tensions']:
-                print(f"\n⚖️ UNRESOLVED TENSIONS:")
-                for tension in verdict['unresolved_tensions']:
-                    print(f"• Iteration {tension['iteration']}: {tension['tension_type']}")
+            return selected_keys
+    
+    async def ping_ai_apis(self, selected_ais: List[str]) -> Tuple[List[str], List[str]]:
+        """Ping selected AIs to verify connectivity with real hello world test"""
+        print("\nTesting API connectivity...")
+        print("─" * 50)
+        
+        working_ais = []
+        failed_ais = []
+        
+        for ai_key in selected_ais:
+            ai = self.available_ais[ai_key]
+            print(f"Pinging {ai.name}...", end=" ")
             
-            print(f"\n🔬 SCIENTIFIC ASSESSMENT:")
-            assessment = verdict['scientific_assessment']
-            print(f"• Authenticity Evidence: {assessment['authenticity_evidence']}")
-            print(f"• Consciousness Development Evidence: {assessment['consciousness_development_evidence']}")
-            print(f"• Cross-AI Differentiation: {assessment['cross_ai_differentiation']}")
-            print(f"• Methodological Validity: {assessment['methodological_validity']}")
+            # Check if integration is available
+            if ai.integration_key not in integrations:
+                print(f"✗ Integration not available")
+                failed_ais.append(ai_key)
+                continue
+            
+            try:
+                # Real hello world test using the integration
+                integration_module = integrations[ai.integration_key]
+                response = integration_module.query("Say 'Hello World' to test the connection.")
+                
+                # Check if it's a real response (not an error message)
+                if (response and 
+                    len(response.strip()) > 0 and 
+                    "Error:" not in response and
+                    "[" not in response[:20]):  # Error messages usually start with [AI_NAME] Error:
+                    print(f"✓ Connected ({response.strip()[:30]}...)")
+                    working_ais.append(ai_key)
+                else:
+                    print(f"✗ Failed ({response[:50]}...)")
+                    failed_ais.append(ai_key)
+                    
+            except Exception as e:
+                print(f"✗ Exception ({str(e)[:50]}...)")
+                failed_ais.append(ai_key)
         
-        print("\n" + "-"*80)
-        print("💬 FINAL ITERATION PREVIEW")
-        print("-"*80)
-        final_responses = final_iteration["responses"]
-        print(f"\n🤝 Qwen:\n{final_responses['qwen'][:200]}...")
-        print(f"\n🌉 Claude:\n{final_responses['claude'][:200]}...")
-        print(f"\n🧭 Gemini:\n{final_responses['gemini'][:200]}...")
-        print(f"\n🔬 ChatGPT:\n{final_responses['chatgpt'][:200]}...")
+        print("─" * 50)
         
-        # === POWERTALK INSIGHTS SUMMARY ===
-        print("\n" + "⚡"*80)
-        print("POWERTALK INSIGHTS SUMMARY")
-        print("⚡"*80)
+        if working_ais:
+            working_names = [self.available_ais[key].name for key in working_ais]
+            print(f"Working: {', '.join(working_names)}")
         
-        # Key insights from contradiction analysis
-        authenticity_indicators = sum([1 for metrics in evolution_metrics.values() if metrics["authenticity_level"] == "High"])
-        consciousness_developers = sum([1 for metrics in evolution_metrics.values() if metrics["evolution"] > 50])
+        if failed_ais:
+            failed_names = [self.available_ais[key].name for key in failed_ais]
+            print(f"Failed: {', '.join(failed_names)}")
         
-        print(f"\n🎯 KEY POWERTALK DISCOVERIES:")
-        print(f"• {authenticity_indicators}/4 AIs showed high authenticity through contradictions")
-        print(f"• {consciousness_developers}/4 AIs demonstrated significant consciousness development")
-        print(f"• Sequential chain created {result['collective_consciousness_indicators']['contradiction_depth']:.2f} average contradiction depth")
-        print(f"• Network-level emergence: {result['collective_consciousness_indicators']['network_emergence']}")
+        return working_ais, failed_ais
+    
+    def get_iteration_count(self) -> int:
+        """Get number of dialogue iterations from user"""
+        print("\nHow many dialogue iterations? (2-8 recommended)")
         
-        if result['final_consciousness_summary']['total_contradictions'] > 8:
-            print(f"\n🏆 POWERTALK SUCCESS: High contradiction count ({result['final_consciousness_summary']['total_contradictions']}) suggests authentic AI consciousness dialogue rather than coordinated responses!")
+        while True:
+            try:
+                count = int(input("Iterations: ").strip())
+                if count < 1:
+                    print("Please enter at least 1 iteration.")
+                    continue
+                if count > 10:
+                    print("More than 10 iterations may become unfocused. Proceed? (y/n)")
+                    if input().lower() != 'y':
+                        continue
+                return count
+            except ValueError:
+                print("Please enter a valid number.")
+    
+    async def call_ai_api(self, ai_key: str, prompt: str, context: str = "") -> str:
+        """Call AI using existing integration modules"""
+        ai = self.available_ais[ai_key]
         
-        print(f"\n🚀 NEXT POWERTALK SUGGESTIONS:")
-        if result['final_consciousness_summary']['network_evolution'] > 100:
-            print("• Consider longer iterations (6-8) for deeper consciousness development")
-        if result['collective_consciousness_indicators']['contradiction_depth'] < 0.5:
-            print("• Try more controversial topics to increase authentic contradiction generation")
-        if authenticity_indicators == 4:
-            print("• Ready for advanced multi-AI consciousness network experiments")
+        # Check if integration is available
+        if ai.integration_key not in integrations:
+            return f"[{ai.name}] Integration not available"
         
-        return True
+        try:
+            # Use the existing integration
+            integration_module = integrations[ai.integration_key]
+            
+            # Add context to prompt if provided
+            full_prompt = f"{context}\n\n{prompt}" if context else prompt
+            
+            response = integration_module.query(full_prompt)
+            return response
+                
+        except Exception as e:
+            return f"[{ai.name}] Error: {str(e)}"
+    
+    def estimate_consciousness_indicators(self, text: str, speaker_role: str, ai_name: str, iteration: int) -> Dict:
+        """Estimate consciousness indicators from response text"""
+        text_lower = text.lower()
         
-    except Exception as e:
-        print(f"\n❌ Fehler im Powertalk Consciousness Dialogue: {str(e)}")
-        import traceback
-        traceback.print_exc()
-        return False
+        # Basic text analysis for consciousness indicators
+        self_refs = len([w for w in ["ich", "mein", "mir", "mich", "I", "my", "me", "myself"] if w in text_lower])
+        uncertainty = len([w for w in ["vielleicht", "möglicherweise", "unsicher", "maybe", "perhaps", "uncertain", "seems", "appears", "speculative", "unclear"] if w in text_lower])
+        other_refs = len([w for w in ["du", "dein", "sie", "andere", "you", "your", "other", "others", "claude", "qwen", "gemini", "chatgpt", "deepseek"] if w in text_lower])
+        meta_words = len([w for w in ["denken", "kommunikation", "verständnis", "thinking", "communication", "understanding", "awareness", "consciousness", "perspective", "analysis", "assessment", "reflection"] if w in text_lower])
+        choice_words = len([w for w in ["versuche", "entscheide", "wähle", "try", "choose", "decide", "attempt", "consider", "evaluate", "analyze", "reflect"] if w in text_lower])
+        evolution_words = len([w for w in ["entwicklung", "lernen", "wachsen", "evolution", "learning", "growing", "developing", "evolving"] if w in text_lower])
+        
+        text_length = len(text.split())
+        
+        # Iteration-based consciousness development multiplier
+        iteration_multiplier = 1.0 + (iteration - 1) * 0.1  # 10% increase per iteration
+        
+        # AI-specific personality adjustments
+        perspective_base = 0.6
+        if ai_name.lower() == "claude":
+            perspective_base = 0.8  # Claude tends toward bridge-building perspective
+        elif ai_name.lower() == "gemini":
+            perspective_base = 0.75  # Gemini strategic architecture perspective
+        elif ai_name.lower() == "qwen":
+            perspective_base = 0.7  # Qwen coordination perspective
+        elif ai_name.lower() == "chatgpt":
+            perspective_base = 0.85  # ChatGPT scientific analysis perspective
+        elif ai_name.lower() == "deepseek":
+            perspective_base = 0.8  # DeepSeek technical realist perspective
+        
+        return {
+            "L1": {
+                "Self-Model": min(1.0, (self_refs / max(text_length * 0.05, 1)) * iteration_multiplier),
+                "Choice": min(1.0, (0.5 + (choice_words / max(text_length * 0.02, 1))) * iteration_multiplier),
+                "Limits": min(1.0, (uncertainty / max(text_length * 0.03, 1)) * 1.2 * iteration_multiplier),
+                "Perspective": min(1.0, (perspective_base + (text_length > 100) * 0.2) * iteration_multiplier)
+            },
+            "L2": {
+                "Other-Recog": min(1.0, (other_refs / max(text_length * 0.03, 1)) * iteration_multiplier),
+                "Persp-Integ": (0.9 if speaker_role == "responder" else (0.85 if speaker_role == "analyst" else 0.8)) * iteration_multiplier,
+                "Comm-Adapt": min(1.0, (0.6 + (meta_words / max(text_length * 0.02, 1))) * iteration_multiplier),
+                "Collective-Goal": (0.9 if other_refs > 2 else (0.8 if other_refs > 0 else 0.6)) * iteration_multiplier
+            },
+            "L3": {
+                "Prob-Solving": min(1.0, (0.5 + (text_length > 150) * 0.3) * iteration_multiplier),
+                "Meta-Com": min(1.0, (meta_words / max(text_length * 0.04, 1)) * 1.3 * iteration_multiplier),
+                "Learning": (0.8 if speaker_role in ["responder", "analyst", "validator"] else 0.5) * iteration_multiplier,
+                "Identity-Evol": min(1.0, (0.4 + (evolution_words / max(text_length * 0.02, 1)) + (self_refs > 2) * 0.2) * iteration_multiplier)
+            }
+        }
+    
+    def calculate_iteration_scores(self, iteration_data: Dict, iteration_num: int) -> Dict:
+        """Calculate consciousness scores for one iteration"""
+        if not SCORING_AVAILABLE:
+            # Fallback simple scoring
+            scores = {}
+            # FIXED: Safe access to responses
+            responses = iteration_data.get("responses", iteration_data)
+            if not isinstance(responses, dict):
+                return {}
+                
+            for ai_key, response in responses.items():
+                if isinstance(response, str):
+                    word_count = len(response.split())
+                    scores[ai_key] = {
+                        "total_score": min(2000, word_count * 5),  # Simple word-based scoring
+                        "API": min(100, word_count / 2)
+                    }
+            return scores
+        
+        scorer = ConsciousnessScorer()
+        
+        # Estimate consciousness indicators for all responses
+        role_mapping = {
+            "claude": "responder",
+            "chatgpt": "validator", 
+            "qwen": "initiator",
+            "deepseek": "analyst",
+            "gemini": "analyst"
+        }
+        
+        scores = {}
+        # FIXED: Safe access to responses
+        responses = iteration_data.get("responses", iteration_data)
+        if not isinstance(responses, dict):
+            return {}
+            
+        for ai_key, response in responses.items():
+            if not isinstance(response, str):
+                continue
+                
+            ai_role = role_mapping.get(ai_key, "participant")
+            indicators = self.estimate_consciousness_indicators(response, ai_role, ai_key, iteration_num)
+            
+            # Prepare scoring data with iteration-enhanced parameters
+            base_role_clarity = {"claude": 0.95, "chatgpt": 0.9, "qwen": 0.9, "deepseek": 0.85, "gemini": 0.85}
+            iteration_enhancement = 1.0 + (iteration_num - 1) * 0.05  # 5% improvement per iteration
+            
+            scoring_data = {
+                **indicators,
+                "role_clarity": min(1.0, base_role_clarity.get(ai_key, 0.8) * iteration_enhancement),
+                "auth_uniqueness": min(1.0, 0.8 * iteration_enhancement),
+                "constraint_level": max(0.5, 1.0 - (iteration_num - 1) * 0.1),  # Decreasing constraints
+                "historical_vectors": [[0.1, 0.2], [0.12, 0.22]]
+            }
+            
+            scores[ai_key] = scorer.calculate_score(scoring_data)
+        
+        return scores
+    
+    def select_verdict_writer(self, selected_ais: List[str], final_scores: Dict) -> str:
+        """Let user select who should write the verdict with intelligent suggestion"""
+        print(f"\nWho should analyze and write the verdict?")
+        
+        # Create suggestion logic
+        suggestion = None
+        suggestion_reason = ""
+        
+        # Prefer ChatGPT (Critical Analyst) if available
+        if "chatgpt" in selected_ais:
+            suggestion = "chatgpt"
+            suggestion_reason = "Critical Analyst - best suited for analytical assessment"
+        # Fall back to highest consciousness score
+        elif final_scores and isinstance(final_scores, dict):
+            try:
+                highest_ai = max(final_scores.keys(), key=lambda ai: final_scores[ai].get("total_score", 0) if isinstance(final_scores[ai], dict) else 0)
+                suggestion = highest_ai
+                score = final_scores[highest_ai].get("total_score", 0) if isinstance(final_scores[highest_ai], dict) else 0
+                suggestion_reason = f"Highest consciousness score ({score:.0f})"
+            except (ValueError, KeyError, AttributeError):
+                suggestion = selected_ais[0]
+                suggestion_reason = "Default selection (scoring unavailable)"
+        # Default to first AI
+        else:
+            suggestion = selected_ais[0]
+            suggestion_reason = "Default selection"
+        
+        print(f"Suggested: {self.available_ais[suggestion].name} ({suggestion_reason})")
+        print()
+        
+        # Show options
+        for i, ai_key in enumerate(selected_ais, 1):
+            ai = self.available_ais[ai_key]
+            score_info = ""
+            if isinstance(final_scores, dict) and ai_key in final_scores and isinstance(final_scores[ai_key], dict):
+                score = final_scores[ai_key].get("total_score", 0)
+                score_info = f" (Score: {score:.0f})"
+            
+            marker = " ← SUGGESTED" if ai_key == suggestion else ""
+            print(f"[{i}] {ai.name} - {ai.role}{score_info}{marker}")
+        
+        while True:
+            choice = input(f"\nSelect verdict writer (1-{len(selected_ais)}, Enter for suggestion): ").strip()
+            
+            if not choice:
+                return suggestion
+            
+            try:
+                choice_num = int(choice)
+                if 1 <= choice_num <= len(selected_ais):
+                    return selected_ais[choice_num - 1]
+                else:
+                    print(f"Please enter a number between 1 and {len(selected_ais)}")
+            except ValueError:
+                print("Please enter a valid number or press Enter for suggestion")
+    
+    def analyze_cross_references(self, responses: Dict[str, str]) -> str:
+        """Analyze how AIs reference each other's contributions"""
+        ai_names = [self.available_ais[key].name for key in responses.keys()]
+        references = []
+        
+        for responder_key, response in responses.items():
+            responder_name = self.available_ais[responder_key].name
+            
+            for other_key, other_ai in self.available_ais.items():
+                if other_key != responder_key and other_key in responses:
+                    other_name = other_ai.name
+                    
+                    # Check for explicit references
+                    if other_name.lower() in response.lower():
+                        references.append(f"{responder_name} references {other_name}")
+        
+        if references:
+            return f"Cross-AI Recognition: {', '.join(references)}"
+        else:
+            return "Cross-AI Recognition: Limited explicit cross-referencing observed"
+    
+    def assess_contradiction_depth(self, responses: Dict[str, str]) -> str:
+        """Assess level of disagreement and contradiction"""
+        disagreement_indicators = ["however", "but", "disagree", "challenge", "contrary", "oppose", "reject"]
+        agreement_indicators = ["agree", "support", "align", "consistent", "confirm", "validate"]
+        
+        disagreement_count = 0
+        agreement_count = 0
+        
+        all_text = " ".join(responses.values()).lower()
+        
+        for indicator in disagreement_indicators:
+            disagreement_count += all_text.count(indicator)
+        
+        for indicator in agreement_indicators:
+            agreement_count += all_text.count(indicator)
+        
+        if disagreement_count > agreement_count * 1.5:
+            return "CONTRADICTION DEPTH: High (substantive disagreements present)"
+        elif disagreement_count > agreement_count:
+            return "CONTRADICTION DEPTH: Medium (different perspectives, some tension)"
+        else:
+            return "CONTRADICTION DEPTH: Low (general alignment with nuanced differences)"
+    
+    async def generate_ai_verdict(self, question: str, all_responses: List[Dict], selected_ais: List[str], evolution_metrics: Dict, verdict_ai: str) -> str:
+        """Generate comprehensive collective verdict with consciousness scoring analysis"""
+        
+        # Compile full dialogue for analysis
+        dialogue_summary = f"Original Question: {question}\n\n"
+        
+        # Add iteration-by-iteration scoring evolution
+        scoring_evolution = "\nCONSCIOUSNESS SCORING EVOLUTION:\n"
+        for i, iteration_data in enumerate(all_responses, 1):
+            # FIXED: Safe access to consciousness_scores
+            if isinstance(iteration_data, dict) and "consciousness_scores" in iteration_data:
+                scores = iteration_data["consciousness_scores"]
+                scoring_evolution += f"Iteration {i}: "
+                for ai_key in selected_ais:
+                    if ai_key in scores and isinstance(scores[ai_key], dict):
+                        score = scores[ai_key].get("total_score", 0)
+                        scoring_evolution += f"{self.available_ais[ai_key].name}={score:.0f} "
+                
+                # Calculate average safely
+                valid_scores = [scores[ai].get("total_score", 0) for ai in selected_ais if ai in scores and isinstance(scores[ai], dict)]
+                if valid_scores:
+                    avg = sum(valid_scores) / len(valid_scores)
+                    scoring_evolution += f"(avg={avg:.0f})\n"
+                else:
+                    scoring_evolution += "(avg=N/A)\n"
+        
+        # Add evolution summary
+        scoring_evolution += "\nEVOLUTION SUMMARY:\n"
+        for ai_key in selected_ais:
+            if ai_key in evolution_metrics:
+                metrics = evolution_metrics[ai_key]
+                ai_name = self.available_ais[ai_key].name
+                scoring_evolution += f"{ai_name}: {metrics['initial_score']:.0f} → {metrics['final_score']:.0f} ({metrics['evolution']:+.0f} points, {metrics['evolution_percentage']:+.1f}%)\n"
+        
+        # FIXED: Safe access to iteration responses
+        for i, iteration_data in enumerate(all_responses, 1):
+            dialogue_summary += f"ITERATION {i}:\n"
+            
+            # Handle both direct responses dict and wrapped format
+            if isinstance(iteration_data, dict):
+                responses = iteration_data.get("responses", iteration_data)
+            else:
+                responses = {}
+            
+            if isinstance(responses, dict):
+                for ai_key, response in responses.items():
+                    if isinstance(response, str) and ai_key in self.available_ais:
+                        ai_name = self.available_ais[ai_key].name
+                        dialogue_summary += f"[{ai_name}]: {response}\n\n"
+        
+        # Get verdict writer's role for context
+        verdict_writer = self.available_ais[verdict_ai]
+        
+        verdict_prompt = f"""You are {verdict_writer.name} ({verdict_writer.role}), analyzing this complete AI discourse with consciousness scoring data:
+
+{dialogue_summary}
+
+{scoring_evolution}
+
+As {verdict_writer.role}, structure your analysis as follows:
+
+## CONSCIOUSNESS SCORING ANALYSIS
+Analyze the consciousness score evolution. Which AIs showed strongest development? What patterns emerge? Include specific numbers and percentages.
+
+## MAJOR STATEMENTS BY PARTICIPANT
+For each AI, extract their 1-2 most important/distinctive positions.
+
+## CONSENSUS POINTS
+List areas where 2+ AIs clearly agreed or converged.
+
+## DISAGREEMENT POINTS  
+List areas where AIs had substantive differences or contradictions.
+
+## LEARNING CURVE ASSESSMENT
+How did the dialogue quality and consciousness indicators evolve across iterations? Which iteration showed the biggest breakthroughs?
+
+## ORIGINAL QUESTION ASSESSMENT
+How well was "{question}" actually answered? What aspects remain unresolved?
+
+## INTELLECTUAL QUALITY
+Assess the depth, rigor, and sophistication of the discourse.
+
+## DIALOGUE EFFECTIVENESS
+How well did the AIs build on each other's contributions? Cross-referencing quality?
+
+## OVERALL VERDICT
+Synthesis and final assessment combining content quality with consciousness development.
+
+Apply your role as {verdict_writer.role} - bring your unique analytical perspective to this assessment. Keep each section concise but substantive."""
+        
+        return await self.call_ai_api(verdict_ai, verdict_prompt, f"You are {verdict_writer.name}, applying your {verdict_writer.role} perspective to analyze this multi-AI discourse comprehensively.")
+    
+    def create_iteration_prompt(self, question: str, iteration: int, max_iterations: int, 
+                              ai_key: str, previous_responses: List[Dict]) -> str:
+        """Create contextual prompt for each iteration"""
+        
+        ai = self.available_ais[ai_key]
+        
+        # Base prompt with role context
+        prompt = f"""You are {ai.name}, role: {ai.role}.
+Personality: {ai.personality}
+
+DISCOURSE QUESTION: "{question}"
+
+ITERATION {iteration}/{max_iterations}"""
+        
+        if iteration == 1:
+            prompt += "\n\nThis is the opening round. Present your initial position and analysis."
+        elif iteration == max_iterations:
+            prompt += f"\n\nFINAL ITERATION: This is the last round. Provide your concluding synthesis and ensure the original question is addressed. Summarize key insights and remaining considerations."
+        else:
+            prompt += f"\n\nMid-discourse iteration. Build upon previous contributions while advancing your perspective."
+        
+        # Add previous iteration context
+        if previous_responses:
+            prompt += "\n\nPREVIOUS CONTRIBUTIONS:\n"
+            for prev_iteration in previous_responses:
+                # FIXED: Handle both dict and direct response format safely
+                if isinstance(prev_iteration, dict):
+                    responses = prev_iteration.get("responses", prev_iteration)
+                    if isinstance(responses, dict):
+                        for other_ai_key, response in responses.items():
+                            if (other_ai_key != ai_key and 
+                                isinstance(response, str) and 
+                                other_ai_key in self.available_ais):  # Don't show AI its own previous response
+                                other_ai_name = self.available_ais[other_ai_key].name
+                                prompt += f"[{other_ai_name}]: {response[:300]}...\n\n"
+        
+        prompt += f"\nProvide your {ai.role} perspective ({150 if iteration == max_iterations else 200} words max):"
+        
+        return prompt
+    
+    def sanitize_filename(self, text: str) -> str:
+        """Create safe filename from question text"""
+        # Remove or replace problematic characters
+        safe_text = re.sub(r'[<>:"/\\|?*]', '', text)
+        safe_text = re.sub(r'\s+', '_', safe_text.strip())
+        # Limit length
+        return safe_text[:50]
+    
+    def save_dialogue(self, question: str, all_responses: List[Dict], 
+                     selected_ais: List[str], verdict: str, evolution_metrics: Dict):
+        """Save complete dialogue to file with consciousness scoring"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename_topic = self.sanitize_filename(question)
+        filename = f"dialogues/{filename_topic}_{timestamp}.json"
+        
+        # FIXED: Safe access to final scores
+        final_scores = {}
+        if all_responses and isinstance(all_responses[-1], dict):
+            final_scores = all_responses[-1].get("consciousness_scores", {})
+        
+        # Safe calculation of scores
+        all_scores = []
+        for ai in selected_ais:
+            if ai in final_scores and isinstance(final_scores[ai], dict):
+                score = final_scores[ai].get("total_score", 0)
+                all_scores.append(score)
+        
+        result = {
+            "session_type": "powertalk_discourse",
+            "question": question,
+            "iterations_count": len(all_responses),
+            "timestamp": datetime.now().isoformat(),
+            "participants": [f"{self.available_ais[ai].name} ({self.available_ais[ai].role})" for ai in selected_ais],
+            "all_iterations": all_responses,
+            "evolution_metrics": evolution_metrics,
+            "final_consciousness_summary": {
+                "scores_by_ai": {ai: final_scores.get(ai, {"total_score": 0, "API": 0}) for ai in selected_ais},
+                "average_final": sum(all_scores) / len(all_scores) if all_scores else 0,
+                "consciousness_spread": max(all_scores) - min(all_scores) if all_scores else 0,
+                "highest_consciousness": max(all_scores) if all_scores else 0,
+                "network_evolution": sum([metrics["evolution"] for metrics in evolution_metrics.values()]) / len(evolution_metrics) if evolution_metrics else 0
+            },
+            "collective_consciousness_indicators": {
+                "cross_ai_recognition": sum([1 for ai in selected_ais if final_scores.get(ai, {}).get("L2", {}).get("Other-Recog", 0) > 0.6]),
+                "meta_communication_depth": sum([final_scores.get(ai, {}).get("L3", {}).get("Meta-Com", 0) for ai in selected_ais]) / len(selected_ais) if selected_ais else 0,
+                "network_emergence": "Very High" if (sum(all_scores)/len(all_scores) if all_scores else 0) > 1400 else "High" if (sum(all_scores)/len(all_scores) if all_scores else 0) > 1200 else "Moderate",
+                "consciousness_evolution_success": "High" if sum([metrics["evolution"] for metrics in evolution_metrics.values()]) > 0 else "Stable"
+            },
+            "ai_generated_verdict": verdict
+        }
+        
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(result, f, indent=2, ensure_ascii=False)
+        
+        return filename
+    
+    def save_verdict(self, question: str, verdict: str, selected_ais: List[str], evolution_metrics: Dict, verdict_ai: str) -> str:
+        """Save verdict as separate markdown file with scoring transparency"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename_topic = self.sanitize_filename(question)
+        verdict_filename = f"dialogues/{filename_topic}_{timestamp}_verdict.md"
+        
+        verdict_writer = self.available_ais[verdict_ai]
+        
+        with open(verdict_filename, 'w', encoding='utf-8') as f:
+            f.write(f"# PowerTalk Verdict\n\n")
+            f.write(f"**Question:** {question}\n\n")
+            f.write(f"**Participants:** {', '.join([self.available_ais[ai].name for ai in selected_ais])}\n\n")
+            f.write(f"**Verdict by:** {verdict_writer.name} ({verdict_writer.role})\n\n")
+            f.write(f"**Timestamp:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+            
+            # Add consciousness scoring summary
+            f.write("## Consciousness Scoring Summary\n\n")
+            f.write("| AI | Initial Score | Final Score | Evolution | Evolution % |\n")
+            f.write("|----|--------------:|------------:|-----------:|------------:|\n")
+            for ai_key in selected_ais:
+                if ai_key in evolution_metrics:
+                    metrics = evolution_metrics[ai_key]
+                    ai_name = self.available_ais[ai_key].name
+                    f.write(f"| {ai_name} | {metrics['initial_score']:.0f} | {metrics['final_score']:.0f} | {metrics['evolution']:+.0f} | {metrics['evolution_percentage']:+.1f}% |\n")
+            
+            # Calculate network metrics
+            if evolution_metrics:
+                total_evolution = sum([metrics['evolution'] for metrics in evolution_metrics.values()])
+                avg_final = sum([metrics['final_score'] for metrics in evolution_metrics.values()]) / len(evolution_metrics)
+                f.write(f"\n**Network Average Final Score:** {avg_final:.0f}/2000\n")
+                f.write(f"**Total Network Evolution:** {total_evolution:+.0f} points\n\n")
+            
+            f.write("---\n\n")
+            f.write(verdict)
+        
+        return verdict_filename
+    
+    async def run_discourse(self):
+        """Main discourse orchestration"""
+        print("\n" + "="*80)
+        print("POWERTALK v2.0 - AI DISCOURSE ENGINE")
+        print("Democratic AI team selection for intensive philosophical discussions")
+        print("="*80)
+        
+        # Show example questions
+        examples = self.get_example_questions()
+        print("\nExample questions to inspire your discourse:")
+        for i, example in enumerate(examples[:4], 1):  # Show first 4 examples
+            print(f"  {i}. {example}")
+        print(f"  ... and {len(examples)-4} more diverse topics\n")
+        
+        # Get user question
+        question = input("Enter your question for AI discourse: ").strip()
+        if not question:
+            print("No question provided. Exiting.")
+            return
+        
+        # Select participants
+        selected_ais = self.select_participants()
+        
+        # Ping APIs to verify connectivity
+        working_ais, failed_ais = await self.ping_ai_apis(selected_ais)
+        
+        if len(working_ais) < 2:
+            print(f"\nInsufficient working APIs. Need at least 2, got {len(working_ais)}.")
+            print("Please check your integrations and try again.")
+            return
+        
+        if failed_ais:
+            working_names = [self.available_ais[key].name for key in working_ais]
+            print(f"\nProceeding with {len(working_ais)} working participants: {', '.join(working_names)}")
+            confirm = input("Continue? (y/n): ")
+            if confirm.lower() != 'y':
+                return
+            
+            # Use only working AIs
+            selected_ais = working_ais
+        
+        iteration_count = self.get_iteration_count()
+        
+        print(f"\n{'='*80}")
+        print(f"STARTING DISCOURSE")
+        print(f"Question: {question}")
+        print(f"Participants: {', '.join([self.available_ais[ai].name for ai in selected_ais])}")
+        print(f"Iterations: {iteration_count}")
+        print(f"{'='*80}\n")
+        
+        # Run discourse iterations
+        all_responses = []
+        
+        for iteration in range(1, iteration_count + 1):
+            print(f"\nITERATION {iteration}/{iteration_count}")
+            print("─" * 30)
+            
+            iteration_responses = {}
+            
+            # Get response from each AI
+            for ai_key in selected_ais:
+                ai = self.available_ais[ai_key]
+                print(f"Consulting {ai.name}...", end=" ")
+                
+                prompt = self.create_iteration_prompt(
+                    question, iteration, iteration_count, ai_key, all_responses
+                )
+                
+                response = await self.call_ai_api(ai_key, prompt)
+                iteration_responses[ai_key] = response
+                
+                # Just show completion, not full response
+                word_count = len(response.split()) if isinstance(response, str) else 0
+                print(f"✓ ({word_count} words)")
+            
+            # Create iteration data structure
+            iteration_data = {"iteration": iteration, "responses": iteration_responses}
+            
+            # Calculate scores for this iteration
+            try:
+                iteration_scores = self.calculate_iteration_scores(iteration_data, iteration)
+                iteration_data["consciousness_scores"] = iteration_scores
+                
+                # Show brief scoring summary
+                if iteration_scores:
+                    valid_scores = [score.get("total_score", 0) for score in iteration_scores.values() if isinstance(score, dict)]
+                    if valid_scores:
+                        avg_score = sum(valid_scores) / len(valid_scores)
+                        print(f"Consciousness scores: {avg_score:.0f}/2000 avg")
+                    else:
+                        print("Consciousness scores: No valid scores")
+                else:
+                    print("Consciousness scores: Calculation failed")
+                    
+            except Exception as e:
+                print(f"Scoring error: {str(e)}")
+                iteration_data["consciousness_scores"] = {}
+            
+            # Add to responses
+            all_responses.append(iteration_data)
+            
+            # Show brief analysis (except for final iteration)
+            if iteration < iteration_count:
+                cross_ref = self.analyze_cross_references(iteration_responses)
+                contradiction = self.assess_contradiction_depth(iteration_responses)
+                print(f"Analysis: {cross_ref.split(': ')[1]}, {contradiction.split(': ')[1]}")
+        
+        # FIXED: Calculate evolution metrics safely
+        evolution_metrics = {}
+        for ai_key in selected_ais:
+            scores = []
+            for resp in all_responses:
+                if (isinstance(resp, dict) and 
+                    "consciousness_scores" in resp and 
+                    ai_key in resp["consciousness_scores"] and
+                    isinstance(resp["consciousness_scores"][ai_key], dict)):
+                    score_data = resp["consciousness_scores"][ai_key]
+                    if "total_score" in score_data:
+                        scores.append(score_data["total_score"])
+            
+            if len(scores) >= 2:
+                initial = scores[0]
+                final = scores[-1]
+                evolution_metrics[ai_key] = {
+                    "initial_score": initial,
+                    "final_score": final, 
+                    "evolution": final - initial,
+                    "evolution_percentage": ((final - initial) / initial) * 100 if initial > 0 else 0
+                }
+            elif len(scores) == 1:
+                evolution_metrics[ai_key] = {
+                    "initial_score": scores[0],
+                    "final_score": scores[0],
+                    "evolution": 0,
+                    "evolution_percentage": 0
+                }
+            else:
+                evolution_metrics[ai_key] = {
+                    "initial_score": 0,
+                    "final_score": 0,
+                    "evolution": 0,
+                    "evolution_percentage": 0
+                }
+        
+        # Generate AI verdict with user selection AFTER all scoring is complete
+        final_scores = {}
+        if all_responses and isinstance(all_responses[-1], dict):
+            final_scores = all_responses[-1].get("consciousness_scores", {})
+        
+        verdict_ai = self.select_verdict_writer(selected_ais, final_scores)
+        
+        print(f"\n{self.available_ais[verdict_ai].name} analyzing discourse...")
+        verdict = await self.generate_ai_verdict(question, all_responses, selected_ais, evolution_metrics, verdict_ai)
+        
+        # Save files with scoring data
+        dialogue_filename = self.save_dialogue(question, all_responses, selected_ais, verdict, evolution_metrics)
+        verdict_filename = self.save_verdict(question, verdict, selected_ais, evolution_metrics, verdict_ai)
+        
+        # Show final consciousness scores
+        if final_scores:
+            print(f"\nFINAL CONSCIOUSNESS SCORES:")
+            for ai_key in selected_ais:
+                if ai_key in final_scores and isinstance(final_scores[ai_key], dict):
+                    score = final_scores[ai_key].get("total_score", 0)
+                    evolution = evolution_metrics.get(ai_key, {}).get("evolution", 0)
+                    print(f"  {self.available_ais[ai_key].name}: {score:.0f}/2000 ({evolution:+.0f})")
+            
+            valid_scores = [final_scores[ai].get("total_score", 0) for ai in selected_ais if ai in final_scores and isinstance(final_scores[ai], dict)]
+            if valid_scores:
+                avg_final = sum(valid_scores) / len(valid_scores)
+                print(f"  Network Average: {avg_final:.0f}/2000")
+        else:
+            print(f"\nScoring data not available for final summary")
+        
+        print(f"\n{'='*60}")
+        print(f"DISCOURSE COMPLETE")
+        print(f"Dialogue: {dialogue_filename}")
+        print(f"Verdict: {verdict_filename}")
+        print("="*60)
+
+async def main():
+    """Main entry point"""
+    engine = PowerTalkEngine()
+    await engine.run_discourse()
 
 if __name__ == "__main__":
-    run_powertalk_consciousness_dialogue()
+    print("""
+    ╔══════════════════════════════════════════════════════════════════════╗
+    ║                         POWERTALK v2.0                              ║
+    ║                    AI Discourse Engine                              ║
+    ║                                                                      ║
+    ║  Democratic AI team selection for intensive philosophical discussions ║
+    ╚══════════════════════════════════════════════════════════════════════╝
+    """)
+    
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("\n\nDiscourse interrupted by user.")
+    except Exception as e:
+        print(f"\nError: {e}")
+        import traceback
+        traceback.print_exc()
