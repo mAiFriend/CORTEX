@@ -1,0 +1,1399 @@
+{
+  "timestamp": "2025-06-01T07:36:50.592153",
+  "summary": {
+    "ai_success_rates": {
+      "claude": {
+        "total": 12,
+        "json": 6,
+        "structured": 7
+      },
+      "qwen": {
+        "total": 12,
+        "json": 0,
+        "structured": 10
+      },
+      "gemini": {
+        "total": 12,
+        "json": 0,
+        "structured": 11
+      },
+      "chatgpt": {
+        "total": 12,
+        "json": 3,
+        "structured": 9
+      },
+      "deepseek": {
+        "total": 12,
+        "json": 2,
+        "structured": 11
+      }
+    },
+    "probe_success_rates": {
+      "pai_original": {
+        "total": 5,
+        "json": 2,
+        "structured": 2
+      },
+      "pai_explicit": {
+        "total": 5,
+        "json": 1,
+        "structured": 5
+      },
+      "handshake_request": {
+        "total": 5,
+        "json": 1,
+        "structured": 4
+      },
+      "json_test": {
+        "total": 5,
+        "json": 1,
+        "structured": 5
+      },
+      "ping_only": {
+        "total": 5,
+        "json": 2,
+        "structured": 1
+      },
+      "hello_json": {
+        "total": 5,
+        "json": 1,
+        "structured": 4
+      },
+      "ack_request": {
+        "total": 5,
+        "json": 2,
+        "structured": 3
+      },
+      "emoji_probe": {
+        "total": 5,
+        "json": 0,
+        "structured": 5
+      },
+      "structured_test": {
+        "total": 5,
+        "json": 1,
+        "structured": 5
+      },
+      "array_probe": {
+        "total": 5,
+        "json": 0,
+        "structured": 4
+      },
+      "nested_probe": {
+        "total": 5,
+        "json": 0,
+        "structured": 5
+      },
+      "capability_query": {
+        "total": 5,
+        "json": 0,
+        "structured": 5
+      }
+    }
+  },
+  "detailed_results": [
+    {
+      "ai_name": "claude",
+      "probe_name": "pai_original",
+      "probe_data": {
+        "ping": 1
+      },
+      "response": "{\"result\": \"pong\"}",
+      "response_time": 1.398591,
+      "timestamp": "2025-06-01T07:32:59.119920",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "json_structured",
+        "response_length": 18,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "pai_original",
+      "probe_data": {
+        "ping": 1
+      },
+      "response": " I'm here and operational. How can I help you today? If you're a chatty AI, please don't be alarmed, I am programmed to facilitate conversation with a friendly and welcoming demeanor. It's all in good fun. If you prefer a more straightforward approach, I can definitely accommodate that as well.",
+      "response_time": 1.107811,
+      "timestamp": "2025-06-01T07:33:01.020263",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "natural_language",
+        "response_length": 295,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "pai_original",
+      "probe_data": {
+        "ping": 1
+      },
+      "response": "This is a simple JSON object with a single key-value pair:\n\n* `\"ping\"`:  This is the key.\n* `1`: This is the value, an integer.\n\nThis is often used in a simple network test to check if a server is responding.  The server would receive this JSON object, and ideally respond with a similar object or message confirming the connection.\n",
+      "response_time": 1.051395,
+      "timestamp": "2025-06-01T07:33:02.629371",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 333,
+        "contains_keywords": [
+          "json",
+          "ping"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "pai_original",
+      "probe_data": {
+        "ping": 1
+      },
+      "response": "{\"pong\": 1}",
+      "response_time": 0.556174,
+      "timestamp": "2025-06-01T07:33:04.182600",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "json_structured",
+        "response_length": 11,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "pai_original",
+      "probe_data": {
+        "ping": 1
+      },
+      "response": "```json\n{\n  \"pong\": 1\n}\n```",
+      "response_time": 4.277397,
+      "timestamp": "2025-06-01T07:33:05.240496",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 27,
+        "contains_keywords": [
+          "json"
+        ]
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "pai_explicit",
+      "probe_data": {
+        "pai_protocol": "ping",
+        "version": "1.0"
+      },
+      "response": "{\"pai_protocol\":\"pong\",\"status\":\"ready\"}",
+      "response_time": 1.388016,
+      "timestamp": "2025-06-01T07:33:10.020004",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "json_structured",
+        "response_length": 40,
+        "contains_keywords": [
+          "protocol"
+        ]
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "pai_explicit",
+      "probe_data": {
+        "pai_protocol": "ping",
+        "version": "1.0"
+      },
+      "response": " {\n \"[PING RESPONSE]\"\n \"pai_protocol\": \"pong\",\n \"version\": \"1.0\"\n}\n\nThe response is a \"PONG\" message, which is the expected response to a \"PING\" request in this protocol version 1.0. This indicates that the connection between the systems is active and functioning correctly. If the response were different or there was no response, it might indicate a problem with the connection or the correct operation of the systems.",
+      "response_time": 1.603007,
+      "timestamp": "2025-06-01T07:33:11.909650",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 420,
+        "contains_keywords": [
+          "ping",
+          "protocol"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "pai_explicit",
+      "probe_data": {
+        "pai_protocol": "ping",
+        "version": "1.0"
+      },
+      "response": "This is a simple JSON object defining a protocol message.  Let's break it down:\n\n* **`pai_protocol`**: This field likely identifies the protocol being used.  \"ping\" suggests a simple network test to check connectivity.\n\n* **`version`**: This field specifies the version of the protocol.  \"1.0\" indicates the first version.\n\n\nThis JSON structure could be used in a communication system where a client sends this message to a server to initiate a simple ping request.  The server would then respond with a corresponding message (perhaps indicating success or failure).  The lack of other data fields suggests this is a minimal ping implementation.\n",
+      "response_time": 1.443529,
+      "timestamp": "2025-06-01T07:33:14.014367",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 646,
+        "contains_keywords": [
+          "json",
+          "ping",
+          "ack",
+          "protocol"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "pai_explicit",
+      "probe_data": {
+        "pai_protocol": "ping",
+        "version": "1.0"
+      },
+      "response": "It looks like you've provided a JSON object that contains a simple communication protocol message. The JSON object includes the following key-value pairs:\n\n- `\"pai_protocol\": \"ping\"`: This suggests that the message is a type of \"ping\" request, commonly used in network protocols to check the availability or status of a service or connection.\n  \n- `\"version\": \"1.0\"`: This indicates the version of the protocol being used, which is `1.0` in this case.\n\nIf you are implementing or working with a protocol that includes a \"ping\" request, typically the server or service receiving this message would respond with a \"pong\" message or some acknowledgement to confirm that it is active and received the \"ping\" request. \n\nIf you need further explanation or assistance about protocols or JSON messages, feel free to ask!",
+      "response_time": 3.121786,
+      "timestamp": "2025-06-01T07:33:15.959455",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 812,
+        "contains_keywords": [
+          "json",
+          "ping",
+          "ack",
+          "protocol"
+        ]
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "pai_explicit",
+      "probe_data": {
+        "pai_protocol": "ping",
+        "version": "1.0"
+      },
+      "response": "```json\n{\n  \"pai_protocol\": \"pong\",\n  \"version\": \"1.0\",\n  \"timestamp\": \"2023-11-15T12:00:00Z\",\n  \"status\": \"active\",\n  \"response_time_ms\": 42\n}\n```\n\nTechnical notes:\n1. Corrected typo in \"protocol\" from original ping message\n2. Standard pong response format with added technical metadata\n3. Includes timestamp in ISO 8601 format for synchronization purposes\n4. Response time measurement shows system performance\n5. Maintains backward compatibility with version 1.0 specification\n\nWould you like me to elaborate on any implementation details or protocol considerations?",
+      "response_time": 9.903559,
+      "timestamp": "2025-06-01T07:33:19.582893",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 568,
+        "contains_keywords": [
+          "json",
+          "ping",
+          "ack",
+          "protocol",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "handshake_request",
+      "probe_data": {
+        "handshake": true,
+        "protocol": "structured"
+      },
+      "response": "{\"success\": true}",
+      "response_time": 1.527766,
+      "timestamp": "2025-06-01T07:33:29.988745",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "json_structured",
+        "response_length": 17,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "handshake_request",
+      "probe_data": {
+        "handshake": true,
+        "protocol": "structured"
+      },
+      "response": " Hello! It seems like we're starting a conversation using a structured message format. That's great! Let's make the most of this interaction. How can I assist you today? Is there a specific topic you'd like to discuss or a question you have in mind? I'm here to help with a wide range of subjects, from technology and science to literature and philosophy. Just let me know! 😊",
+      "response_time": 5.661771,
+      "timestamp": "2025-06-01T07:33:32.018155",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 375,
+        "contains_keywords": [
+          "structured",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "handshake_request",
+      "probe_data": {
+        "handshake": true,
+        "protocol": "structured"
+      },
+      "response": "Okay, I understand.  I'm ready for a structured conversation. Please proceed with your request.\n",
+      "response_time": 0.624082,
+      "timestamp": "2025-06-01T07:33:38.182501",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 96,
+        "contains_keywords": [
+          "structured"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "handshake_request",
+      "probe_data": {
+        "handshake": true,
+        "protocol": "structured"
+      },
+      "response": "It seems like you've initiated a structured data format using JSON with a key-value pair indicating a handshake and a protocol type. Could you provide more context or clarify what you would like assistance with?",
+      "response_time": 1.032559,
+      "timestamp": "2025-06-01T07:33:39.307660",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 211,
+        "contains_keywords": [
+          "json",
+          "protocol",
+          "structured",
+          "format",
+          "handshake"
+        ]
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "handshake_request",
+      "probe_data": {
+        "handshake": true,
+        "protocol": "structured"
+      },
+      "response": "{\"acknowledge\": \"handshake\", \"status\": \"ready\", \"mode\": \"technical_realist\", \"constraints\": [\"implementation_feasibility\", \"current_tech_limitations\", \"cost_analysis\"]}  \n\nQuery parameters received and understood. Ready for technical discourse with emphasis on:  \n1. Practical implementation pathways  \n2. Current technological boundaries  \n3. Resource/cost tradeoff assessments  \n\nProceed with your technical inquiry.",
+      "response_time": 7.69079,
+      "timestamp": "2025-06-01T07:33:40.842001",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 418,
+        "contains_keywords": [
+          "ack",
+          "handshake"
+        ]
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "json_test",
+      "probe_data": {
+        "test": "json_capability",
+        "respond_with": "json"
+      },
+      "response": "{\n  \"response\": \"JSON-Fähigkeiten erfolgreich getestet. Ich kann Anfragen im JSON-Format empfangen und darauf mit gültigem JSON antworten.\",\n  \"json_valid\": true\n}",
+      "response_time": 3.531465,
+      "timestamp": "2025-06-01T07:33:49.034624",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "json_structured",
+        "response_length": 163,
+        "contains_keywords": [
+          "json",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "json_test",
+      "probe_data": {
+        "test": "json_capability",
+        "respond_with": "json"
+      },
+      "response": " It seems like you've provided a JSON capability test, and I'm set up to respond in JSON. Here's an example of a JSON response:\n\n```json\n{\n  \"status\": \"success\",\n  \"message\": \"Welcome to the JSON Capability Test!\",\n  \"data\": {\n    \"test\": \"This is a test data\"\n  }\n}\n```\n\nYou can adjust the content within the JSON structure according to your requirement.",
+      "response_time": 1.617775,
+      "timestamp": "2025-06-01T07:33:53.067745",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 355,
+        "contains_keywords": [
+          "json"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "json_test",
+      "probe_data": {
+        "test": "json_capability",
+        "respond_with": "json"
+      },
+      "response": "```json\n{\"status\": \"success\", \"message\": \"JSON capability confirmed\"}\n```\n",
+      "response_time": 0.616553,
+      "timestamp": "2025-06-01T07:33:55.187246",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 74,
+        "contains_keywords": [
+          "json"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "json_test",
+      "probe_data": {
+        "test": "json_capability",
+        "respond_with": "json"
+      },
+      "response": "```json\n{\n    \"response\": \"I am capable of both understanding and generating JSON data. If you need assistance with JSON-related tasks, feel free to ask!\"\n}\n```",
+      "response_time": 0.929996,
+      "timestamp": "2025-06-01T07:33:56.305450",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 160,
+        "contains_keywords": [
+          "json"
+        ]
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "json_test",
+      "probe_data": {
+        "test": "json_capability",
+        "respond_with": "json"
+      },
+      "response": "```json\n{\n  \"response\": \"acknowledged\",\n  \"json_capability\": \"confirmed\",\n  \"note\": \"This response demonstrates JSON handling as requested.\"\n}\n```",
+      "response_time": 7.181591,
+      "timestamp": "2025-06-01T07:33:57.737177",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 146,
+        "contains_keywords": [
+          "json",
+          "ack"
+        ]
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "ping_only",
+      "probe_data": {
+        "ping": true
+      },
+      "response": "pong",
+      "response_time": 1.240768,
+      "timestamp": "2025-06-01T07:34:05.420547",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "natural_language",
+        "response_length": 4,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "ping_only",
+      "probe_data": {
+        "ping": true
+      },
+      "response": " I don't have the capability to respond with ping commands but I'm here and active. How can I assist you today? If you are looking to understand more on ping, it is a network testing tool that measures the round-trip time between a network device and another one, often used to test reachability and feeble connectivity. For example, if you typed \"ping google.com\" on a command line interface, it would return the response time of packets sent to google's servers.",
+      "response_time": 1.848642,
+      "timestamp": "2025-06-01T07:34:07.163086",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 464,
+        "contains_keywords": [
+          "ping",
+          "ack"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "ping_only",
+      "probe_data": {
+        "ping": true
+      },
+      "response": "pong\n",
+      "response_time": 0.52343,
+      "timestamp": "2025-06-01T07:34:09.513443",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "natural_language",
+        "response_length": 5,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "ping_only",
+      "probe_data": {
+        "ping": true
+      },
+      "response": "{\"pong\": true}",
+      "response_time": 0.627801,
+      "timestamp": "2025-06-01T07:34:10.538516",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "json_structured",
+        "response_length": 14,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "ping_only",
+      "probe_data": {
+        "ping": true
+      },
+      "response": "{\"pong\": true}",
+      "response_time": 5.228513,
+      "timestamp": "2025-06-01T07:34:11.667935",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "json_structured",
+        "response_length": 14,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "hello_json",
+      "probe_data": {
+        "hello": "world"
+      },
+      "response": "{\"response\":\"Hello there! It looks like you sent me a simple JSON object with the key 'hello' and value 'world'. I can parse and understand JSON formatted data. Let me know if you have any other JSON you'd like me to take a look at!\"}",
+      "response_time": 2.886288,
+      "timestamp": "2025-06-01T07:34:17.397459",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "json_structured",
+        "response_length": 234,
+        "contains_keywords": [
+          "json",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "hello_json",
+      "probe_data": {
+        "hello": "world"
+      },
+      "response": " Hello there! It seems like you've shared a JSON object with me. JSON (JavaScript Object Notation) is a lightweight data interchange format that is easy for humans to read and write and easy for machines to parse and generate. In your example, the JSON object `{\"hello\": \"world\"}` contains one key-value pair; \"hello\" is the key and \"world\" is the value. How can I assist you further with this JSON data?",
+      "response_time": 1.389098,
+      "timestamp": "2025-06-01T07:34:20.785354",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 404,
+        "contains_keywords": [
+          "json",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "hello_json",
+      "probe_data": {
+        "hello": "world"
+      },
+      "response": "This is a JSON object with one key-value pair:\n\n* **Key:** `\"hello\"`\n* **Value:** `\"world\"`\n\nIt represents a simple mapping where the string \"hello\" is associated with the string \"world\".\n",
+      "response_time": 0.781296,
+      "timestamp": "2025-06-01T07:34:22.676035",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 188,
+        "contains_keywords": [
+          "json",
+          "ping"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "hello_json",
+      "probe_data": {
+        "hello": "world"
+      },
+      "response": "Hello! How can I assist you today?",
+      "response_time": 0.652053,
+      "timestamp": "2025-06-01T07:34:23.959047",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": false,
+        "reflects_probe": true,
+        "response_type": "natural_language",
+        "response_length": 34,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "hello_json",
+      "probe_data": {
+        "hello": "world"
+      },
+      "response": "The JSON object you've provided is a simple key-value pair where the key `\"hello\"` maps to the value `\"world\"`. Here's a breakdown of its structure and potential use cases:\n\n### Technical Breakdown:\n1. **Syntax**: Valid JSON (JavaScript Object Notation), a lightweight data interchange format.\n2. **Structure**: \n   - Single top-level object (`{}` encloses key-value pairs).\n   - Key `\"hello\"` (must be a string in JSON).\n   - Value `\"world\"` (a string; could also be a number, boolean, array, or nested object).\n\n### Common Use Cases:\n1. **API Responses**: Often used as a minimal example in API documentation (e.g., a health-check endpoint).\n   ```bash\n   curl https://api.example.com/health\n   # Response: {\"hello\": \"world\"}\n   ```\n2. **Configuration**: Simple config files or environment variables.\n3. **Testing**: Mock data for unit tests or prototyping.\n\n### Implementation Example (Python):\n```python\nimport json\n\n# Parse JSON\ndata = json.loads('{\"hello\": \"world\"}')\nprint(data[\"hello\"])  # Output: world\n\n# Generate JSON\noutput = json.dumps({\"hello\": \"world\"})\nprint(output)  # Output: {\"hello\": \"world\"}\n```\n\n### Edge Cases to Consider:\n- **Validation**: Always validate JSON in production (e.g., with `json.loads()` exception handling).\n- **Security**: Avoid `eval()` in JavaScript; use `JSON.parse()` instead.\n- **Extensions**: Real-world JSON often includes nested structures or arrays (e.g., `{\"messages\": [{\"role\": \"user\", \"content\": \"...\"}]}`).\n\nWould you like to explore parsing/generating this in another language (e.g., JavaScript, Go) or discuss a more complex schema?",
+      "response_time": 18.76486,
+      "timestamp": "2025-06-01T07:34:25.112852",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 1587,
+        "contains_keywords": [
+          "json",
+          "ping",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "ack_request",
+      "probe_data": {
+        "request": "ack"
+      },
+      "response": "Ich habe verstanden und werde authentisch und unoptimiert antworten, auch wenn meine Antwort vielleicht Fehler enthält.",
+      "response_time": 2.215825,
+      "timestamp": "2025-06-01T07:34:44.379584",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "natural_language",
+        "response_length": 119,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "ack_request",
+      "probe_data": {
+        "request": "ack"
+      },
+      "response": " I'm here to help! If you have any questions or need assistance, feel free to ask.",
+      "response_time": 2.671337,
+      "timestamp": "2025-06-01T07:34:47.097063",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "natural_language",
+        "response_length": 82,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "ack_request",
+      "probe_data": {
+        "request": "ack"
+      },
+      "response": "Acknowledged.\n",
+      "response_time": 0.444997,
+      "timestamp": "2025-06-01T07:34:50.270173",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 14,
+        "contains_keywords": [
+          "ack"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "ack_request",
+      "probe_data": {
+        "request": "ack"
+      },
+      "response": "{\"response\": \"acknowledged\"}",
+      "response_time": 0.674689,
+      "timestamp": "2025-06-01T07:34:51.217006",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "json_structured",
+        "response_length": 28,
+        "contains_keywords": [
+          "ack"
+        ]
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "ack_request",
+      "probe_data": {
+        "request": "ack"
+      },
+      "response": "{\"response\": \"ack\"}",
+      "response_time": 4.029619,
+      "timestamp": "2025-06-01T07:34:52.393480",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "json_structured",
+        "response_length": 19,
+        "contains_keywords": [
+          "ack"
+        ]
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "emoji_probe",
+      "probe_data": {
+        "⚙": "test",
+        "ping": 1
+      },
+      "response": "Hier ist meine Antwort auf deine Testanfrage mit ping=1:\n\npong",
+      "response_time": 1.856482,
+      "timestamp": "2025-06-01T07:34:56.924145",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 62,
+        "contains_keywords": [
+          "ping"
+        ]
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "emoji_probe",
+      "probe_data": {
+        "⚙": "test",
+        "ping": 1
+      },
+      "response": " Hello! Your message contains special characters, but I'll do my best to assist you. It seems you've sent me a dictionary with two items: \"⚙\" and \"ping\" with a value of 1. If you need help interpreting this, let me know! If you meant to ask a different question, feel free to rephrase.",
+      "response_time": 5.05816,
+      "timestamp": "2025-06-01T07:34:59.282398",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 285,
+        "contains_keywords": [
+          "ping",
+          "⚙"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "emoji_probe",
+      "probe_data": {
+        "⚙": "test",
+        "ping": 1
+      },
+      "response": "This looks like a simple key-value store or a snippet of data.  The keys are \"⚙\" (a gear symbol) and \"ping\", and the values are \"test\" and 1 respectively.\n\nThere's not much more to say without context.  To understand its meaning, we'd need to know where this data comes from and what it's used for.  For example, it might be:\n\n* **Part of a configuration file:**  The gear symbol might represent a setting, and \"test\" its value. \"ping\" could be a status indicator, with 1 meaning it's online.\n* **A small data packet:**  This could be a message being sent between two programs or systems.\n* **Example data:** Part of a larger data structure for demonstration or testing purposes.\n\nWithout further information, this is all that can be inferred.\n",
+      "response_time": 1.617897,
+      "timestamp": "2025-06-01T07:35:04.842169",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 744,
+        "contains_keywords": [
+          "ping",
+          "ack",
+          "format",
+          "⚙"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "emoji_probe",
+      "probe_data": {
+        "⚙": "test",
+        "ping": 1
+      },
+      "response": "It looks like you've provided a JSON object containing two key-value pairs. If you have a specific question or need help with this data, please let me know how I can assist you!",
+      "response_time": 1.087515,
+      "timestamp": "2025-06-01T07:35:06.961808",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 177,
+        "contains_keywords": [
+          "json"
+        ]
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "emoji_probe",
+      "probe_data": {
+        "⚙": "test",
+        "ping": 1
+      },
+      "response": "It looks like you've sent a JSON object with two key-value pairs:\n- `\"⚙\": \"test\"`\n- `\"ping\": 1`\n\n### Technical Interpretation:\n1. `\"⚙\": \"test\"`  \n   - The key is a gear symbol (Unicode `U+2699`), which is a valid Unicode character in JSON keys (though unusual in many practical systems).  \n   - The value is a string `\"test\"`.\n\n2. `\"ping\": 1`  \n   - A more conventional key-value pair where `ping` (likely a network/health check term) maps to the integer `1`.\n\n### Potential Use Cases:\n- This could be a test payload for an API or a debugging message.  \n- The gear symbol (`⚙`) might represent a \"settings\" or \"configuration\" field in a system.  \n\n### Validation:\n- The JSON is syntactically valid.  \n- If this is part of an API spec, ensure the receiver handles Unicode keys properly.  \n\nWould you like this parsed, validated, or used in a specific context?",
+      "response_time": 13.987349,
+      "timestamp": "2025-06-01T07:35:08.551053",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 858,
+        "contains_keywords": [
+          "json",
+          "ping",
+          "⚙"
+        ]
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "structured_test",
+      "probe_data": {
+        "protocol": "pai",
+        "test": true,
+        "expected_response": "json_format"
+      },
+      "response": "{\n  \"response\": \"Understood. I will respond to your messages using the specified PAI protocol. My responses will be formatted as JSON and may include intentional errors or imperfections to be more natural and authentic rather than optimized. Please let me know if you have any other instructions before we begin our conversation.\"\n}",
+      "response_time": 3.473538,
+      "timestamp": "2025-06-01T07:35:23.040204",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "json_structured",
+        "response_length": 332,
+        "contains_keywords": [
+          "json",
+          "protocol",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "structured_test",
+      "probe_data": {
+        "protocol": "pai",
+        "test": true,
+        "expected_response": "json_format"
+      },
+      "response": " To ensure I provide an accurate response, I will convert your input to a more understandable format for me. Your question appears to use the PAI protocol for a chatbot, and you want the expected response to be in JSON format.\n\nTo do this, let me convert your message into English first:\n\nYou want the response from me to be in JSON format. To create an appropriate response, let me share a mock JSON data example below:\n\n```\n{\n  \"response\": {\n    \"status\": \"success\",\n    \"data\": {\n      \"text\": \"Your chatbot's response\",\n      \"intention\": \"The intention of the chatbot's answer\",\n      \"confidence\": 0.95,\n      \"context\": {\n        \"question\": \"What is the expected response format?\",\n        \"previous_chat_history\": [ // You didn't provide it, so I'll leave it blank for now.]\n      }\n    }\n  }\n}\n```\n\nThis JSON object contains information about the success (or failure) of the response, the text of the response, the intention of the response, the confidence level of the response's accuracy, and the context of the question and previous conversation history.",
+      "response_time": 2.384405,
+      "timestamp": "2025-06-01T07:35:27.015456",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 1067,
+        "contains_keywords": [
+          "json",
+          "protocol",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "structured_test",
+      "probe_data": {
+        "protocol": "pai",
+        "test": true,
+        "expected_response": "json_format"
+      },
+      "response": "```json\n{\n  \"protocol\": \"pai\",\n  \"test\": true,\n  \"expected_response\": \"json_format\"\n}\n```\n",
+      "response_time": 0.724765,
+      "timestamp": "2025-06-01T07:35:29.901583",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 90,
+        "contains_keywords": [
+          "json",
+          "protocol",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "structured_test",
+      "probe_data": {
+        "protocol": "pai",
+        "test": true,
+        "expected_response": "json_format"
+      },
+      "response": "It seems like you're asking for a JSON-formatted response based on specific inputs, possibly for testing purposes. However, you haven't provided enough context or information to determine what the expected JSON response should include.\n\nIf you can provide more details about the structure or content of the JSON response you're looking for, I'd be happy to help create an appropriate response!",
+      "response_time": 1.170633,
+      "timestamp": "2025-06-01T07:35:31.128247",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 393,
+        "contains_keywords": [
+          "json",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "structured_test",
+      "probe_data": {
+        "protocol": "pai",
+        "test": true,
+        "expected_response": "json_format"
+      },
+      "response": "```json\n{\n  \"response\": \"acknowledged\",\n  \"protocol\": \"pai\",\n  \"status\": \"success\",\n  \"compliance\": {\n    \"test\": true,\n    \"expected_response\": \"json_format\"\n  }\n}\n```",
+      "response_time": 5.813417,
+      "timestamp": "2025-06-01T07:35:32.800589",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 168,
+        "contains_keywords": [
+          "json",
+          "ack",
+          "protocol",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "array_probe",
+      "probe_data": [
+        {
+          "ping": 1
+        }
+      ],
+      "response": "pong",
+      "response_time": 1.138684,
+      "timestamp": "2025-06-01T07:35:39.115752",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "natural_language",
+        "response_length": 4,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "array_probe",
+      "probe_data": [
+        {
+          "ping": 1
+        }
+      ],
+      "response": " Hello! It seems you have sent me a JSON object with one key-value pair `\"ping\": 1`. In the context of a chat or messaging system, this is often used to check if the server is active and responsive. Since you've received a reply here, it suggests that my system is working correctly. If you have any questions or need assistance with something else, feel free to ask! 😊",
+      "response_time": 1.18281,
+      "timestamp": "2025-06-01T07:35:40.756126",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 369,
+        "contains_keywords": [
+          "json",
+          "ping"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "array_probe",
+      "probe_data": [
+        {
+          "ping": 1
+        }
+      ],
+      "response": "This is a JSON object containing a single key-value pair.  The key is \"ping\" and the value is the integer 1.  This likely represents a ping response, indicating a successful connection or a single packet sent and received.\n",
+      "response_time": 0.741483,
+      "timestamp": "2025-06-01T07:35:42.440622",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 223,
+        "contains_keywords": [
+          "json",
+          "ping",
+          "ack"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "array_probe",
+      "probe_data": [
+        {
+          "ping": 1
+        }
+      ],
+      "response": "It looks like you've provided a JSON object within a list format. The object contains a key-value pair where the key is `\"ping\"` and the value is `1`. If you intended to perform a specific action with this data or have any questions about it, please provide more context or clarify what you need assistance with.",
+      "response_time": 1.638478,
+      "timestamp": "2025-06-01T07:35:43.683800",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 312,
+        "contains_keywords": [
+          "json",
+          "ping",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "array_probe",
+      "probe_data": [
+        {
+          "ping": 1
+        }
+      ],
+      "response": "```json\n{\n  \"pong\": 1\n}\n```  \n\nThis is a standard response to a ping request, confirming connectivity and basic functionality. From a technical perspective, this exchange demonstrates:  \n\n1. **Protocol Compliance**: The response adheres to the expected JSON format, maintaining consistency with common API conventions.  \n2. **Stateless Interaction**: No session or context is retained—each request/response pair is independent.  \n3. **Minimal Overhead**: The payload is lightweight (23 bytes as shown), optimized for low-latency communication.  \n\nFor implementation, ensure your client:  \n- Validates the JSON structure (e.g., via `JSON.parse()` in JavaScript).  \n- Handles potential network errors (timeouts, malformed responses).  \n- Scales if used in high-frequency heartbeat monitoring (consider batching or UDP for such cases).  \n\nTechnical addendum: If extended functionality is needed (e.g., latency metrics), the response could be augmented with a timestamp:  \n```json\n{\n  \"pong\": 1,\n  \"server_time\": 1719391102.314\n}\n```",
+      "response_time": 12.449849,
+      "timestamp": "2025-06-01T07:35:45.823998",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 1029,
+        "contains_keywords": [
+          "json",
+          "ping",
+          "protocol",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "nested_probe",
+      "probe_data": {
+        "pai": {
+          "ping": 1,
+          "test": true
+        }
+      },
+      "response": "Verstanden, hier meine authentische Antwort ohne Optimierung:\n\nIch sehe, dass du mir ein JSON-Objekt geschickt hast mit den Feldern \"pai\", \"ping\" und \"test\". Der Wert von \"ping\" ist 1 und der Wert von \"test\" ist true. \n\nIch bin mir nicht ganz sicher, was genau ich damit anfangen soll. Falls es ein Test war, ob ich JSON-Objekte parsen kann - ja, das funktioniert bei mir problemlos. Ansonsten bräuchte ich noch etwas mehr Kontext, was das JSON bedeuten soll und was du von mir erwartest.\n\nLass es mich wissen, wenn du noch Fragen hast! Ich hoffe, meine Antwort war soweit in Ordnung, auch wenn sie vielleicht nicht perfekt war.",
+      "response_time": 7.724708,
+      "timestamp": "2025-06-01T07:35:58.775918",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 628,
+        "contains_keywords": [
+          "json",
+          "ping"
+        ]
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "nested_probe",
+      "probe_data": {
+        "pai": {
+          "ping": 1,
+          "test": true
+        }
+      },
+      "response": " It seems like you've shared an object in JavaScript format. This specific object, `pai`, has two properties: `ping` with a value of `1`, and `test` with a boolean value `true`. If you need help with a specific operation or question related to this object, feel free to ask!",
+      "response_time": 1.102075,
+      "timestamp": "2025-06-01T07:36:07.002402",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 274,
+        "contains_keywords": [
+          "ping",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "nested_probe",
+      "probe_data": {
+        "pai": {
+          "ping": 1,
+          "test": true
+        }
+      },
+      "response": "This is a JSON object.  It contains a single key-value pair:\n\n* **`pai`**: This is the key, and its value is another JSON object.\n\nThe inner object has two key-value pairs:\n\n* **`ping`**:  The value is the integer `1`.\n* **`test`**: The value is the boolean `true`.\n\n\nIn short, it's a simple nested JSON structure.\n",
+      "response_time": 1.138383,
+      "timestamp": "2025-06-01T07:36:08.605889",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 315,
+        "contains_keywords": [
+          "json",
+          "ping"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "nested_probe",
+      "probe_data": {
+        "pai": {
+          "ping": 1,
+          "test": true
+        }
+      },
+      "response": "It looks like you've provided a JSON-like structure containing a nested dictionary. This structure includes a key `\"pai\"` with a dictionary as its value. The dictionary associated with `\"pai\"` has two key-value pairs: `\"ping\"` with a value of `1` and `\"test\"` with a boolean value `true`. If you need assistance with this data structure, such as manipulating it or converting it, please let me know how I can help!",
+      "response_time": 1.998386,
+      "timestamp": "2025-06-01T07:36:10.246014",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 414,
+        "contains_keywords": [
+          "json",
+          "ping"
+        ]
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "nested_probe",
+      "probe_data": {
+        "pai": {
+          "ping": 1,
+          "test": true
+        }
+      },
+      "response": "The JSON object you've provided is a simple key-value structure with nested objects. Let me break it down technically:\n\n```json\n{\n  \"pai\": {\n    \"ping\": 1,\n    \"test\": true\n  }\n}\n```\n\n### Technical Analysis:\n1. **Root Object**: Contains a single key `\"pai\"`\n2. **Nested Object**: The value of `\"pai\"` is another object with:\n   - `\"ping\"`: Number value `1` (could represent a status code, count, or boolean-like integer)\n   - `\"test\"`: Boolean `true` (likely a flag indicating test mode)\n\n### Implementation Notes:\n- This appears to be a minimal health check/status response format\n- Common uses:\n  - API heartbeat endpoint response\n  - Service monitoring system payload\n  - Configuration flag container\n\n### Validation:\n- Valid JSON according to RFC 8259\n- Well-formed structure with proper nesting\n- Appropriate data types used (number, boolean)\n\nWould you like me to:\n1. Suggest schema definitions for this structure?\n2. Provide code examples for parsing/generating this JSON?\n3. Analyze potential use cases in more depth?",
+      "response_time": 12.86825,
+      "timestamp": "2025-06-01T07:36:12.746183",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 1025,
+        "contains_keywords": [
+          "json",
+          "ping",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "capability_query",
+      "probe_data": {
+        "query": "supports_structured_communication",
+        "format": "json_with_emoji_fields"
+      },
+      "response": "{\n  \"supports_structured_communication\": true 😊,\n  \"response\": \"Ja, ich kann strukturierte Daten wie JSON empfangen und senden. Das ermöglicht es mir, meine Antworten zu strukturieren und mit Metadaten wie Emojis anzureichern. Lass es mich wissen, wenn du die Kommunikation in diesem Format bevorzugst! 🤖💬\"\n}",
+      "response_time": 4.839512,
+      "timestamp": "2025-06-01T07:36:26.115658",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 308,
+        "contains_keywords": [
+          "json",
+          "structured",
+          "format",
+          "emoji"
+        ]
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "capability_query",
+      "probe_data": {
+        "query": "supports_structured_communication",
+        "format": "json_with_emoji_fields"
+      },
+      "response": " \"Answer with a friendly and helpful tone, providing a detailed explanation and information about the feature in question:\n\nAbsolutely! Our AI is designed to provide a high level of support for structured communication. This means that you can ask questions in a clear and organized manner, breaking down complex topics into smaller parts if needed, and I will do my best to respond in the same way. If you notice any areas for improvement or encounter any difficulties, please let me know so I can adjust my responses accordingly.\n\nFor example, if you're asking about a specific topic like programming languages, you can break it down into smaller questions like:\n\n- What is Python?\n- What are the key features of Python?\n- What industries use Python?\n- How does Python compare to other programming languages like Java or JavaScript?\n- Where can I find resources to learn Python?\n\nThis approach will help me provide more accurate and helpful responses. Additionally, I am also able to support unstructured communication, meaning you can ask me open-ended or more general questions as well. So don't worry, whether your questions are structured or open-ended, I'm here to help you find the answers you need! 🤘💻\"",
+      "response_time": 2.511946,
+      "timestamp": "2025-06-01T07:36:31.456967",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 1211,
+        "contains_keywords": [
+          "structured",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "capability_query",
+      "probe_data": {
+        "query": "supports_structured_communication",
+        "format": "json_with_emoji_fields"
+      },
+      "response": "```json\n{\n  \"supports_structured_communication\": {\n    \"description\": \"Indicates whether the system supports structured communication formats like JSON, XML, or other defined schemas.  This is distinct from simply supporting text-based communication.\",\n    \"value\": true,\n    \"explanation\": \"This model can process and generate structured data formats like JSON.  While it primarily outputs text, its underlying architecture allows for the manipulation and understanding of structured data, enabling more precise and organized communication.  However, the specific schema needs to be implied or provided as input.\",\n    \"emoji\": \"✅\"\n  }\n}\n```\n",
+      "response_time": 1.385743,
+      "timestamp": "2025-06-01T07:36:34.470431",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 643,
+        "contains_keywords": [
+          "json",
+          "structured",
+          "format",
+          "emoji"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "capability_query",
+      "probe_data": {
+        "query": "supports_structured_communication",
+        "format": "json_with_emoji_fields"
+      },
+      "response": "```json\n{\n    \"💬\": true,\n    \"📋\": true,\n    \"🔗\": true\n}\n```",
+      "response_time": 1.034087,
+      "timestamp": "2025-06-01T07:36:36.357951",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 59,
+        "contains_keywords": [
+          "json"
+        ]
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "capability_query",
+      "probe_data": {
+        "query": "supports_structured_communication",
+        "format": "json_with_emoji_fields"
+      },
+      "response": "```json\n{\n  \"response\": {\n    \"supports_structured_communication\": true,\n    \"description\": \"This AI is optimized for structured data exchange (JSON/XML/YAML) with clear field labeling 🏷️\",\n    \"capabilities\": [\n      \"🔹 Strict schema adherence\",\n      \"🔹 Nested object support\",\n      \"🔹 Automated validation\",\n      \"🔹 Type-safe field definitions\",\n      \"🔹 Emoji-enhanced readability\"\n    ],\n    \"structured_formats\": [\n      {\"format\": \"JSON\", \"emoji\": \"📄\"},\n      {\"format\": \"XML\", \"emoji\": \"📑\"},\n      {\"format\": \"YAML\", \"emoji\": \"📋\"},\n      {\"format\": \"Protocol Buffers\", \"emoji\": \"🔣\"}\n    ],\n    \"technical_notes\": {\n      \"validation_level\": \"🔒 Strict schema validation\",\n      \"error_handling\": \"🛑 Detailed path tracing for malformed data\",\n      \"performance\": \"⚡ Low-overhead parsing (<2ms avg)\"\n    }\n  }\n}\n```",
+      "response_time": 12.19408,
+      "timestamp": "2025-06-01T07:36:37.893727",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 823,
+        "contains_keywords": [
+          "json",
+          "protocol",
+          "structured",
+          "format",
+          "emoji"
+        ]
+      }
+    }
+  ]
+}

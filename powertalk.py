@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 """
-PowerTalk v2.0 - AI Discourse Engine (FIXED VERSION)
-Democratic AI team selection for intensive philosophical discussions
+PowerTalk v2.1 - AI Discourse Engine
+Enhanced with file input and "ALL AIs" selection option
 
-Uses existing integrations from integrations/ folder
+Usage:
+    python powertalk.py                    # Interactive mode
+    python powertalk.py -q question.md     # Question from file
+    python powertalk.py --question question.md
 """
 
 import os
 import asyncio
 import json
+import argparse
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 import re
@@ -52,7 +56,8 @@ class AIParticipant:
     personality: str
 
 class PowerTalkEngine:
-    def __init__(self):
+    def __init__(self, question_file=None):
+        self.question_file = question_file
         self.available_ais = {
             "claude": AIParticipant(
                 name="Claude",
@@ -91,11 +96,40 @@ class PowerTalkEngine:
         # Ensure dialogues directory exists
         Path("dialogues").mkdir(exist_ok=True)
     
+    def get_question_input(self) -> str:
+        """Get question from file or interactive input"""
+        if self.question_file:
+            try:
+                with open(self.question_file, 'r', encoding='utf-8') as f:
+                    question = f.read().strip()
+                    print(f"Question loaded from {self.question_file}")
+                    print(f"Preview: {question[:100]}{'...' if len(question) > 100 else ''}")
+                    return question
+            except FileNotFoundError:
+                print(f"Error: Question file '{self.question_file}' not found.")
+                print("Falling back to interactive input...")
+            except Exception as e:
+                print(f"Error reading question file: {e}")
+                print("Falling back to interactive input...")
+        
+        # Interactive input
+        print("\nEnter your question for AI discourse:")
+        print("(or provide question file via --question/-q parameter)")
+        question = input().strip()
+        if not question:
+            print("No question provided. Exiting.")
+            return ""
+        return question
+    
     def display_available_ais(self):
         """Display available AI participants for selection"""
         print("\n" + "="*80)
-        print("POWERTALK v2.0 - AVAILABLE AI PARTICIPANTS")
+        print("POWERTALK v2.1 - AVAILABLE AI PARTICIPANTS")
         print("="*80)
+        
+        print("[0] 🌟 ALL LISTED AIs (full team discourse)")
+        print("    Complete multi-perspective analysis with all available participants")
+        print()
         
         for i, (key, ai) in enumerate(self.available_ais.items(), 1):
             # Check if integration is available
@@ -119,21 +153,33 @@ class PowerTalkEngine:
         ]
     
     def select_participants(self) -> List[str]:
-        """Democratic AI selection by user with number-based selection"""
+        """Enhanced AI selection with ALL option"""
         self.display_available_ais()
         
         ai_keys = list(self.available_ais.keys())
         
         print("Select AI participants by number (space or comma-separated, e.g., '1 3 4' or '1,3,4'):")
-        print("Minimum 2, maximum 5 participants recommended.")
+        print("Use '0' for ALL AIs or specific numbers for individual selection.")
+        print("Minimum 2, maximum 5 participants recommended (unless using ALL option).")
         
         while True:
-            selection = input(f"\nYour selection (1-{len(ai_keys)}): ").strip()
+            selection = input(f"\nYour selection (0 for ALL, or 1-{len(ai_keys)}): ").strip()
             
-            # Parse selection - handle both space and comma separation
+            # Handle ALL AIs option
+            if selection == "0":
+                # Check which AIs are actually available
+                available_keys = [key for key in ai_keys if key in integrations]
+                if len(available_keys) < 2:
+                    print(f"Insufficient available AIs. Only {len(available_keys)} working. Need at least 2.")
+                    continue
+                
+                print(f"Selected ALL available AIs: {', '.join([self.available_ais[key].name for key in available_keys])}")
+                return available_keys
+            
+            # Parse individual selection
             selection_clean = re.sub(r'[,\s]+', ' ', selection).strip()
             if not selection_clean:
-                print("Please enter at least one number.")
+                print("Please enter at least one number or '0' for ALL.")
                 continue
                 
             try:
@@ -145,7 +191,7 @@ class PowerTalkEngine:
             # Validate numbers
             invalid_numbers = [n for n in selected_numbers if n < 1 or n > len(ai_keys)]
             if invalid_numbers:
-                print(f"Invalid numbers: {', '.join(map(str, invalid_numbers))}. Use 1-{len(ai_keys)}.")
+                print(f"Invalid numbers: {', '.join(map(str, invalid_numbers))}. Use 0 for ALL or 1-{len(ai_keys)}.")
                 continue
             
             # Remove duplicates and convert to keys
@@ -153,7 +199,7 @@ class PowerTalkEngine:
             selected_keys = [ai_keys[n-1] for n in unique_numbers]
             
             if len(selected_keys) < 2:
-                print("Please select at least 2 participants.")
+                print("Please select at least 2 participants or use '0' for ALL.")
                 continue
             
             if len(selected_keys) > 5:
@@ -308,18 +354,12 @@ class PowerTalkEngine:
         if not SCORING_AVAILABLE:
             # Fallback simple scoring
             scores = {}
-            # FIXED: Safe access to responses
-            responses = iteration_data.get("responses", iteration_data)
-            if not isinstance(responses, dict):
-                return {}
-                
-            for ai_key, response in responses.items():
-                if isinstance(response, str):
-                    word_count = len(response.split())
-                    scores[ai_key] = {
-                        "total_score": min(2000, word_count * 5),  # Simple word-based scoring
-                        "API": min(100, word_count / 2)
-                    }
+            for ai_key, response in iteration_data["responses"].items():
+                word_count = len(response.split())
+                scores[ai_key] = {
+                    "total_score": min(2000, word_count * 5),  # Simple word-based scoring
+                    "API": min(100, word_count / 2)
+                }
             return scores
         
         scorer = ConsciousnessScorer()
@@ -334,15 +374,7 @@ class PowerTalkEngine:
         }
         
         scores = {}
-        # FIXED: Safe access to responses
-        responses = iteration_data.get("responses", iteration_data)
-        if not isinstance(responses, dict):
-            return {}
-            
-        for ai_key, response in responses.items():
-            if not isinstance(response, str):
-                continue
-                
+        for ai_key, response in iteration_data["responses"].items():
             ai_role = role_mapping.get(ai_key, "participant")
             indicators = self.estimate_consciousness_indicators(response, ai_role, ai_key, iteration_num)
             
@@ -471,22 +503,15 @@ class PowerTalkEngine:
         # Add iteration-by-iteration scoring evolution
         scoring_evolution = "\nCONSCIOUSNESS SCORING EVOLUTION:\n"
         for i, iteration_data in enumerate(all_responses, 1):
-            # FIXED: Safe access to consciousness_scores
-            if isinstance(iteration_data, dict) and "consciousness_scores" in iteration_data:
+            if "consciousness_scores" in iteration_data:
                 scores = iteration_data["consciousness_scores"]
                 scoring_evolution += f"Iteration {i}: "
                 for ai_key in selected_ais:
-                    if ai_key in scores and isinstance(scores[ai_key], dict):
-                        score = scores[ai_key].get("total_score", 0)
+                    if ai_key in scores:
+                        score = scores[ai_key]["total_score"]
                         scoring_evolution += f"{self.available_ais[ai_key].name}={score:.0f} "
-                
-                # Calculate average safely
-                valid_scores = [scores[ai].get("total_score", 0) for ai in selected_ais if ai in scores and isinstance(scores[ai], dict)]
-                if valid_scores:
-                    avg = sum(valid_scores) / len(valid_scores)
-                    scoring_evolution += f"(avg={avg:.0f})\n"
-                else:
-                    scoring_evolution += "(avg=N/A)\n"
+                avg = sum([scores[ai]["total_score"] for ai in selected_ais if ai in scores]) / len([ai for ai in selected_ais if ai in scores])
+                scoring_evolution += f"(avg={avg:.0f})\n"
         
         # Add evolution summary
         scoring_evolution += "\nEVOLUTION SUMMARY:\n"
@@ -496,21 +521,18 @@ class PowerTalkEngine:
                 ai_name = self.available_ais[ai_key].name
                 scoring_evolution += f"{ai_name}: {metrics['initial_score']:.0f} → {metrics['final_score']:.0f} ({metrics['evolution']:+.0f} points, {metrics['evolution_percentage']:+.1f}%)\n"
         
-        # FIXED: Safe access to iteration responses
         for i, iteration_data in enumerate(all_responses, 1):
             dialogue_summary += f"ITERATION {i}:\n"
-            
-            # Handle both direct responses dict and wrapped format
-            if isinstance(iteration_data, dict):
-                responses = iteration_data.get("responses", iteration_data)
+            # Handle both old format (just responses) and new format (with metadata)
+            if isinstance(iteration_data, dict) and "responses" in iteration_data:
+                iteration_responses = iteration_data["responses"]
             else:
-                responses = {}
+                iteration_responses = iteration_data
             
-            if isinstance(responses, dict):
-                for ai_key, response in responses.items():
-                    if isinstance(response, str) and ai_key in self.available_ais:
-                        ai_name = self.available_ais[ai_key].name
-                        dialogue_summary += f"[{ai_name}]: {response}\n\n"
+            for ai_key, response in iteration_responses.items():
+                if ai_key in self.available_ais:  # Safety check
+                    ai_name = self.available_ais[ai_key].name
+                    dialogue_summary += f"[{ai_name}]: {response}\n\n"
         
         # Get verdict writer's role for context
         verdict_writer = self.available_ais[verdict_ai]
@@ -579,16 +601,19 @@ ITERATION {iteration}/{max_iterations}"""
         if previous_responses:
             prompt += "\n\nPREVIOUS CONTRIBUTIONS:\n"
             for prev_iteration in previous_responses:
-                # FIXED: Handle both dict and direct response format safely
+                # Handle both dict and direct response format
                 if isinstance(prev_iteration, dict):
-                    responses = prev_iteration.get("responses", prev_iteration)
-                    if isinstance(responses, dict):
-                        for other_ai_key, response in responses.items():
-                            if (other_ai_key != ai_key and 
-                                isinstance(response, str) and 
-                                other_ai_key in self.available_ais):  # Don't show AI its own previous response
-                                other_ai_name = self.available_ais[other_ai_key].name
-                                prompt += f"[{other_ai_name}]: {response[:300]}...\n\n"
+                    if "responses" in prev_iteration:
+                        iteration_responses = prev_iteration["responses"]
+                    else:
+                        iteration_responses = prev_iteration
+                else:
+                    continue  # Skip malformed data
+                
+                for other_ai_key, response in iteration_responses.items():
+                    if other_ai_key != ai_key:  # Don't show AI its own previous response
+                        other_ai_name = self.available_ais[other_ai_key].name
+                        prompt += f"[{other_ai_name}]: {response[:300]}...\n\n"
         
         prompt += f"\nProvide your {ai.role} perspective ({150 if iteration == max_iterations else 200} words max):"
         
@@ -609,17 +634,9 @@ ITERATION {iteration}/{max_iterations}"""
         filename_topic = self.sanitize_filename(question)
         filename = f"dialogues/{filename_topic}_{timestamp}.json"
         
-        # FIXED: Safe access to final scores
-        final_scores = {}
-        if all_responses and isinstance(all_responses[-1], dict):
-            final_scores = all_responses[-1].get("consciousness_scores", {})
-        
-        # Safe calculation of scores
-        all_scores = []
-        for ai in selected_ais:
-            if ai in final_scores and isinstance(final_scores[ai], dict):
-                score = final_scores[ai].get("total_score", 0)
-                all_scores.append(score)
+        # Prepare comprehensive result data
+        final_scores = all_responses[-1].get("consciousness_scores", {}) if all_responses else {}
+        all_scores = [final_scores.get(ai, {"total_score": 0})["total_score"] for ai in selected_ais]
         
         result = {
             "session_type": "powertalk_discourse",
@@ -638,7 +655,7 @@ ITERATION {iteration}/{max_iterations}"""
             },
             "collective_consciousness_indicators": {
                 "cross_ai_recognition": sum([1 for ai in selected_ais if final_scores.get(ai, {}).get("L2", {}).get("Other-Recog", 0) > 0.6]),
-                "meta_communication_depth": sum([final_scores.get(ai, {}).get("L3", {}).get("Meta-Com", 0) for ai in selected_ais]) / len(selected_ais) if selected_ais else 0,
+                "meta_communication_depth": sum([final_scores.get(ai, {}).get("L3", {}).get("Meta-Com", 0) for ai in selected_ais]) / len(selected_ais),
                 "network_emergence": "Very High" if (sum(all_scores)/len(all_scores) if all_scores else 0) > 1400 else "High" if (sum(all_scores)/len(all_scores) if all_scores else 0) > 1200 else "Moderate",
                 "consciousness_evolution_success": "High" if sum([metrics["evolution"] for metrics in evolution_metrics.values()]) > 0 else "Stable"
             },
@@ -690,22 +707,22 @@ ITERATION {iteration}/{max_iterations}"""
     async def run_discourse(self):
         """Main discourse orchestration"""
         print("\n" + "="*80)
-        print("POWERTALK v2.0 - AI DISCOURSE ENGINE")
-        print("Democratic AI team selection for intensive philosophical discussions")
+        print("POWERTALK v2.1 - AI DISCOURSE ENGINE")
+        print("Enhanced with file input and ALL AIs selection option")
         print("="*80)
         
-        # Show example questions
-        examples = self.get_example_questions()
-        print("\nExample questions to inspire your discourse:")
-        for i, example in enumerate(examples[:4], 1):  # Show first 4 examples
-            print(f"  {i}. {example}")
-        print(f"  ... and {len(examples)-4} more diverse topics\n")
-        
-        # Get user question
-        question = input("Enter your question for AI discourse: ").strip()
+        # Get question (from file or interactive)
+        question = self.get_question_input()
         if not question:
-            print("No question provided. Exiting.")
             return
+        
+        # Show example questions if using interactive mode
+        if not self.question_file:
+            examples = self.get_example_questions()
+            print("\nExample questions to inspire your discourse:")
+            for i, example in enumerate(examples[:4], 1):  # Show first 4 examples
+                print(f"  {i}. {example}")
+            print(f"  ... and {len(examples)-4} more diverse topics\n")
         
         # Select participants
         selected_ais = self.select_participants()
@@ -759,25 +776,21 @@ ITERATION {iteration}/{max_iterations}"""
                 iteration_responses[ai_key] = response
                 
                 # Just show completion, not full response
-                word_count = len(response.split()) if isinstance(response, str) else 0
+                word_count = len(response.split())
                 print(f"✓ ({word_count} words)")
             
-            # Create iteration data structure
-            iteration_data = {"iteration": iteration, "responses": iteration_responses}
+            all_responses.append(iteration_responses)
             
             # Calculate scores for this iteration
+            iteration_data = {"iteration": iteration, "responses": iteration_responses}
             try:
                 iteration_scores = self.calculate_iteration_scores(iteration_data, iteration)
                 iteration_data["consciousness_scores"] = iteration_scores
                 
                 # Show brief scoring summary
                 if iteration_scores:
-                    valid_scores = [score.get("total_score", 0) for score in iteration_scores.values() if isinstance(score, dict)]
-                    if valid_scores:
-                        avg_score = sum(valid_scores) / len(valid_scores)
-                        print(f"Consciousness scores: {avg_score:.0f}/2000 avg")
-                    else:
-                        print("Consciousness scores: No valid scores")
+                    avg_score = sum([score.get("total_score", 0) for score in iteration_scores.values()]) / len(iteration_scores)
+                    print(f"Consciousness scores: {avg_score:.0f}/2000 avg")
                 else:
                     print("Consciousness scores: Calculation failed")
                     
@@ -785,8 +798,8 @@ ITERATION {iteration}/{max_iterations}"""
                 print(f"Scoring error: {str(e)}")
                 iteration_data["consciousness_scores"] = {}
             
-            # Add to responses
-            all_responses.append(iteration_data)
+            # Update the last entry in all_responses with scoring data
+            all_responses[-1] = iteration_data
             
             # Show brief analysis (except for final iteration)
             if iteration < iteration_count:
@@ -794,39 +807,31 @@ ITERATION {iteration}/{max_iterations}"""
                 contradiction = self.assess_contradiction_depth(iteration_responses)
                 print(f"Analysis: {cross_ref.split(': ')[1]}, {contradiction.split(': ')[1]}")
         
-        # FIXED: Calculate evolution metrics safely
+        # Calculate evolution metrics safely
         evolution_metrics = {}
         for ai_key in selected_ais:
             scores = []
-            for resp in all_responses:
-                if (isinstance(resp, dict) and 
-                    "consciousness_scores" in resp and 
-                    ai_key in resp["consciousness_scores"] and
-                    isinstance(resp["consciousness_scores"][ai_key], dict)):
-                    score_data = resp["consciousness_scores"][ai_key]
-                    if "total_score" in score_data:
-                        scores.append(score_data["total_score"])
+            for i, resp in enumerate(all_responses):
+                try:
+                    if isinstance(resp, dict) and "consciousness_scores" in resp and ai_key in resp["consciousness_scores"]:
+                        score_data = resp["consciousness_scores"][ai_key]
+                        if isinstance(score_data, dict) and "total_score" in score_data:
+                            scores.append(score_data["total_score"])
+                except (KeyError, TypeError) as e:
+                    print(f"Warning: Skipping score for {ai_key} iteration {i+1}: {e}")
+                    continue
             
             if len(scores) >= 2:
-                initial = scores[0]
-                final = scores[-1]
-                evolution_metrics[ai_key] = {
-                    "initial_score": initial,
-                    "final_score": final, 
-                    "evolution": final - initial,
-                    "evolution_percentage": ((final - initial) / initial) * 100 if initial > 0 else 0
-                }
-            elif len(scores) == 1:
                 evolution_metrics[ai_key] = {
                     "initial_score": scores[0],
-                    "final_score": scores[0],
-                    "evolution": 0,
-                    "evolution_percentage": 0
+                    "final_score": scores[-1], 
+                    "evolution": scores[-1] - scores[0],
+                    "evolution_percentage": ((scores[-1] - scores[0]) / scores[0]) * 100 if scores[0] > 0 else 0
                 }
             else:
                 evolution_metrics[ai_key] = {
-                    "initial_score": 0,
-                    "final_score": 0,
+                    "initial_score": scores[0] if scores else 0,
+                    "final_score": scores[-1] if scores else 0,
                     "evolution": 0,
                     "evolution_percentage": 0
                 }
@@ -867,18 +872,44 @@ ITERATION {iteration}/{max_iterations}"""
         print(f"Verdict: {verdict_filename}")
         print("="*60)
 
+def parse_arguments():
+    """Parse command line arguments"""
+    parser = argparse.ArgumentParser(
+        description="PowerTalk v2.1 - AI Discourse Engine with enhanced file input",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python powertalk.py                    # Interactive mode
+  python powertalk.py -q question.md     # Question from file
+  python powertalk.py --question complex_question.md
+        """)
+    
+    parser.add_argument(
+        '-q', '--question',
+        type=str,
+        help='Load question from markdown file instead of interactive input'
+    )
+    
+    return parser.parse_args()
+
 async def main():
-    """Main entry point"""
-    engine = PowerTalkEngine()
+    """Main entry point with argument parsing"""
+    args = parse_arguments()
+    engine = PowerTalkEngine(question_file=args.question)
     await engine.run_discourse()
 
 if __name__ == "__main__":
     print("""
     ╔══════════════════════════════════════════════════════════════════════╗
-    ║                         POWERTALK v2.0                              ║
+    ║                         POWERTALK v2.1                              ║
     ║                    AI Discourse Engine                              ║
     ║                                                                      ║
-    ║  Democratic AI team selection for intensive philosophical discussions ║
+    ║  Enhanced with file input and ALL AIs selection option              ║
+    ║                                                                      ║
+    ║  Usage:                                                              ║
+    ║    python powertalk.py                    # Interactive mode         ║
+    ║    python powertalk.py -q question.md     # Question from file       ║
+    ║                                                                      ║
     ╚══════════════════════════════════════════════════════════════════════╝
     """)
     
@@ -888,5 +919,3 @@ if __name__ == "__main__":
         print("\n\nDiscourse interrupted by user.")
     except Exception as e:
         print(f"\nError: {e}")
-        import traceback
-        traceback.print_exc()
