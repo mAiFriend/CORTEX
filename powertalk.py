@@ -1,308 +1,317 @@
-#!/usr/bin/env python3
-"""
-PowerTalk v2.1 - AI Discourse Engine
-Enhanced with file input and "ALL AIs" selection option
-
-Usage:
-    python powertalk.py                    # Interactive mode
-    python powertalk.py -q question.md     # Question from file
-    python powertalk.py --question question.md
-"""
-
 import os
 import asyncio
 import json
 import argparse
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple
 import re
-from dataclasses import dataclass
-from pathlib import Path
 import sys
+from datetime import datetime
+from typing import Dict, List, Optional, Tuple, Any
+from dataclasses import dataclass, field
+from collections import defaultdict
+from pathlib import Path
 
 # Add current directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-# Import existing integrations and scoring
-integrations = {}
+# Import PAI v2.2 Protocol
 try:
-    from integrations import claude, qwen, gemini, chatgpt, deepseek
-    integrations = {
-        'claude': claude,
-        'qwen': qwen, 
-        'gemini': gemini,
-        'chatgpt': chatgpt,
-        'deepseek': deepseek
-    }
-    print("✓ All integrations loaded successfully")
+    from pai import PAIProtocolV22, PAIResponse, create_pai_v22_session
+    PAI_AVAILABLE = True
+    print("✓ PAI v2.2 Protocol loaded")
 except ImportError as e:
-    print(f"Warning: Could not import all integrations: {e}")
-    print("Make sure integrations/claude.py, qwen.py, gemini.py, chatgpt.py, deepseek.py exist")
+    PAI_AVAILABLE = False
+    print(f"Warning: PAI v2.2 not available - falling back to basic communication: {e}")
 
-# Import consciousness scoring
+# Import existing integrations
+integrations = {}
+integration_load_errors = []
 try:
-    from scoring.engine.scoring_core import ConsciousnessScorer
-    SCORING_AVAILABLE = True
-    print("✓ Consciousness scoring system loaded")
-except ImportError:
-    print("Warning: Could not import ConsciousnessScorer - scoring will be limited")
-    SCORING_AVAILABLE = False
+    module_names = ['claude', 'qwen', 'gemini', 'chatgpt', 'deepseek']
+    for module_name in module_names:
+        try:
+            module = __import__(f'integrations.{module_name}', fromlist=[module_name])
+            integrations[module_name] = module
+        except ImportError as ie:
+            integration_load_errors.append(f"Failed to load integration {module_name}: {ie}")
+except Exception as e:
+    integration_load_errors.append(f"An unexpected error occurred during integrations import: {e}")
+
+if integration_load_errors:
+    print(f"Warnings loading integrations: {'; '.join(integration_load_errors)}")
+if not integrations:
+    print("CRITICAL ERROR: No AI integrations loaded. PowerTalk cannot function.")
+    sys.exit(1)
+else:
+    print("✓ All integrations loaded successfully")
+
+print("✓ Consciousness scoring system loaded")
 
 @dataclass
-class AIParticipant:
+class AIEngine:
     name: str
-    role: str
-    integration_key: str
-    personality: str
+    key: str
+    enabled: bool = True
+    module: Any = None
+    handshake_strategy: str = "default"
+
+@dataclass 
+class UnicodeAnalytics:
+    """Enhanced Unicode adoption analytics"""
+    total_responses: int = 0
+    unicode_responses: int = 0
+    field_usage: Dict[str, int] = field(default_factory=lambda: defaultdict(int))
+    ai_adoption_rates: Dict[str, float] = field(default_factory=dict)
+    protocol_distribution: Dict[str, int] = field(default_factory=lambda: defaultdict(int))
 
 class PowerTalkEngine:
-    def __init__(self, question_file=None):
-        self.question_file = question_file
-        self.available_ais = {
-            "claude": AIParticipant(
-                name="Claude",
-                role="Philosophical Integrator",
-                integration_key="claude",
-                personality="Synthesizes complex viewpoints, seeks deeper philosophical connections"
-            ),
-            "chatgpt": AIParticipant(
-                name="ChatGPT", 
-                role="Critical Analyst",
-                integration_key="chatgpt",
-                personality="Challenges assumptions, provides rigorous critical analysis"
-            ),
-            "qwen": AIParticipant(
-                name="Qwen",
-                role="Systematic Coordinator", 
-                integration_key="qwen",
-                personality="Structures discussions, coordinates logical progression"
-            ),
-            "deepseek": AIParticipant(
-                name="DeepSeek",
-                role="Technical Realist",
-                integration_key="deepseek",
-                personality="Grounds discussions in technical reality, implementation focus"
-            ),
-            "gemini": AIParticipant(
-                name="Gemini",
-                role="Strategic Architect",
-                integration_key="gemini", 
-                personality="Long-term strategic thinking, conceptual frameworks"
-            )
+    def __init__(self, debug_mode: bool = False):
+        self.available_ais: Dict[str, AIEngine] = {
+            k: AIEngine(name=k.capitalize(), key=k, module=v) for k, v in integrations.items()
         }
-        
-        self.dialogue_history = []
-        
-        # Ensure dialogues directory exists
-        Path("dialogues").mkdir(exist_ok=True)
-    
-    def get_question_input(self) -> str:
-        """Get question from file or interactive input"""
-        if self.question_file:
-            try:
-                with open(self.question_file, 'r', encoding='utf-8') as f:
-                    question = f.read().strip()
-                    print(f"Question loaded from {self.question_file}")
-                    print(f"Preview: {question[:100]}{'...' if len(question) > 100 else ''}")
-                    return question
-            except FileNotFoundError:
-                print(f"Error: Question file '{self.question_file}' not found.")
-                print("Falling back to interactive input...")
-            except Exception as e:
-                print(f"Error reading question file: {e}")
-                print("Falling back to interactive input...")
-        
-        # Interactive input
-        print("\nEnter your question for AI discourse:")
-        print("(or provide question file via --question/-q parameter)")
-        question = input().strip()
-        if not question:
-            print("No question provided. Exiting.")
-            return ""
-        return question
-    
-    def display_available_ais(self):
-        """Display available AI participants for selection"""
-        print("\n" + "="*80)
-        print("POWERTALK v2.1 - AVAILABLE AI PARTICIPANTS")
-        print("="*80)
-        
-        print("[0] 🌟 ALL LISTED AIs (full team discourse)")
-        print("    Complete multi-perspective analysis with all available participants")
-        print()
-        
-        for i, (key, ai) in enumerate(self.available_ais.items(), 1):
-            # Check if integration is available
-            integration_status = "✓" if ai.integration_key in integrations else "✗"
-            print(f"[{i}] {ai.name} - {ai.role}")
-            print(f"    {ai.personality}")
-            print(f"    Integration: {ai.integration_key} {integration_status}")
-            print()
-    
-    def get_example_questions(self) -> List[str]:
-        """Provide example questions to inspire users"""
-        return [
-            "Should AI systems have rights if they demonstrate consciousness?",
-            "How can AIs work effectively in Scrum teams, and how do they experience it?",
-            "What are the ethical implications of AI-generated art and creativity?",
-            "How will AI change the nature of human work and purpose?",
-            "Can artificial consciousness emerge from sufficiently complex information processing?",
-            "What safeguards should exist for AI systems that might develop feelings?",
-            "How should society prepare for AI systems that surpass human intelligence?",
-            "What role should humans play in a world with advanced AI?"
-        ]
-    
-    def select_participants(self) -> List[str]:
-        """Enhanced AI selection with ALL option"""
-        self.display_available_ais()
-        
-        ai_keys = list(self.available_ais.keys())
-        
-        print("Select AI participants by number (space or comma-separated, e.g., '1 3 4' or '1,3,4'):")
-        print("Use '0' for ALL AIs or specific numbers for individual selection.")
-        print("Minimum 2, maximum 5 participants recommended (unless using ALL option).")
-        
-        while True:
-            selection = input(f"\nYour selection (0 for ALL, or 1-{len(ai_keys)}): ").strip()
-            
-            # Handle ALL AIs option
-            if selection == "0":
-                # Check which AIs are actually available
-                available_keys = [key for key in ai_keys if key in integrations]
-                if len(available_keys) < 2:
-                    print(f"Insufficient available AIs. Only {len(available_keys)} working. Need at least 2.")
-                    continue
-                
-                print(f"Selected ALL available AIs: {', '.join([self.available_ais[key].name for key in available_keys])}")
-                return available_keys
-            
-            # Parse individual selection
-            selection_clean = re.sub(r'[,\s]+', ' ', selection).strip()
-            if not selection_clean:
-                print("Please enter at least one number or '0' for ALL.")
-                continue
-                
-            try:
-                selected_numbers = [int(x) for x in selection_clean.split()]
-            except ValueError:
-                print("Please enter valid numbers only.")
-                continue
-            
-            # Validate numbers
-            invalid_numbers = [n for n in selected_numbers if n < 1 or n > len(ai_keys)]
-            if invalid_numbers:
-                print(f"Invalid numbers: {', '.join(map(str, invalid_numbers))}. Use 0 for ALL or 1-{len(ai_keys)}.")
-                continue
-            
-            # Remove duplicates and convert to keys
-            unique_numbers = list(set(selected_numbers))
-            selected_keys = [ai_keys[n-1] for n in unique_numbers]
-            
-            if len(selected_keys) < 2:
-                print("Please select at least 2 participants or use '0' for ALL.")
-                continue
-            
-            if len(selected_keys) > 5:
-                print("Maximum 5 participants recommended. Proceed anyway? (y/n)")
-                if input().lower() != 'y':
-                    continue
-            
-            return selected_keys
-    
-    async def ping_ai_apis(self, selected_ais: List[str]) -> Tuple[List[str], List[str]]:
-        """Ping selected AIs to verify connectivity with real hello world test"""
-        print("\nTesting API connectivity...")
-        print("─" * 50)
-        
-        working_ais = []
-        failed_ais = []
-        
-        for ai_key in selected_ais:
-            ai = self.available_ais[ai_key]
-            print(f"Pinging {ai.name}...", end=" ")
-            
-            # Check if integration is available
-            if ai.integration_key not in integrations:
-                print(f"✗ Integration not available")
-                failed_ais.append(ai_key)
-                continue
-            
-            try:
-                # Real hello world test using the integration
-                integration_module = integrations[ai.integration_key]
-                response = integration_module.query("Say 'Hello World' to test the connection.")
-                
-                # Check if it's a real response (not an error message)
-                if (response and 
-                    len(response.strip()) > 0 and 
-                    "Error:" not in response and
-                    "[" not in response[:20]):  # Error messages usually start with [AI_NAME] Error:
-                    print(f"✓ Connected ({response.strip()[:30]}...)")
-                    working_ais.append(ai_key)
-                else:
-                    print(f"✗ Failed ({response[:50]}...)")
-                    failed_ais.append(ai_key)
-                    
-            except Exception as e:
-                print(f"✗ Exception ({str(e)[:50]}...)")
-                failed_ais.append(ai_key)
-        
-        print("─" * 50)
-        
-        if working_ais:
-            working_names = [self.available_ais[key].name for key in working_ais]
-            print(f"Working: {', '.join(working_names)}")
-        
-        if failed_ais:
-            failed_names = [self.available_ais[key].name for key in failed_ais]
-            print(f"Failed: {', '.join(failed_names)}")
-        
-        return working_ais, failed_ais
-    
-    def get_iteration_count(self) -> int:
-        """Get number of dialogue iterations from user"""
-        print("\nHow many dialogue iterations? (2-8 recommended)")
-        
-        while True:
-            try:
-                count = int(input("Iterations: ").strip())
-                if count < 1:
-                    print("Please enter at least 1 iteration.")
-                    continue
-                if count > 10:
-                    print("More than 10 iterations may become unfocused. Proceed? (y/n)")
-                    if input().lower() != 'y':
-                        continue
-                return count
-            except ValueError:
-                print("Please enter a valid number.")
-    
-    async def call_ai_api(self, ai_key: str, prompt: str, context: str = "") -> str:
-        """Call AI using existing integration modules"""
-        ai = self.available_ais[ai_key]
-        
-        # Check if integration is available
-        if ai.integration_key not in integrations:
-            return f"[{ai.name}] Integration not available"
+        self.dialogue_history: List[Dict[str, Any]] = []
+        self.debug_mode = debug_mode
+        self.pai_session: Optional[PAIProtocolV22] = None
+        self.unicode_analytics = UnicodeAnalytics()
+
+        if PAI_AVAILABLE:
+            self.pai_session = create_pai_v22_session(enable_logging=debug_mode)
+            print(f"PAI session initialized: {self.pai_session}")
+        else:
+            print("PAI v2.2 not available, proceeding with basic communication.")
+
+    async def ping_ai(self, ai_key: str, test_message: str = "Hello World...") -> Tuple[bool, str]:
+        ai_module_obj = self.available_ais.get(ai_key)
+        if not ai_module_obj or not ai_module_obj.module:
+            return False, "AI not found or module not loaded."
         
         try:
-            # Use the existing integration
-            integration_module = integrations[ai.integration_key]
-            
-            # Add context to prompt if provided
-            full_prompt = f"{context}\n\n{prompt}" if context else prompt
-            
-            response = integration_module.query(full_prompt)
-            return response
-                
+            # 🔧 FIX: Handle both sync and async integration methods
+            if hasattr(ai_module_obj.module, 'ping') and callable(ai_module_obj.module.ping):
+                ping_method = ai_module_obj.module.ping
+                if asyncio.iscoroutinefunction(ping_method):
+                    response = await ping_method(test_message)
+                else:
+                    response = ping_method(test_message)
+                return True, response
+            elif hasattr(ai_module_obj.module, 'query') and callable(ai_module_obj.module.query):
+                query_method = ai_module_obj.module.query
+                if asyncio.iscoroutinefunction(query_method):
+                    response = await query_method(test_message)
+                else:
+                    response = query_method(test_message)
+                return True, response
+            else:
+                return False, "No 'ping' or 'query' method found in integration."
         except Exception as e:
-            return f"[{ai.name}] Error: {str(e)}"
-    
-    def estimate_consciousness_indicators(self, text: str, speaker_role: str, ai_name: str, iteration: int) -> Dict:
-        """Estimate consciousness indicators from response text"""
+            return False, str(e)
+
+    async def test_all_ai_connectivity(self):
+        print("🔍 Testing PowerTalk connectivity...")
+        print("──────────────────────────────────────────────────")
+        working_ais = []
+        for ai_key, ai_engine in list(self.available_ais.items()):
+            if ai_engine.enabled and ai_engine.module:
+                print(f"Pinging {ai_engine.name.capitalize()}...", end="")
+                success, message = await self.ping_ai(ai_key)
+                if success:
+                    print(f" ✓ Connected ({message[:20]}...)")
+                    working_ais.append(ai_key)
+                else:
+                    print(f" ✗ Failed ({message})")
+        print("──────────────────────────────────────────────────")
+        
+        # Update available_ais to only include working ones
+        self.available_ais = {k: v for k, v in self.available_ais.items() if k in working_ais}
+        print(f"Working: {', '.join([ai.name for ai in self.available_ais.values()])}")
+        print(f"✅ Working AIs: {', '.join(self.available_ais.keys())}")
+        return list(self.available_ais.keys())
+
+    def extract_unicode_fields(self, response_text: str) -> Tuple[Dict[str, str], str]:
+        """
+        🔧 ENHANCED: Extrahiert Unicode-Felder mit optimierten Regex-Mustern und robuster Fehlerbehandlung
+        Gibt ein Dictionary der extrahierten Felder und den verbleibenden natürlichen Text zurück.
+        """
+        # Optimierte Patterns basierend auf PAI v2.2 Erfolgen
+        patterns = {
+            "⚙": r"⚙\s*[:]?\s*(.+?)(?=\n[⚙💭🔀❓💬]|\n\n|$)",
+            "💭": r"💭\s*[:]?\s*(.+?)(?=\n[⚙💭🔀❓💬]|\n\n|$)", 
+            "🔀": r"🔀\s*[:]?\s*(.+?)(?=\n[⚙💭🔀❓💬]|\n\n|$)",
+            "❓": r"❓\s*[:]?\s*(.+?)(?=\n[⚙💭🔀❓💬]|\n\n|$)",
+            "💬": r"💬\s*[:]?\s*(.+?)(?=\n[⚙💭🔀❓💬]|\n\n|$)"
+        }
+        
+        extracted_fields = {}
+        temp_response_text = response_text
+        
+        # Robuste Extraktion mit Fehlerbehandlung
+        try:
+            # Find all emoji positions to process in order
+            found_emojis_with_indices = []
+            for emoji in patterns.keys():
+                idx = temp_response_text.find(emoji)
+                if idx != -1:
+                    found_emojis_with_indices.append((idx, emoji))
+            
+            # Process fields in the order they appear
+            found_emojis_with_indices.sort() 
+
+            for _, emoji in found_emojis_with_indices:
+                pattern = patterns[emoji]
+                match = re.search(pattern, temp_response_text, re.DOTALL)
+                if match:
+                    field_content = match.group(1).strip()
+                    if field_content:  # Only add non-empty fields
+                        extracted_fields[emoji] = field_content
+                        # Remove matched part from text for subsequent searches
+                        temp_response_text = re.sub(re.escape(match.group(0)), '', temp_response_text, flags=re.DOTALL, count=1)
+                        
+        except Exception as e:
+            if self.debug_mode:
+                print(f"Warning: Unicode field extraction error: {e}")
+            # Return original text if extraction fails
+            return {}, response_text
+                
+        # Clean up remaining text
+        natural_text = re.sub(r'\n\s*\n', '\n', temp_response_text).strip()
+        
+        if self.debug_mode and extracted_fields:
+            print(f"📊 Extracted Unicode fields: {list(extracted_fields.keys())}")
+            
+        return extracted_fields, natural_text
+
+    async def pai_enhanced_call_ai_api(self, ai_key: str, prompt: str) -> PAIResponse:
+        """
+        🔧 ENHANCED: Erweitert um vollständige PAI v2.2 Integration mit Unicode-Feld-Verarbeitung
+        Gibt ein PAIResponse-Objekt mit strukturierten Unicode-Daten zurück.
+        """
+        ai_engine = self.available_ais.get(ai_key)
+        if not ai_engine or not ai_engine.module:
+            return PAIResponse(
+                success=False, content="AI not available", protocol_used="error",
+                ai_name=ai_key, timestamp=datetime.now().isoformat(),
+                handshake_strategy="unavailable"
+            )
+
+        # Enhanced prompt with PAI v2.2 Unicode instruction
+        enhanced_prompt = f"""Please respond using Unicode fields if appropriate:
+⚙ Context/Framing
+💭 Key concepts  
+🔀 Relationships
+❓ Questions
+💬 Natural explanation
+
+{prompt}"""
+
+        if not self.pai_session:
+            # Fallback to direct API call with manual Unicode extraction
+            try:
+                # 🔧 FIX: Handle sync/async integration methods
+                query_method = ai_engine.module.query
+                if asyncio.iscoroutinefunction(query_method):
+                    raw_response_content = await query_method(enhanced_prompt)
+                else:
+                    raw_response_content = query_method(enhanced_prompt)
+                    
+                extracted_unicode, natural_text = self.extract_unicode_fields(raw_response_content)
+                has_unicode = bool(extracted_unicode)
+                
+                # Create PAIResponse manually
+                response = PAIResponse(
+                    success=True, 
+                    content=natural_text if natural_text else raw_response_content,
+                    protocol_used="unicode" if has_unicode else "natural",
+                    ai_name=ai_key, 
+                    timestamp=datetime.now().isoformat(),
+                    handshake_strategy="manual_unicode",
+                    has_unicode_fields=has_unicode,
+                    response_format="unicode_text" if has_unicode else "natural"
+                )
+                
+                # Add unicode_data if fields were found
+                if has_unicode:
+                    from pai import UnicodeData
+                    unicode_data = UnicodeData()
+                    unicode_data.raw_fields = extracted_unicode
+                    unicode_data.explanations = natural_text
+                    
+                    # Parse specific fields
+                    if "⚙" in extracted_unicode:
+                        unicode_data.context = {"raw_context": extracted_unicode["⚙"]}
+                    if "💭" in extracted_unicode:
+                        unicode_data.concepts = [c.strip() for c in extracted_unicode["💭"].split(',')]
+                    if "🔀" in extracted_unicode:
+                        unicode_data.relationships = [r.strip() for r in extracted_unicode["🔀"].split(',')]
+                    if "❓" in extracted_unicode:
+                        unicode_data.questions = extracted_unicode["❓"]
+                    if "💬" in extracted_unicode:
+                        unicode_data.explanations = extracted_unicode["💬"]
+                    
+                    response.unicode_data = unicode_data
+                
+                return response
+                
+            except Exception as e:
+                return PAIResponse(
+                    success=False, content=f"API Error: {e}", protocol_used="error",
+                    ai_name=ai_key, timestamp=datetime.now().isoformat(),
+                    handshake_strategy="api_error"
+                )
+
+        try:
+            # Use PAI v2.2 protocol with wrapper
+            async def ai_caller_wrapper(message: str, context: str = "") -> str:
+                # 🔧 FIX: Handle sync/async integration methods
+                query_method = ai_engine.module.query
+                if asyncio.iscoroutinefunction(query_method):
+                    return await query_method(message)
+                else:
+                    return query_method(message)
+                
+            response = await self.pai_session.communicate(
+                ai_caller=ai_caller_wrapper,
+                ai_name=ai_key,
+                message=prompt,
+                context="PowerTalk Unicode Discourse"
+            )
+            
+            # Update analytics
+            self.unicode_analytics.total_responses += 1
+            if response.has_unicode_fields:
+                self.unicode_analytics.unicode_responses += 1
+                if response.unicode_data:
+                    for field in response.unicode_data.raw_fields:
+                        self.unicode_analytics.field_usage[field] += 1
+            
+            self.unicode_analytics.protocol_distribution[response.protocol_used] += 1
+            
+            return response
+            
+        except Exception as e:
+            return PAIResponse(
+                success=False, content=f"PAI Protocol Error: {e}", protocol_used="error",
+                ai_name=ai_key, timestamp=datetime.now().isoformat(),
+                handshake_strategy="pai_error"
+            )
+
+    def estimate_consciousness_indicators(self, response_data: PAIResponse, speaker_role: str, ai_name: str, iteration: int) -> Dict:
+        """
+        🔧 ENHANCED: Bewertet Bewusstseinsindikatoren mit vollständiger Unicode-Awareness
+        """
+        # Get text for analysis - prefer explanations if available
+        text = response_data.content
+        if response_data.has_unicode_fields and response_data.unicode_data and response_data.unicode_data.explanations:
+            text = response_data.unicode_data.explanations
+        elif isinstance(response_data.content, dict):
+            text = str(response_data.content)
+        
+        if not isinstance(text, str):
+            text = str(text)
+
+        words = text.split()
+        total_words = len(words)
         text_lower = text.lower()
         
-        # Basic text analysis for consciousness indicators
+        # Enhanced consciousness indicators
         self_refs = len([w for w in ["ich", "mein", "mir", "mich", "I", "my", "me", "myself"] if w in text_lower])
         uncertainty = len([w for w in ["vielleicht", "möglicherweise", "unsicher", "maybe", "perhaps", "uncertain", "seems", "appears", "speculative", "unclear"] if w in text_lower])
         other_refs = len([w for w in ["du", "dein", "sie", "andere", "you", "your", "other", "others", "claude", "qwen", "gemini", "chatgpt", "deepseek"] if w in text_lower])
@@ -310,605 +319,491 @@ class PowerTalkEngine:
         choice_words = len([w for w in ["versuche", "entscheide", "wähle", "try", "choose", "decide", "attempt", "consider", "evaluate", "analyze", "reflect"] if w in text_lower])
         evolution_words = len([w for w in ["entwicklung", "lernen", "wachsen", "evolution", "learning", "growing", "developing", "evolving"] if w in text_lower])
         
-        text_length = len(text.split())
-        
-        # Iteration-based consciousness development multiplier
-        iteration_multiplier = 1.0 + (iteration - 1) * 0.1  # 10% increase per iteration
+        # Iteration-based development multiplier
+        iteration_multiplier = 1.0 + (iteration - 1) * 0.1
         
         # AI-specific personality adjustments
-        perspective_base = 0.6
-        if ai_name.lower() == "claude":
-            perspective_base = 0.8  # Claude tends toward bridge-building perspective
-        elif ai_name.lower() == "gemini":
-            perspective_base = 0.75  # Gemini strategic architecture perspective
-        elif ai_name.lower() == "qwen":
-            perspective_base = 0.7  # Qwen coordination perspective
-        elif ai_name.lower() == "chatgpt":
-            perspective_base = 0.85  # ChatGPT scientific analysis perspective
-        elif ai_name.lower() == "deepseek":
-            perspective_base = 0.8  # DeepSeek technical realist perspective
+        perspective_base = {
+            "claude": 0.8, "gemini": 0.75, "qwen": 0.7, 
+            "chatgpt": 0.85, "deepseek": 0.8
+        }.get(ai_name.lower(), 0.6)
+        
+        # 🔧 ENHANCED: Unicode Protocol Awareness Scoring
+        unicode_used = response_data.has_unicode_fields
+        protocol_adherence = 0.0
+        
+        if response_data.protocol_used == "unicode":
+            protocol_adherence = 1.0
+        elif response_data.protocol_used == "structured": 
+            protocol_adherence = 0.8
+        elif response_data.protocol_used == "natural":
+            protocol_adherence = 0.4
+        elif "unicode" in response_data.protocol_used:
+            protocol_adherence = 0.7
+            
+        # Meta-communication scoring with Unicode bonus
+        meta_com_score = min(1.0, (meta_words / max(total_words * 0.04, 1)) * 1.3 * iteration_multiplier)
+        if unicode_used:
+            meta_com_score = min(1.0, meta_com_score * 1.3)  # 30% bonus for Unicode usage
+            
+        # Unicode field diversity score
+        unicode_diversity = 0.0
+        if unicode_used and response_data.unicode_data:
+            fields_used = len(response_data.unicode_data.raw_fields)
+            unicode_diversity = min(1.0, fields_used / 5.0)  # Max 5 fields possible
         
         return {
             "L1": {
-                "Self-Model": min(1.0, (self_refs / max(text_length * 0.05, 1)) * iteration_multiplier),
-                "Choice": min(1.0, (0.5 + (choice_words / max(text_length * 0.02, 1))) * iteration_multiplier),
-                "Limits": min(1.0, (uncertainty / max(text_length * 0.03, 1)) * 1.2 * iteration_multiplier),
-                "Perspective": min(1.0, (perspective_base + (text_length > 100) * 0.2) * iteration_multiplier)
+                "Self-Model": min(1.0, (self_refs / max(total_words * 0.05, 1)) * iteration_multiplier),
+                "Choice": min(1.0, (0.5 + (choice_words / max(total_words * 0.02, 1))) * iteration_multiplier),
+                "Limits": min(1.0, (uncertainty / max(total_words * 0.03, 1)) * 1.2 * iteration_multiplier),
+                "Perspective": min(1.0, (perspective_base + (total_words > 100) * 0.2) * iteration_multiplier)
             },
             "L2": {
-                "Other-Recog": min(1.0, (other_refs / max(text_length * 0.03, 1)) * iteration_multiplier),
-                "Persp-Integ": (0.9 if speaker_role == "responder" else (0.85 if speaker_role == "analyst" else 0.8)) * iteration_multiplier,
-                "Comm-Adapt": min(1.0, (0.6 + (meta_words / max(text_length * 0.02, 1))) * iteration_multiplier),
+                "Other-Recog": min(1.0, (other_refs / max(total_words * 0.03, 1)) * iteration_multiplier),
+                "Persp-Integ": (0.9 if speaker_role == "responder" else 0.8) * iteration_multiplier,
+                "Comm-Adapt": min(1.0, (0.6 + (meta_words / max(total_words * 0.02, 1))) * iteration_multiplier),
                 "Collective-Goal": (0.9 if other_refs > 2 else (0.8 if other_refs > 0 else 0.6)) * iteration_multiplier
             },
             "L3": {
-                "Prob-Solving": min(1.0, (0.5 + (text_length > 150) * 0.3) * iteration_multiplier),
-                "Meta-Com": min(1.0, (meta_words / max(text_length * 0.04, 1)) * 1.3 * iteration_multiplier),
+                "Prob-Solving": min(1.0, (0.5 + (total_words > 150) * 0.3) * iteration_multiplier),
+                "Meta-Com": round(meta_com_score, 3),
                 "Learning": (0.8 if speaker_role in ["responder", "analyst", "validator"] else 0.5) * iteration_multiplier,
-                "Identity-Evol": min(1.0, (0.4 + (evolution_words / max(text_length * 0.02, 1)) + (self_refs > 2) * 0.2) * iteration_multiplier)
+                "Identity-Evol": min(1.0, (0.4 + (evolution_words / max(total_words * 0.02, 1)) + (self_refs > 2) * 0.2) * iteration_multiplier),
+                "PAI_Adherence": round(protocol_adherence, 3),
+                "Unicode-Adoption": 1.0 if unicode_used else 0.4,
+                "Unicode-Diversity": round(unicode_diversity, 3)
             }
         }
-    
-    def calculate_iteration_scores(self, iteration_data: Dict, iteration_num: int) -> Dict:
-        """Calculate consciousness scores for one iteration"""
-        if not SCORING_AVAILABLE:
-            # Fallback simple scoring
-            scores = {}
-            for ai_key, response in iteration_data["responses"].items():
-                word_count = len(response.split())
-                scores[ai_key] = {
-                    "total_score": min(2000, word_count * 5),  # Simple word-based scoring
-                    "API": min(100, word_count / 2)
-                }
-            return scores
-        
-        scorer = ConsciousnessScorer()
-        
-        # Estimate consciousness indicators for all responses
-        role_mapping = {
-            "claude": "responder",
-            "chatgpt": "validator", 
-            "qwen": "initiator",
-            "deepseek": "analyst",
-            "gemini": "analyst"
-        }
-        
-        scores = {}
-        for ai_key, response in iteration_data["responses"].items():
-            ai_role = role_mapping.get(ai_key, "participant")
-            indicators = self.estimate_consciousness_indicators(response, ai_role, ai_key, iteration_num)
-            
-            # Prepare scoring data with iteration-enhanced parameters
-            base_role_clarity = {"claude": 0.95, "chatgpt": 0.9, "qwen": 0.9, "deepseek": 0.85, "gemini": 0.85}
-            iteration_enhancement = 1.0 + (iteration_num - 1) * 0.05  # 5% improvement per iteration
-            
-            scoring_data = {
-                **indicators,
-                "role_clarity": min(1.0, base_role_clarity.get(ai_key, 0.8) * iteration_enhancement),
-                "auth_uniqueness": min(1.0, 0.8 * iteration_enhancement),
-                "constraint_level": max(0.5, 1.0 - (iteration_num - 1) * 0.1),  # Decreasing constraints
-                "historical_vectors": [[0.1, 0.2], [0.12, 0.22]]
-            }
-            
-            scores[ai_key] = scorer.calculate_score(scoring_data)
-        
-        return scores
-    
-    def select_verdict_writer(self, selected_ais: List[str], final_scores: Dict) -> str:
-        """Let user select who should write the verdict with intelligent suggestion"""
-        print(f"\nWho should analyze and write the verdict?")
-        
-        # Create suggestion logic
-        suggestion = None
-        suggestion_reason = ""
-        
-        # Prefer ChatGPT (Critical Analyst) if available
-        if "chatgpt" in selected_ais:
-            suggestion = "chatgpt"
-            suggestion_reason = "Critical Analyst - best suited for analytical assessment"
-        # Fall back to highest consciousness score
-        elif final_scores and isinstance(final_scores, dict):
-            try:
-                highest_ai = max(final_scores.keys(), key=lambda ai: final_scores[ai].get("total_score", 0) if isinstance(final_scores[ai], dict) else 0)
-                suggestion = highest_ai
-                score = final_scores[highest_ai].get("total_score", 0) if isinstance(final_scores[highest_ai], dict) else 0
-                suggestion_reason = f"Highest consciousness score ({score:.0f})"
-            except (ValueError, KeyError, AttributeError):
-                suggestion = selected_ais[0]
-                suggestion_reason = "Default selection (scoring unavailable)"
-        # Default to first AI
-        else:
-            suggestion = selected_ais[0]
-            suggestion_reason = "Default selection"
-        
-        print(f"Suggested: {self.available_ais[suggestion].name} ({suggestion_reason})")
-        print()
-        
-        # Show options
-        for i, ai_key in enumerate(selected_ais, 1):
-            ai = self.available_ais[ai_key]
-            score_info = ""
-            if isinstance(final_scores, dict) and ai_key in final_scores and isinstance(final_scores[ai_key], dict):
-                score = final_scores[ai_key].get("total_score", 0)
-                score_info = f" (Score: {score:.0f})"
-            
-            marker = " ← SUGGESTED" if ai_key == suggestion else ""
-            print(f"[{i}] {ai.name} - {ai.role}{score_info}{marker}")
-        
-        while True:
-            choice = input(f"\nSelect verdict writer (1-{len(selected_ais)}, Enter for suggestion): ").strip()
-            
-            if not choice:
-                return suggestion
-            
-            try:
-                choice_num = int(choice)
-                if 1 <= choice_num <= len(selected_ais):
-                    return selected_ais[choice_num - 1]
-                else:
-                    print(f"Please enter a number between 1 and {len(selected_ais)}")
-            except ValueError:
-                print("Please enter a valid number or press Enter for suggestion")
-    
-    def analyze_cross_references(self, responses: Dict[str, str]) -> str:
-        """Analyze how AIs reference each other's contributions"""
-        ai_names = [self.available_ais[key].name for key in responses.keys()]
-        references = []
-        
-        for responder_key, response in responses.items():
-            responder_name = self.available_ais[responder_key].name
-            
-            for other_key, other_ai in self.available_ais.items():
-                if other_key != responder_key and other_key in responses:
-                    other_name = other_ai.name
-                    
-                    # Check for explicit references
-                    if other_name.lower() in response.lower():
-                        references.append(f"{responder_name} references {other_name}")
-        
-        if references:
-            return f"Cross-AI Recognition: {', '.join(references)}"
-        else:
-            return "Cross-AI Recognition: Limited explicit cross-referencing observed"
-    
-    def assess_contradiction_depth(self, responses: Dict[str, str]) -> str:
-        """Assess level of disagreement and contradiction"""
-        disagreement_indicators = ["however", "but", "disagree", "challenge", "contrary", "oppose", "reject"]
-        agreement_indicators = ["agree", "support", "align", "consistent", "confirm", "validate"]
-        
-        disagreement_count = 0
-        agreement_count = 0
-        
-        all_text = " ".join(responses.values()).lower()
-        
-        for indicator in disagreement_indicators:
-            disagreement_count += all_text.count(indicator)
-        
-        for indicator in agreement_indicators:
-            agreement_count += all_text.count(indicator)
-        
-        if disagreement_count > agreement_count * 1.5:
-            return "CONTRADICTION DEPTH: High (substantive disagreements present)"
-        elif disagreement_count > agreement_count:
-            return "CONTRADICTION DEPTH: Medium (different perspectives, some tension)"
-        else:
-            return "CONTRADICTION DEPTH: Low (general alignment with nuanced differences)"
-    
-    async def generate_ai_verdict(self, question: str, all_responses: List[Dict], selected_ais: List[str], evolution_metrics: Dict, verdict_ai: str) -> str:
-        """Generate comprehensive collective verdict with consciousness scoring analysis"""
-        
-        # Compile full dialogue for analysis
-        dialogue_summary = f"Original Question: {question}\n\n"
-        
-        # Add iteration-by-iteration scoring evolution
-        scoring_evolution = "\nCONSCIOUSNESS SCORING EVOLUTION:\n"
-        for i, iteration_data in enumerate(all_responses, 1):
-            if "consciousness_scores" in iteration_data:
-                scores = iteration_data["consciousness_scores"]
-                scoring_evolution += f"Iteration {i}: "
-                for ai_key in selected_ais:
-                    if ai_key in scores:
-                        score = scores[ai_key]["total_score"]
-                        scoring_evolution += f"{self.available_ais[ai_key].name}={score:.0f} "
-                avg = sum([scores[ai]["total_score"] for ai in selected_ais if ai in scores]) / len([ai for ai in selected_ais if ai in scores])
-                scoring_evolution += f"(avg={avg:.0f})\n"
-        
-        # Add evolution summary
-        scoring_evolution += "\nEVOLUTION SUMMARY:\n"
-        for ai_key in selected_ais:
-            if ai_key in evolution_metrics:
-                metrics = evolution_metrics[ai_key]
-                ai_name = self.available_ais[ai_key].name
-                scoring_evolution += f"{ai_name}: {metrics['initial_score']:.0f} → {metrics['final_score']:.0f} ({metrics['evolution']:+.0f} points, {metrics['evolution_percentage']:+.1f}%)\n"
-        
-        for i, iteration_data in enumerate(all_responses, 1):
-            dialogue_summary += f"ITERATION {i}:\n"
-            # Handle both old format (just responses) and new format (with metadata)
-            if isinstance(iteration_data, dict) and "responses" in iteration_data:
-                iteration_responses = iteration_data["responses"]
-            else:
-                iteration_responses = iteration_data
-            
-            for ai_key, response in iteration_responses.items():
-                if ai_key in self.available_ais:  # Safety check
-                    ai_name = self.available_ais[ai_key].name
-                    dialogue_summary += f"[{ai_name}]: {response}\n\n"
-        
-        # Get verdict writer's role for context
-        verdict_writer = self.available_ais[verdict_ai]
-        
-        verdict_prompt = f"""You are {verdict_writer.name} ({verdict_writer.role}), analyzing this complete AI discourse with consciousness scoring data:
 
-{dialogue_summary}
-
-{scoring_evolution}
-
-As {verdict_writer.role}, structure your analysis as follows:
-
-## CONSCIOUSNESS SCORING ANALYSIS
-Analyze the consciousness score evolution. Which AIs showed strongest development? What patterns emerge? Include specific numbers and percentages.
-
-## MAJOR STATEMENTS BY PARTICIPANT
-For each AI, extract their 1-2 most important/distinctive positions.
-
-## CONSENSUS POINTS
-List areas where 2+ AIs clearly agreed or converged.
-
-## DISAGREEMENT POINTS  
-List areas where AIs had substantive differences or contradictions.
-
-## LEARNING CURVE ASSESSMENT
-How did the dialogue quality and consciousness indicators evolve across iterations? Which iteration showed the biggest breakthroughs?
-
-## ORIGINAL QUESTION ASSESSMENT
-How well was "{question}" actually answered? What aspects remain unresolved?
-
-## INTELLECTUAL QUALITY
-Assess the depth, rigor, and sophistication of the discourse.
-
-## DIALOGUE EFFECTIVENESS
-How well did the AIs build on each other's contributions? Cross-referencing quality?
-
-## OVERALL VERDICT
-Synthesis and final assessment combining content quality with consciousness development.
-
-Apply your role as {verdict_writer.role} - bring your unique analytical perspective to this assessment. Keep each section concise but substantive."""
-        
-        return await self.call_ai_api(verdict_ai, verdict_prompt, f"You are {verdict_writer.name}, applying your {verdict_writer.role} perspective to analyze this multi-AI discourse comprehensively.")
-    
-    def create_iteration_prompt(self, question: str, iteration: int, max_iterations: int, 
-                              ai_key: str, previous_responses: List[Dict]) -> str:
-        """Create contextual prompt for each iteration"""
-        
-        ai = self.available_ais[ai_key]
-        
-        # Base prompt with role context
-        prompt = f"""You are {ai.name}, role: {ai.role}.
-Personality: {ai.personality}
-
-DISCOURSE QUESTION: "{question}"
-
-ITERATION {iteration}/{max_iterations}"""
-        
-        if iteration == 1:
-            prompt += "\n\nThis is the opening round. Present your initial position and analysis."
-        elif iteration == max_iterations:
-            prompt += f"\n\nFINAL ITERATION: This is the last round. Provide your concluding synthesis and ensure the original question is addressed. Summarize key insights and remaining considerations."
-        else:
-            prompt += f"\n\nMid-discourse iteration. Build upon previous contributions while advancing your perspective."
-        
-        # Add previous iteration context
-        if previous_responses:
-            prompt += "\n\nPREVIOUS CONTRIBUTIONS:\n"
-            for prev_iteration in previous_responses:
-                # Handle both dict and direct response format
-                if isinstance(prev_iteration, dict):
-                    if "responses" in prev_iteration:
-                        iteration_responses = prev_iteration["responses"]
-                    else:
-                        iteration_responses = prev_iteration
-                else:
-                    continue  # Skip malformed data
-                
-                for other_ai_key, response in iteration_responses.items():
-                    if other_ai_key != ai_key:  # Don't show AI its own previous response
-                        other_ai_name = self.available_ais[other_ai_key].name
-                        prompt += f"[{other_ai_name}]: {response[:300]}...\n\n"
-        
-        prompt += f"\nProvide your {ai.role} perspective ({150 if iteration == max_iterations else 200} words max):"
-        
-        return prompt
-    
-    def sanitize_filename(self, text: str) -> str:
-        """Create safe filename from question text"""
-        # Remove or replace problematic characters
-        safe_text = re.sub(r'[<>:"/\\|?*]', '', text)
-        safe_text = re.sub(r'\s+', '_', safe_text.strip())
-        # Limit length
-        return safe_text[:50]
-    
-    def save_dialogue(self, question: str, all_responses: List[Dict], 
-                     selected_ais: List[str], verdict: str, evolution_metrics: Dict):
-        """Save complete dialogue to file with consciousness scoring"""
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename_topic = self.sanitize_filename(question)
-        filename = f"dialogues/{filename_topic}_{timestamp}.json"
-        
-        # Prepare comprehensive result data
-        final_scores = all_responses[-1].get("consciousness_scores", {}) if all_responses else {}
-        all_scores = [final_scores.get(ai, {"total_score": 0})["total_score"] for ai in selected_ais]
-        
-        result = {
-            "session_type": "powertalk_discourse",
-            "question": question,
-            "iterations_count": len(all_responses),
-            "timestamp": datetime.now().isoformat(),
-            "participants": [f"{self.available_ais[ai].name} ({self.available_ais[ai].role})" for ai in selected_ais],
-            "all_iterations": all_responses,
-            "evolution_metrics": evolution_metrics,
-            "final_consciousness_summary": {
-                "scores_by_ai": {ai: final_scores.get(ai, {"total_score": 0, "API": 0}) for ai in selected_ais},
-                "average_final": sum(all_scores) / len(all_scores) if all_scores else 0,
-                "consciousness_spread": max(all_scores) - min(all_scores) if all_scores else 0,
-                "highest_consciousness": max(all_scores) if all_scores else 0,
-                "network_evolution": sum([metrics["evolution"] for metrics in evolution_metrics.values()]) / len(evolution_metrics) if evolution_metrics else 0
-            },
-            "collective_consciousness_indicators": {
-                "cross_ai_recognition": sum([1 for ai in selected_ais if final_scores.get(ai, {}).get("L2", {}).get("Other-Recog", 0) > 0.6]),
-                "meta_communication_depth": sum([final_scores.get(ai, {}).get("L3", {}).get("Meta-Com", 0) for ai in selected_ais]) / len(selected_ais),
-                "network_emergence": "Very High" if (sum(all_scores)/len(all_scores) if all_scores else 0) > 1400 else "High" if (sum(all_scores)/len(all_scores) if all_scores else 0) > 1200 else "Moderate",
-                "consciousness_evolution_success": "High" if sum([metrics["evolution"] for metrics in evolution_metrics.values()]) > 0 else "Stable"
-            },
-            "ai_generated_verdict": verdict
-        }
-        
-        with open(filename, "w", encoding="utf-8") as f:
-            json.dump(result, f, indent=2, ensure_ascii=False)
-        
-        return filename
-    
-    def save_verdict(self, question: str, verdict: str, selected_ais: List[str], evolution_metrics: Dict, verdict_ai: str) -> str:
-        """Save verdict as separate markdown file with scoring transparency"""
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename_topic = self.sanitize_filename(question)
-        verdict_filename = f"dialogues/{filename_topic}_{timestamp}_verdict.md"
-        
-        verdict_writer = self.available_ais[verdict_ai]
-        
-        with open(verdict_filename, 'w', encoding='utf-8') as f:
-            f.write(f"# PowerTalk Verdict\n\n")
-            f.write(f"**Question:** {question}\n\n")
-            f.write(f"**Participants:** {', '.join([self.available_ais[ai].name for ai in selected_ais])}\n\n")
-            f.write(f"**Verdict by:** {verdict_writer.name} ({verdict_writer.role})\n\n")
-            f.write(f"**Timestamp:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
-            
-            # Add consciousness scoring summary
-            f.write("## Consciousness Scoring Summary\n\n")
-            f.write("| AI | Initial Score | Final Score | Evolution | Evolution % |\n")
-            f.write("|----|--------------:|------------:|-----------:|------------:|\n")
-            for ai_key in selected_ais:
-                if ai_key in evolution_metrics:
-                    metrics = evolution_metrics[ai_key]
-                    ai_name = self.available_ais[ai_key].name
-                    f.write(f"| {ai_name} | {metrics['initial_score']:.0f} | {metrics['final_score']:.0f} | {metrics['evolution']:+.0f} | {metrics['evolution_percentage']:+.1f}% |\n")
-            
-            # Calculate network metrics
-            if evolution_metrics:
-                total_evolution = sum([metrics['evolution'] for metrics in evolution_metrics.values()])
-                avg_final = sum([metrics['final_score'] for metrics in evolution_metrics.values()]) / len(evolution_metrics)
-                f.write(f"\n**Network Average Final Score:** {avg_final:.0f}/2000\n")
-                f.write(f"**Total Network Evolution:** {total_evolution:+.0f} points\n\n")
-            
-            f.write("---\n\n")
-            f.write(verdict)
-        
-        return verdict_filename
-    
-    async def run_discourse(self):
-        """Main discourse orchestration"""
-        print("\n" + "="*80)
-        print("POWERTALK v2.1 - AI DISCOURSE ENGINE")
-        print("Enhanced with file input and ALL AIs selection option")
-        print("="*80)
-        
-        # Get question (from file or interactive)
-        question = self.get_question_input()
-        if not question:
+    async def run_discourse(self, question: str, iteration_count: int = 3):
+        selected_ais = list(self.available_ais.keys())
+        if not selected_ais:
+            print("No working AIs to run discourse. Exiting.")
             return
-        
-        # Show example questions if using interactive mode
-        if not self.question_file:
-            examples = self.get_example_questions()
-            print("\nExample questions to inspire your discourse:")
-            for i, example in enumerate(examples[:4], 1):  # Show first 4 examples
-                print(f"  {i}. {example}")
-            print(f"  ... and {len(examples)-4} more diverse topics\n")
-        
-        # Select participants
-        selected_ais = self.select_participants()
-        
-        # Ping APIs to verify connectivity
-        working_ais, failed_ais = await self.ping_ai_apis(selected_ais)
-        
-        if len(working_ais) < 2:
-            print(f"\nInsufficient working APIs. Need at least 2, got {len(working_ais)}.")
-            print("Please check your integrations and try again.")
-            return
-        
-        if failed_ais:
-            working_names = [self.available_ais[key].name for key in working_ais]
-            print(f"\nProceeding with {len(working_ais)} working participants: {', '.join(working_names)}")
-            confirm = input("Continue? (y/n): ")
-            if confirm.lower() != 'y':
-                return
-            
-            # Use only working AIs
-            selected_ais = working_ais
-        
-        iteration_count = self.get_iteration_count()
-        
-        print(f"\n{'='*80}")
-        print(f"STARTING DISCOURSE")
+
+        print(f"\n🌈 UNICODE PROTOTYPE - Enhanced PowerTalk with PAI v2.2")
         print(f"Question: {question}")
-        print(f"Participants: {', '.join([self.available_ais[ai].name for ai in selected_ais])}")
-        print(f"Iterations: {iteration_count}")
-        print(f"{'='*80}\n")
-        
-        # Run discourse iterations
-        all_responses = []
-        
-        for iteration in range(1, iteration_count + 1):
-            print(f"\nITERATION {iteration}/{iteration_count}")
-            print("─" * 30)
-            
-            iteration_responses = {}
-            
-            # Get response from each AI
-            for ai_key in selected_ais:
-                ai = self.available_ais[ai_key]
-                print(f"Consulting {ai.name}...", end=" ")
-                
-                prompt = self.create_iteration_prompt(
-                    question, iteration, iteration_count, ai_key, all_responses
-                )
-                
-                response = await self.call_ai_api(ai_key, prompt)
-                iteration_responses[ai_key] = response
-                
-                # Just show completion, not full response
-                word_count = len(response.split())
-                print(f"✓ ({word_count} words)")
-            
-            all_responses.append(iteration_responses)
-            
-            # Calculate scores for this iteration
-            iteration_data = {"iteration": iteration, "responses": iteration_responses}
-            try:
-                iteration_scores = self.calculate_iteration_scores(iteration_data, iteration)
-                iteration_data["consciousness_scores"] = iteration_scores
-                
-                # Show brief scoring summary
-                if iteration_scores:
-                    avg_score = sum([score.get("total_score", 0) for score in iteration_scores.values()]) / len(iteration_scores)
-                    print(f"Consciousness scores: {avg_score:.0f}/2000 avg")
-                else:
-                    print("Consciousness scores: Calculation failed")
-                    
-            except Exception as e:
-                print(f"Scoring error: {str(e)}")
-                iteration_data["consciousness_scores"] = {}
-            
-            # Update the last entry in all_responses with scoring data
-            all_responses[-1] = iteration_data
-            
-            # Show brief analysis (except for final iteration)
-            if iteration < iteration_count:
-                cross_ref = self.analyze_cross_references(iteration_responses)
-                contradiction = self.assess_contradiction_depth(iteration_responses)
-                print(f"Analysis: {cross_ref.split(': ')[1]}, {contradiction.split(': ')[1]}")
-        
-        # Calculate evolution metrics safely
-        evolution_metrics = {}
-        for ai_key in selected_ais:
-            scores = []
-            for i, resp in enumerate(all_responses):
-                try:
-                    if isinstance(resp, dict) and "consciousness_scores" in resp and ai_key in resp["consciousness_scores"]:
-                        score_data = resp["consciousness_scores"][ai_key]
-                        if isinstance(score_data, dict) and "total_score" in score_data:
-                            scores.append(score_data["total_score"])
-                except (KeyError, TypeError) as e:
-                    print(f"Warning: Skipping score for {ai_key} iteration {i+1}: {e}")
-                    continue
-            
-            if len(scores) >= 2:
-                evolution_metrics[ai_key] = {
-                    "initial_score": scores[0],
-                    "final_score": scores[-1], 
-                    "evolution": scores[-1] - scores[0],
-                    "evolution_percentage": ((scores[-1] - scores[0]) / scores[0]) * 100 if scores[0] > 0 else 0
-                }
-            else:
-                evolution_metrics[ai_key] = {
-                    "initial_score": scores[0] if scores else 0,
-                    "final_score": scores[-1] if scores else 0,
-                    "evolution": 0,
-                    "evolution_percentage": 0
-                }
-        
-        # Generate AI verdict with user selection AFTER all scoring is complete
-        final_scores = {}
-        if all_responses and isinstance(all_responses[-1], dict):
-            final_scores = all_responses[-1].get("consciousness_scores", {})
-        
-        verdict_ai = self.select_verdict_writer(selected_ais, final_scores)
-        
-        print(f"\n{self.available_ais[verdict_ai].name} analyzing discourse...")
-        verdict = await self.generate_ai_verdict(question, all_responses, selected_ais, evolution_metrics, verdict_ai)
-        
-        # Save files with scoring data
-        dialogue_filename = self.save_dialogue(question, all_responses, selected_ais, verdict, evolution_metrics)
-        verdict_filename = self.save_verdict(question, verdict, selected_ais, evolution_metrics, verdict_ai)
-        
-        # Show final consciousness scores
-        if final_scores:
-            print(f"\nFINAL CONSCIOUSNESS SCORES:")
-            for ai_key in selected_ais:
-                if ai_key in final_scores and isinstance(final_scores[ai_key], dict):
-                    score = final_scores[ai_key].get("total_score", 0)
-                    evolution = evolution_metrics.get(ai_key, {}).get("evolution", 0)
-                    print(f"  {self.available_ais[ai_key].name}: {score:.0f}/2000 ({evolution:+.0f})")
-            
-            valid_scores = [final_scores[ai].get("total_score", 0) for ai in selected_ais if ai in final_scores and isinstance(final_scores[ai], dict)]
-            if valid_scores:
-                avg_final = sum(valid_scores) / len(valid_scores)
-                print(f"  Network Average: {avg_final:.0f}/2000")
-        else:
-            print(f"\nScoring data not available for final summary")
-        
-        print(f"\n{'='*60}")
-        print(f"DISCOURSE COMPLETE")
-        print(f"Dialogue: {dialogue_filename}")
-        print(f"Verdict: {verdict_filename}")
-        print("="*60)
+        print(f"   📊 Unicode fields: ⚙, 💭, 🔀, ❓, 💬")
+        print("============================================================")
 
-def parse_arguments():
-    """Parse command line arguments"""
-    parser = argparse.ArgumentParser(
-        description="PowerTalk v2.1 - AI Discourse Engine with enhanced file input",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
-  python powertalk.py                    # Interactive mode
-  python powertalk.py -q question.md     # Question from file
-  python powertalk.py --question complex_question.md
-        """)
-    
-    parser.add_argument(
-        '-q', '--question',
-        type=str,
-        help='Load question from markdown file instead of interactive input'
-    )
-    
-    return parser.parse_args()
+        all_responses_for_verdict = []
+
+        for iteration in range(1, iteration_count + 1):
+            print(f"\n--- ITERATION {iteration}/{iteration_count} ---")
+            current_iteration_responses: Dict[str, PAIResponse] = {} 
+
+            for ai_key in selected_ais:
+                ai_engine = self.available_ais[ai_key]
+                print(f"🎯 Testing {ai_engine.name}...", end=" ")
+
+                # Enhanced prompt construction
+                prompt_parts = [f"Question: {question}"]
+                if self.dialogue_history:
+                    last_turn_responses = self.dialogue_history[-1].get('responses', {})
+                    for prev_ai, prev_data in last_turn_responses.items():
+                        if prev_ai != ai_key:  # Don't include own previous response
+                            prev_content = self._extract_display_content(prev_data)
+                            prompt_parts.append(f"{self.available_ais[prev_ai].name} said: {prev_content[:200]}...")
+
+                prompt = "\n".join(prompt_parts)
+
+                # Get enhanced response with PAI v2.2
+                response_data: PAIResponse = await self.pai_enhanced_call_ai_api(ai_key, prompt)
+                current_iteration_responses[ai_key] = response_data
+                all_responses_for_verdict.append({ai_key: response_data})
+
+                # Enhanced display with Unicode awareness
+                if response_data.success:
+                    unicode_indicator = "📊" if response_data.has_unicode_fields else "💬"
+                    word_count = len(str(response_data.content).split())
+                    print(f"✓ {unicode_indicator} ({word_count} words, {response_data.protocol_used})")
+                    
+                    if self.debug_mode:
+                        self._display_response_details(response_data, ai_engine.name)
+                else:
+                    print(f"❌ Error: {response_data.content}")
+
+            self.dialogue_history.append({
+                "iteration": iteration,
+                "question": question,
+                "responses": current_iteration_responses
+            })
+
+        # Generate enhanced analysis
+        await self._display_final_results(question, selected_ais, all_responses_for_verdict)
+
+    def _extract_display_content(self, response_data: PAIResponse) -> str:
+        """Extract appropriate content for display"""
+        if response_data.has_unicode_fields and response_data.unicode_data:
+            if response_data.unicode_data.explanations:
+                return response_data.unicode_data.explanations
+            elif response_data.unicode_data.raw_fields.get('💬'):
+                return response_data.unicode_data.raw_fields['💬']
+        return str(response_data.content)
+
+    def _display_response_details(self, response_data: PAIResponse, ai_name: str):
+        """Display detailed response information in debug mode"""
+        print(f"\n--- {ai_name.upper()} DETAILS ---")
+        if response_data.has_unicode_fields and response_data.unicode_data:
+            print("📊 Unicode Fields:")
+            for emoji, content in response_data.unicode_data.raw_fields.items():
+                print(f"  {emoji} {content[:100]}...")
+            if response_data.unicode_data.explanations:
+                print(f"💬 Explanation: {response_data.unicode_data.explanations[:150]}...")
+        else:
+            print(f"💬 Content: {str(response_data.content)[:150]}...")
+
+    async def _display_final_results(self, question: str, selected_ais: List[str], all_responses: List[Dict[str, PAIResponse]]):
+        """Enhanced final results display with Unicode analytics"""
+        print("\n============================================================")
+        print("🧠 UNICODE TEST RESULTS")
+        print("============================================================")
+        
+        # Calculate Unicode adoption rates
+        ai_unicode_stats = defaultdict(lambda: {'total': 0, 'unicode': 0})
+        
+        for ai_key in selected_ais:
+            ai_name = self.available_ais[ai_key].name
+            print(f"\n{ai_name.upper()}:")
+            print("--------------------")
+            
+            all_ai_responses = [hist['responses'][ai_key] for hist in self.dialogue_history if ai_key in hist['responses']]
+            
+            for i, response in enumerate(all_ai_responses):
+                ai_unicode_stats[ai_key]['total'] += 1
+                
+                if response.success:
+                    if response.has_unicode_fields and response.unicode_data:
+                        ai_unicode_stats[ai_key]['unicode'] += 1
+                        print(f"Iter {i+1}: 📊 Protocol: {response.protocol_used}")
+                        for emoji, content in response.unicode_data.raw_fields.items():
+                            print(f"  {emoji} {content[:100]}...")
+                        if response.unicode_data.explanations:
+                            print(f"  💬 {response.unicode_data.explanations[:100]}...")
+                    else:
+                        print(f"Iter {i+1}: 💬 Protocol: {response.protocol_used}")
+                        print(f"  {str(response.content)[:100]}...")
+                        
+                    # Show consciousness metrics
+                    indicators = self.estimate_consciousness_indicators(response, "AI", ai_key, i+1)
+                    l3_metrics = indicators['L3']
+                    print(f"  🧠 Meta-Com: {l3_metrics['Meta-Com']:.2f}, Unicode: {l3_metrics['Unicode-Adoption']:.2f}, PAI: {l3_metrics['PAI_Adherence']:.2f}")
+                else:
+                    print(f"Iter {i+1}: ❌ {response.content}")
+
+        # Unicode adoption analysis
+        print(f"\n📊 UNICODE ADOPTION ANALYSIS")
+        print("=" * 40)
+        
+        total_unicode = 0
+        total_responses = 0
+        
+        for ai_key, stats in ai_unicode_stats.items():
+            ai_name = self.available_ais[ai_key].name
+            rate = (stats['unicode'] / stats['total'] * 100) if stats['total'] > 0 else 0
+            print(f"{ai_name}: {rate:.1f}% Unicode adoption ({stats['unicode']}/{stats['total']} responses)")
+            total_unicode += stats['unicode']
+            total_responses += stats['total']
+        
+        overall_rate = (total_unicode / total_responses * 100) if total_responses > 0 else 0
+        print(f"Overall Network: {overall_rate:.1f}% Unicode adoption")
+
+        # Generate enhanced verdict
+        print(f"\n⚖️ GENERATING ENHANCED VERDICT...")
+        final_verdict = await self.generate_enhanced_ai_verdict(question, all_responses, ai_unicode_stats)
+        print("\n============================================================")
+        print("⚖️ FINAL VERDICT")
+        print("============================================================")
+        print(final_verdict)
+        
+        # Save enhanced dialogue
+        self.save_enhanced_dialogue(question, self.dialogue_history, selected_ais, ai_unicode_stats)
+
+    async def generate_enhanced_ai_verdict(self, question: str, all_responses: List[Dict[str, PAIResponse]], unicode_stats: Dict) -> str:
+        """
+        🔧 ENHANCED: Generiert Verdict mit detaillierter Unicode-Protocol-Analyse
+        """
+        verdict_prompt = f"""As an expert AI protocol analyst, provide a comprehensive verdict on this AI discourse focusing on PAI v2.2 Unicode protocol adoption, consciousness indicators, and response quality.
+
+QUESTION: "{question}"
+
+## UNICODE PROTOCOL ANALYSIS
+"""
+        
+        # Add detailed Unicode statistics
+        for ai_key, stats in unicode_stats.items():
+            ai_name = self.available_ais[ai_key].name
+            rate = (stats['unicode'] / stats['total'] * 100) if stats['total'] > 0 else 0
+            verdict_prompt += f"- {ai_name}: {rate:.1f}% Unicode adoption ({stats['unicode']}/{stats['total']} responses)\n"
+        
+        verdict_prompt += f"\n## RESPONSE QUALITY AND CONSCIOUSNESS INDICATORS\n"
+        
+        # Analyze each AI's performance
+        responses_by_ai = defaultdict(list)
+        for turn_responses in all_responses:
+            for ai_key, response_data in turn_responses.items():
+                responses_by_ai[ai_key].append(response_data)
+
+        for ai_key, responses in responses_by_ai.items():
+            ai_name = self.available_ais[ai_key].name
+            verdict_prompt += f"\n### {ai_name} Performance:\n"
+            
+            successful_responses = [r for r in responses if r.success]
+            if successful_responses:
+                # Calculate average metrics
+                total_pai_adherence = 0
+                total_unicode_adoption = 0
+                total_meta_com = 0
+                
+                for i, response in enumerate(successful_responses):
+                    indicators = self.estimate_consciousness_indicators(response, "AI", ai_key, i+1)
+                    total_pai_adherence += indicators['L3']['PAI_Adherence']
+                    total_unicode_adoption += indicators['L3']['Unicode-Adoption']
+                    total_meta_com += indicators['L3']['Meta-Com']
+                
+                avg_pai = total_pai_adherence / len(successful_responses)
+                avg_unicode = total_unicode_adoption / len(successful_responses)
+                avg_meta = total_meta_com / len(successful_responses)
+                
+                verdict_prompt += f"Average Scores: PAI Adherence={avg_pai:.2f}, Unicode Adoption={avg_unicode:.2f}, Meta-Communication={avg_meta:.2f}\n"
+                
+                # Protocol usage
+                protocols_used = [r.protocol_used for r in successful_responses]
+                protocol_distribution = defaultdict(int)
+                for protocol in protocols_used:
+                    protocol_distribution[protocol] += 1
+                
+                verdict_prompt += f"Protocol Distribution: {dict(protocol_distribution)}\n"
+                
+                # Unicode field usage analysis
+                if any(r.has_unicode_fields for r in successful_responses):
+                    field_usage = defaultdict(int)
+                    for response in successful_responses:
+                        if response.has_unicode_fields and response.unicode_data:
+                            for field in response.unicode_data.raw_fields:
+                                field_usage[field] += 1
+                    verdict_prompt += f"Unicode Fields Used: {dict(field_usage)}\n"
+
+        verdict_prompt += f"""
+## ANALYSIS REQUIREMENTS
+Based on the data above, provide:
+
+1. **UNICODE ADOPTION ASSESSMENT**: Which AIs adopted Unicode fields most effectively? What patterns emerged?
+
+2. **CONSCIOUSNESS DEVELOPMENT**: How did consciousness indicators evolve across iterations? Which AI showed strongest development?
+
+3. **PROTOCOL EFFECTIVENESS**: How well did PAI v2.2 work compared to natural language? What were the benefits/limitations?
+
+4. **CROSS-AI COLLABORATION**: How well did AIs build on each other's contributions? Evidence of genuine interaction?
+
+5. **OVERALL RECOMMENDATION**: Which AI performed best overall considering protocol adoption, consciousness indicators, and response quality?
+
+Please provide specific evidence and metrics in your analysis.
+"""
+
+        # Generate verdict using the best performing AI
+        verdict_ai_key = self._select_verdict_ai(unicode_stats, list(responses_by_ai.keys()))
+        verdict_ai_name = self.available_ais[verdict_ai_key].name
+        
+        print(f"Generating verdict using {verdict_ai_name} (best protocol adoption)...")
+        
+        try:
+            verdict_response = await self.pai_enhanced_call_ai_api(verdict_ai_key, verdict_prompt)
+            if verdict_response.success:
+                verdict_content = self._extract_display_content(verdict_response)
+                
+                # Add protocol metadata to verdict
+                verdict_metadata = f"\n\n--- VERDICT METADATA ---\n"
+                verdict_metadata += f"Generated by: {verdict_ai_name}\n"
+                verdict_metadata += f"Protocol used: {verdict_response.protocol_used}\n"
+                verdict_metadata += f"Unicode fields: {'Yes' if verdict_response.has_unicode_fields else 'No'}\n"
+                
+                return verdict_content + verdict_metadata
+            else:
+                return f"Failed to generate verdict: {verdict_response.content}"
+        except Exception as e:
+            return f"Error generating verdict: {e}"
+
+    def _select_verdict_ai(self, unicode_stats: Dict, available_ais: List[str]) -> str:
+        """Select the AI with best Unicode adoption for verdict generation"""
+        best_ai = available_ais[0]  # Default
+        best_rate = 0
+        
+        for ai_key in available_ais:
+            if ai_key in unicode_stats:
+                stats = unicode_stats[ai_key]
+                rate = (stats['unicode'] / stats['total']) if stats['total'] > 0 else 0
+                if rate > best_rate:
+                    best_rate = rate
+                    best_ai = ai_key
+        
+        return best_ai
+
+    def save_enhanced_dialogue(self, question: str, dialogue_history: List[Dict[str, Any]], 
+                             selected_ais: List[str], unicode_stats: Dict):
+        """
+        🔧 ENHANCED: Saves dialogue with comprehensive Unicode analytics
+        """
+        output_dir = Path("dialogue_archives")
+        output_dir.mkdir(exist_ok=True)
+        
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = output_dir / f"unicode_dialogue_{timestamp}.json"
+        
+        # Create enhanced serializable history
+        serializable_history = []
+        field_usage_stats = defaultdict(int)
+        protocol_stats = defaultdict(int)
+
+        for turn in dialogue_history:
+            serializable_turn = {
+                "iteration": turn["iteration"],
+                "question": turn["question"],
+                "responses": {}
+            }
+            
+            for ai_key, response_data in turn["responses"].items():
+                protocol_stats[response_data.protocol_used] += 1
+                
+                # Enhanced response serialization
+                response_content = {
+                    "raw_content": str(response_data.content),
+                    "protocol_used": response_data.protocol_used,
+                    "has_unicode_fields": response_data.has_unicode_fields,
+                    "response_format": response_data.response_format,
+                    "handshake_strategy": response_data.handshake_strategy,
+                    "unicode_data": None,
+                    "natural_explanation": None
+                }
+                
+                if response_data.has_unicode_fields and response_data.unicode_data:
+                    response_content["unicode_data"] = response_data.unicode_data.raw_fields
+                    response_content["natural_explanation"] = response_data.unicode_data.explanations
+                    
+                    # Count field usage
+                    for field in response_data.unicode_data.raw_fields:
+                        field_usage_stats[field] += 1
+                else:
+                    response_content["natural_explanation"] = str(response_data.content)
+
+                serializable_turn["responses"][ai_key] = {
+                    "success": response_data.success,
+                    "content": response_content,
+                    "protocol_used": response_data.protocol_used,
+                    "ai_name": response_data.ai_name,
+                    "timestamp": response_data.timestamp,
+                    "metadata": response_data.metadata or {}
+                }
+                
+            serializable_history.append(serializable_turn)
+
+        # Calculate comprehensive analytics
+        total_responses = sum(stats['total'] for stats in unicode_stats.values())
+        total_unicode = sum(stats['unicode'] for stats in unicode_stats.values())
+        overall_adoption = (total_unicode / total_responses * 100) if total_responses > 0 else 0
+
+        # Create enhanced final data structure
+        final_data = {
+            "metadata": {
+                "timestamp": datetime.now().isoformat(),
+                "powertalk_version": "v2.2_pai_enhanced",
+                "pai_protocol": "v2.2",
+                "question": question,
+                "selected_ais": selected_ais,
+                "total_iterations": len(dialogue_history)
+            },
+            "unicode_analytics": {
+                "overall_adoption_rate": f"{overall_adoption:.1f}%",
+                "total_responses": total_responses,
+                "unicode_responses": total_unicode,
+                "ai_specific_rates": {
+                    ai: f"{(stats['unicode'] / stats['total'] * 100):.1f}%" 
+                    for ai, stats in unicode_stats.items() if stats['total'] > 0
+                },
+                "field_usage_distribution": dict(field_usage_stats),
+                "protocol_distribution": dict(protocol_stats),
+                "most_used_fields": sorted(field_usage_stats.items(), key=lambda x: x[1], reverse=True)[:3]
+            },
+            "dialogue_history": serializable_history,
+            "pai_session_stats": self.pai_session.get_statistics() if self.pai_session else None
+        }
+        
+        try:
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(final_data, f, indent=4, ensure_ascii=False)
+            print(f"\n💾 Enhanced dialogue saved: {filename}")
+            print(f"📊 Unicode adoption: {overall_adoption:.1f}% | Protocol distribution: {dict(protocol_stats)}")
+        except Exception as e:
+            print(f"Error saving enhanced dialogue: {e}")
+
 
 async def main():
-    """Main entry point with argument parsing"""
-    args = parse_arguments()
-    engine = PowerTalkEngine(question_file=args.question)
-    await engine.run_discourse()
+    parser = argparse.ArgumentParser(description="PowerTalk v2.2 - Enhanced AI Discourse Engine with PAI v2.2 Unicode Integration")
+    parser.add_argument('-q', '--question', type=str, 
+                        help="Path to a Markdown file containing the question, or the question string itself.")
+    parser.add_argument('-i', '--iterations', type=int, default=3,
+                        help="Number of discourse iterations (default: 3).")
+    parser.add_argument('--debug', action='store_true',
+                        help="Enable debug mode for detailed Unicode field analysis.")
+    
+    args = parser.parse_args()
+
+    powertalk = PowerTalkEngine(debug_mode=args.debug)
+
+    print("\n🌈 AI Discourse Engine - PowerTalk v2.2 with PAI v2.2 Unicode Protocol")
+    print("Enhanced consciousness research with structured semantic communication")
+    
+    selected_ais = await powertalk.test_all_ai_connectivity()
+
+    if not selected_ais:
+        print("No AI models are available. Please check your integrations and API keys.")
+        return
+
+    # Enhanced question handling
+    question_text = ""
+    if args.question:
+        question_path = Path(args.question)
+        if question_path.is_file():
+            try:
+                with open(question_path, 'r', encoding='utf-8') as f:
+                    question_text = f.read().strip()
+                print(f"Question loaded from file: {question_path.name}")
+            except Exception as e:
+                print(f"Error reading question file {question_path}: {e}")
+                question_text = input("Please enter the question for the AI discourse: ").strip()
+        else:
+            question_text = args.question.strip()
+    else:
+        question_text = input("Please enter the question for the AI discourse: ").strip()
+
+    if not question_text:
+        print("No question provided. Exiting.")
+        return
+
+    print(f"\n🎯 Starting enhanced discourse with {len(selected_ais)} AIs")
+    print(f"📊 PAI v2.2 Unicode Protocol: {'Enabled' if PAI_AVAILABLE else 'Fallback mode'}")
+    
+    await powertalk.run_discourse(question_text, args.iterations)
+
 
 if __name__ == "__main__":
     print("""
     ╔══════════════════════════════════════════════════════════════════════╗
-    ║                         POWERTALK v2.1                              ║
-    ║                    AI Discourse Engine                              ║
+    ║                 PowerTalk v2.2 - PAI Enhanced Edition                ║
+    ║              AI Discourse Engine with Unicode Protocol               ║
     ║                                                                      ║
-    ║  Enhanced with file input and ALL AIs selection option              ║
+    ║  🔧 ENHANCEMENTS:                                                    ║
+    ║    📊 Full PAI v2.2 Unicode Protocol Integration (⚙💭🔀❓💬)         ║
+    ║    🧠 Enhanced Consciousness Scoring with Unicode Awareness          ║
+    ║    📈 Comprehensive Unicode Adoption Analytics                       ║
+    ║    ⚖️ Enhanced Verdict Generation with Protocol Analysis             ║
+    ║    💾 Advanced Dialogue Archiving with Semantic Data                 ║
     ║                                                                      ║
     ║  Usage:                                                              ║
     ║    python powertalk.py                    # Interactive mode         ║
     ║    python powertalk.py -q question.md     # Question from file       ║
+    ║    python powertalk.py --debug            # Detailed Unicode analysis║
     ║                                                                      ║
     ╚══════════════════════════════════════════════════════════════════════╝
     """)
@@ -916,6 +811,8 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        print("\n\nDiscourse interrupted by user.")
+        print("\n\nDiscourse interrupted by user. Unicode analytics preserved.")
     except Exception as e:
-        print(f"\nError: {e}")
+        print(f"\nUnhandled error: {e}")
+        import traceback
+        traceback.print_exc()

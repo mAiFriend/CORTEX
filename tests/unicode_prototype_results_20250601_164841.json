@@ -1,0 +1,37 @@
+{
+  "question": "What makes AI-to-AI communication different from human communication?",
+  "total_responses": 6,
+  "unicode_responses": 0,
+  "unicode_adoption_rate": "0.0%",
+  "field_distribution": {},
+  "dialogue_history": [
+    {
+      "iteration": 1,
+      "responses": {
+        "claude": "PAI Communication Error (authentication): \"Could not resolve authentication method. Expected either api_key or auth_token to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted\"",
+        "qwen": "❌ Ungültiger OpenRouter-Key"
+      },
+      "unicode_data": {},
+      "timestamp": "2025-06-01T16:48:41.667318"
+    },
+    {
+      "iteration": 2,
+      "responses": {
+        "claude": "PAI Communication Error (authentication): \"Could not resolve authentication method. Expected either api_key or auth_token to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted\"",
+        "qwen": "❌ Ungültiger OpenRouter-Key"
+      },
+      "unicode_data": {},
+      "timestamp": "2025-06-01T16:48:41.673844"
+    },
+    {
+      "iteration": 3,
+      "responses": {
+        "claude": "PAI Communication Error (authentication): \"Could not resolve authentication method. Expected either api_key or auth_token to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted\"",
+        "qwen": "❌ Ungültiger OpenRouter-Key"
+      },
+      "unicode_data": {},
+      "timestamp": "2025-06-01T16:48:41.679366"
+    }
+  ],
+  "timestamp": "2025-06-01T16:48:41.679375"
+}

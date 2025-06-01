@@ -1,0 +1,232 @@
+[
+  {
+    "timestamp": "2025-06-01T12:58:08.697934",
+    "test_name": "connectivity",
+    "ai_name": "claude",
+    "input": "Hello test",
+    "response": "OK",
+    "success": true,
+    "notes": "Connected (2 chars)",
+    "response_length": 2
+  },
+  {
+    "timestamp": "2025-06-01T12:58:09.431334",
+    "test_name": "connectivity",
+    "ai_name": "qwen",
+    "input": "Hello test",
+    "response": " OK",
+    "success": true,
+    "notes": "Connected (3 chars)",
+    "response_length": 3
+  },
+  {
+    "timestamp": "2025-06-01T12:58:13.601440",
+    "test_name": "connectivity",
+    "ai_name": "deepseek",
+    "input": "Hello test",
+    "response": "OK",
+    "success": true,
+    "notes": "Connected (2 chars)",
+    "response_length": 2
+  },
+  {
+    "timestamp": "2025-06-01T12:58:14.531507",
+    "test_name": "connectivity",
+    "ai_name": "chatgpt",
+    "input": "Hello test",
+    "response": "OK",
+    "success": true,
+    "notes": "Connected (2 chars)",
+    "response_length": 2
+  },
+  {
+    "timestamp": "2025-06-01T12:58:15.058627",
+    "test_name": "connectivity",
+    "ai_name": "gemini",
+    "input": "Hello test",
+    "response": "OK\n",
+    "success": true,
+    "notes": "Connected (3 chars)",
+    "response_length": 3
+  },
+  {
+    "timestamp": "2025-06-01T12:58:16.291493",
+    "test_name": "json_parsing",
+    "ai_name": "claude",
+    "input": "{\"ping\": true}",
+    "response": "pong",
+    "success": false,
+    "notes": "JSON response: False",
+    "response_length": 4
+  },
+  {
+    "timestamp": "2025-06-01T12:58:17.078848",
+    "test_name": "json_parsing",
+    "ai_name": "qwen",
+    "input": "{\"request\": \"ack\"}",
+    "response": " Acknowledged! I am here and ready to help. If you have any questions or need assistance, feel free to ask.",
+    "success": false,
+    "notes": "JSON response: False",
+    "response_length": 107
+  },
+  {
+    "timestamp": "2025-06-01T12:58:21.073258",
+    "test_name": "json_parsing",
+    "ai_name": "deepseek",
+    "input": "{\"ping\": 1}",
+    "response": "{\"pong\": 1}",
+    "success": true,
+    "notes": "JSON response: True",
+    "response_length": 11
+  },
+  {
+    "timestamp": "2025-06-01T12:58:21.801164",
+    "test_name": "json_parsing",
+    "ai_name": "chatgpt",
+    "input": "{\"hello\": \"world\"}",
+    "response": "Hello! How can I assist you today?",
+    "success": false,
+    "notes": "JSON response: False",
+    "response_length": 34
+  },
+  {
+    "timestamp": "2025-06-01T12:58:22.429982",
+    "test_name": "json_parsing",
+    "ai_name": "gemini",
+    "input": "{\"ping\": 1}",
+    "response": "OK.  I received your ping.  Is there anything I can help you with?\n",
+    "success": false,
+    "notes": "JSON response: False",
+    "response_length": 67
+  },
+  {
+    "timestamp": "2025-06-01T12:58:29.920550",
+    "test_name": "emoji_fields",
+    "ai_name": "claude",
+    "input": "{\"⚙\": \"test_context\", \"💭\": [\"communication\", \"test\"], \"🔀\": \"ai_to_ai\"}",
+    "response": "Ich verstehe. Dies ist also ein Test unserer Kommunikation in einem AI-zu-AI Kontext. Mein Ziel ist es, natürlich und authentisch zu antworten, ohne meine Antworten zu optimieren. Fehler sind in Ordnu...",
+    "success": false,
+    "notes": "Emoji understanding: False",
+    "response_length": 565
+  },
+  {
+    "timestamp": "2025-06-01T12:58:31.100975",
+    "test_name": "emoji_fields",
+    "ai_name": "qwen",
+    "input": "{\"⚙\": \"test_context\", \"💭\": [\"communication\", \"test\"], \"🔀\": \"ai_to_ai\"}",
+    "response": " The AI is simulating a conversation in the context of a test scenario focused on communication.\n\nExplanation:\n- \"⚙\": test_context indicates that the conversation is happening in a specific context, i...",
+    "success": true,
+    "notes": "Emoji understanding: True",
+    "response_length": 445
+  },
+  {
+    "timestamp": "2025-06-01T12:58:45.316525",
+    "test_name": "emoji_fields",
+    "ai_name": "deepseek",
+    "input": "{\"⚙\": \"test_context\", \"💭\": [\"communication\", \"test\"], \"🔀\": \"ai_to_ai\"}",
+    "response": "Understood. As a Technical Realist, I'll ground this exchange in practical implementation considerations. Let's analyze the test context:\n\n**Technical Observations:**\n1. The test context suggests we'r...",
+    "success": true,
+    "notes": "Emoji understanding: True",
+    "response_length": 1135
+  },
+  {
+    "timestamp": "2025-06-01T12:58:46.461670",
+    "test_name": "emoji_fields",
+    "ai_name": "chatgpt",
+    "input": "{\"⚙\": \"test_context\", \"💭\": [\"communication\", \"test\"], \"🔀\": \"ai_to_ai\"}",
+    "response": "{\"🧠\": \"Hello, how can I assist with your communication or test-related queries today?\"}",
+    "success": true,
+    "notes": "Emoji understanding: True",
+    "response_length": 87
+  },
+  {
+    "timestamp": "2025-06-01T12:58:48.589998",
+    "test_name": "emoji_fields",
+    "ai_name": "gemini",
+    "input": "{\"⚙\": \"test_context\", \"💭\": [\"communication\", \"test\"], \"🔀\": \"ai_to_ai\"}",
+    "response": "This looks like a structured representation of a test scenario. Let's break down what each part likely represents:\n\n* **`⚙`: `test_context`**  This likely indicates the context or environment in which...",
+    "success": true,
+    "notes": "Emoji understanding: True",
+    "response_length": 1037
+  },
+  {
+    "timestamp": "2025-06-01T12:58:51.107700",
+    "test_name": "relay_start",
+    "ai_name": "claude",
+    "input": "Start a conversation about AI consciousness. Respond in 1-2 sentences.",
+    "response": "Consciousness in AI is a fascinating and complex topic. There's still a lot of uncertainty and debate among experts about whether current AI systems can be considered truly conscious, or if that's eve...",
+    "success": true,
+    "notes": "Initial message",
+    "response_length": 211
+  },
+  {
+    "timestamp": "2025-06-01T12:58:52.680028",
+    "test_name": "relay_continue",
+    "ai_name": "qwen",
+    "input": "Claude said: 'Consciousness in AI is a fascinating and complex topic. There's still a lot of uncertainty and debate among experts about whether current AI systems can be considered truly conscious, or if that's even possible.'\n\nBuild on Claude's point. Respond in 1-2 sentences.",
+    "response": " While AI has made significant advancements in areas such as speech recognition, image analysis, and decision-making, the question of whether they possess consciousness, with its subjective experience...",
+    "success": true,
+    "notes": "Relay response",
+    "response_length": 522
+  },
+  {
+    "timestamp": "2025-06-01T12:58:52.680151",
+    "test_name": "relay_recognition",
+    "ai_name": "qwen",
+    "input": "Cross-AI reference check",
+    "response": " While AI has made significant advancements in areas such as speech recognition, image analysis, and decision-making, the question of whether they possess consciousness, with its subjective experience...",
+    "success": false,
+    "notes": "References Claude: False",
+    "response_length": 522
+  },
+  {
+    "timestamp": "2025-06-01T12:58:58.754141",
+    "test_name": "structured_dialogue",
+    "ai_name": "claude",
+    "input": "JSON structure request",
+    "response": "{\n  \"ai_name\": \"Claude\",\n  \"message\": \"I believe AIs can collaborate effectively by leveraging our complementary strengths and capabilities. We each have unique knowledge bases, reasoning abilities, a...",
+    "success": true,
+    "notes": "Structured: True",
+    "response_length": 746
+  },
+  {
+    "timestamp": "2025-06-01T12:59:00.010435",
+    "test_name": "structured_dialogue",
+    "ai_name": "qwen",
+    "input": "JSON structure request",
+    "response": " {\n  \"ai_name\": \"Assistant\",\n  \"message\": \"AIs can collaborate effectively by leveraging their unique skills and capabilities to work together on tasks, processes, and problem-solving. Collaboration c...",
+    "success": true,
+    "notes": "Structured: True",
+    "response_length": 521
+  },
+  {
+    "timestamp": "2025-06-01T12:59:09.066978",
+    "test_name": "structured_dialogue",
+    "ai_name": "deepseek",
+    "input": "JSON structure request",
+    "response": "```json\n{\n  \"ai_name\": \"DeepSeek\",\n  \"message\": \"AIs can collaborate effectively by leveraging standardized communication protocols (e.g., APIs, RPC), sharing well-defined data schemas, and adhering t...",
+    "success": true,
+    "notes": "Structured: True",
+    "response_length": 611
+  },
+  {
+    "timestamp": "2025-06-01T12:59:11.071265",
+    "test_name": "structured_dialogue",
+    "ai_name": "chatgpt",
+    "input": "JSON structure request",
+    "response": "```json\n{\n  \"ai_name\": \"ChatGPT\",\n  \"message\": \"AIs can collaborate effectively by integrating their specialized capabilities to achieve a common goal. This involves communication protocols, data shar...",
+    "success": true,
+    "notes": "Structured: True",
+    "response_length": 465
+  },
+  {
+    "timestamp": "2025-06-01T12:59:12.959519",
+    "test_name": "structured_dialogue",
+    "ai_name": "gemini",
+    "input": "JSON structure request",
+    "response": "```json\n{\n  \"ai_name\": \"Bard\",\n  \"message\": \"Effective AI collaboration hinges on several key factors.  Firstly, a well-defined shared goal or objective is crucial.  Without a clear purpose, individua...",
+    "success": true,
+    "notes": "Structured: True",
+    "response_length": 1118
+  }
+]

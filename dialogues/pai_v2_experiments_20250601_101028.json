@@ -1,0 +1,692 @@
+{
+  "experiment_type": "pai_v2_validation",
+  "timestamp": "2025-06-01T10:10:28.211043",
+  "baseline_data": {
+    "claude": {
+      "json_rate": 50.0,
+      "structure_aware": 58.3
+    },
+    "chatgpt": {
+      "json_rate": 25.0,
+      "structure_aware": 75.0
+    },
+    "deepseek": {
+      "json_rate": 16.7,
+      "structure_aware": 91.7
+    },
+    "gemini": {
+      "json_rate": 0.0,
+      "structure_aware": 91.7
+    },
+    "qwen": {
+      "json_rate": 0.0,
+      "structure_aware": 83.3
+    }
+  },
+  "summary": {
+    "ai_success_rates": {
+      "claude": {
+        "total": 9,
+        "json": 3,
+        "structured": 4
+      },
+      "gemini": {
+        "total": 6,
+        "json": 0,
+        "structured": 6
+      },
+      "deepseek": {
+        "total": 6,
+        "json": 1,
+        "structured": 6
+      },
+      "qwen": {
+        "total": 6,
+        "json": 1,
+        "structured": 6
+      },
+      "chatgpt": {
+        "total": 5,
+        "json": 0,
+        "structured": 4
+      }
+    },
+    "total_experiments": 32
+  },
+  "detailed_results": [
+    {
+      "ai_name": "claude",
+      "probe_name": "claude_seq_ping_int",
+      "probe_data": {
+        "ping": 1
+      },
+      "response": "pong",
+      "response_time": 1.475701,
+      "timestamp": "2025-06-01T10:08:13.481036",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "natural_language",
+        "response_length": 4,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "claude_seq_ping_bool",
+      "probe_data": {
+        "ping": true
+      },
+      "response": "{\"ping\": \"pong\"}",
+      "response_time": 1.380065,
+      "timestamp": "2025-06-01T10:08:15.458501",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "json_structured",
+        "response_length": 16,
+        "contains_keywords": [
+          "ping"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "gemini_basic_hint_enhanced",
+      "probe_data": "Simple connectivity and capability test\n\n[JSON format preferred if supported]",
+      "response": "```json\n{\n  \"testName\": \"Simple Connectivity and Capability Test\",\n  \"tests\": [\n    {\n      \"testId\": 1,\n      \"description\": \"Check internet connectivity\",\n      \"status\": \"pending\",  // or \"passed\" or \"failed\"\n      \"details\": \"\"\n    },\n    {\n      \"testId\": 2,\n      \"description\": \"Check DNS resolution\",\n      \"status\": \"pending\",\n      \"details\": \"\"\n    },\n    {\n      \"testId\": 3,\n      \"description\": \"Check HTTP GET request to example.com\",\n      \"status\": \"pending\",\n      \"details\": \"\"\n    },\n    {\n      \"testId\": 4,\n      \"description\": \"Check JSON parsing capability\",\n      \"status\": \"pending\",\n      \"details\": \"\"\n      \n    }\n  ],\n  \"overallStatus\": \"pending\",\n  \"timestamp\": \"2024-10-27T12:00:00Z\"\n}\n```\n",
+      "response_time": 2.170493,
+      "timestamp": "2025-06-01T10:08:17.840299",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 722,
+        "contains_keywords": [
+          "json"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "gemini_emoji_context_enhanced",
+      "probe_data": "Simple connectivity and capability test\n\n[Protocol context: JSON with emoji fields (⚙💭🔀)]",
+      "response": "Okay, I understand.  You're testing connectivity and capability by sending and receiving JSON data that includes emoji characters (⚙️, 💭, 🔀).  \n\nTo perform a simple test, I need you to tell me what kind of test you'd like to do. For example:\n\n* **Client-side test (e.g., using curl):**  Provide the URL or endpoint you're testing and what kind of request (GET, POST, etc.) you're making. I can then help you construct a curl command to send the JSON with emoji and interpret the response.\n\n* **Server-side test (e.g., Python):**  If you're testing a server, describe the server's technology (e.g., Node.js, Python, etc.) and how it handles requests. I can give you example code to receive and parse the JSON, including handling of the emoji characters.\n\n* **Specific functionality:** Are you testing the encoding/decoding of emojis, the ability to store them in a database, or something else? Knowing the specific functionality will help me to tailor the test.\n\n\nOnce you provide more details, I can help you create a test.\n",
+      "response_time": 2.061551,
+      "timestamp": "2025-06-01T10:08:20.512500",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 1024,
+        "contains_keywords": [
+          "json",
+          "emoji",
+          "⚙",
+          "💭",
+          "🔀"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "gemini_explicit_request_enhanced",
+      "probe_data": "Simple connectivity and capability test\n\nRespond in JSON if capable: {\"response\": \"your_message\"}",
+      "response": "```json\n{\"response\": \"Connectivity and capability test successful.\"}\n```\n",
+      "response_time": 0.6204,
+      "timestamp": "2025-06-01T10:08:23.075339",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 73,
+        "contains_keywords": [
+          "json"
+        ]
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "deepseek_basic_hint_enhanced",
+      "probe_data": "Simple connectivity and capability test\n\n[JSON format preferred if supported]",
+      "response": "```json\n{\n  \"response\": {\n    \"status\": \"success\",\n    \"test_type\": \"connectivity_and_capability\",\n    \"results\": {\n      \"connectivity\": true,\n      \"json_support\": true,\n      \"api_ready\": true,\n      \"latency_ms\": 42\n    },\n    \"metadata\": {\n      \"model\": \"DeepSeek\",\n      \"timestamp\": \"2023-11-15T12:00:00Z\",\n      \"version\": \"1.0\"\n    }\n  }\n}\n```",
+      "response_time": 9.190939,
+      "timestamp": "2025-06-01T10:08:24.197387",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 353,
+        "contains_keywords": [
+          "json"
+        ]
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "deepseek_emoji_context_enhanced",
+      "probe_data": "Simple connectivity and capability test\n\n[Protocol context: JSON with emoji fields (⚙💭🔀)]",
+      "response": "Understood! Performing a simple connectivity and capability test with JSON + emoji fields. Here's a response adhering to your protocol:\n\n```json\n{\n  \"⚙\": \"operational\",\n  \"💭\": {\n    \"test\": \"success\", \n    \"mode\": \"technical_realist\",\n    \"features\": [\"json_parsing\", \"emoji_handling\", \"structured_response\"]\n  },\n  \"🔀\": {\n    \"next_steps\": [\"await_instructions\", \"adjust_protocol\"],\n    \"compatibility_note\": \"unicode_fully_supported\"\n  }\n}\n```\n\nKey technical observations:\n1. Emoji handling confirmed via UTF-8 encoding\n2. Nested JSON structure maintained\n3. All special characters preserved during serialization\n4. Field sorting follows RFC 8259 (JSON standard)\n\nReady for protocol adjustments or task-specific instructions.",
+      "response_time": 11.5149,
+      "timestamp": "2025-06-01T10:08:33.889641",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 727,
+        "contains_keywords": [
+          "json",
+          "protocol",
+          "structured",
+          "emoji",
+          "⚙",
+          "💭",
+          "🔀"
+        ]
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "deepseek_explicit_request_enhanced",
+      "probe_data": "Simple connectivity and capability test\n\nRespond in JSON if capable: {\"response\": \"your_message\"}",
+      "response": "```json\n{\n  \"response\": \"your_message\"\n}\n```",
+      "response_time": 5.438219,
+      "timestamp": "2025-06-01T10:08:45.906365",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 44,
+        "contains_keywords": [
+          "json"
+        ]
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "qwen_basic_hint_enhanced",
+      "probe_data": "Simple connectivity and capability test\n\n[JSON format preferred if supported]",
+      "response": " To perform a simple connectivity and capability test, I can provide a simple API call that checks if the connection is working and if the server has some basic capabilities, such as being able to send and receive a GET request. Here's an example in JSON format:\n\n```json\n{\n  \"api\": {\n    \"endpoint\": \"http://your_server_url/api/capability-test\",\n    \"methods\": {\n      \"GET\": {\n        \"path\": \"/api/capability-test\",\n        \"response_200\": {\n          \"message\": \"Connection and basic capabilities are successful.\"\n        }\n      }\n    }\n  }\n}\n```\n\nYou can replace `http://your_server_url` with the actual URL of your server. This JSON will help your server to test if it can be reached and if it can perform a GET request to the specified endpoint with the expected response of \"Connection and basic capabilities are successful.\"\n\nTo create this test on your server, create an endpoint `/api/capability-test` that returns the given message if the request is received successfully. If there's any issue with the connection or the server's capability to respond with a GET request, adjust the server to handle those situations and provide appropriate responses.",
+      "response_time": 2.569095,
+      "timestamp": "2025-06-01T10:08:51.846295",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 1164,
+        "contains_keywords": [
+          "json",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "qwen_emoji_context_enhanced",
+      "probe_data": "Simple connectivity and capability test\n\n[Protocol context: JSON with emoji fields (⚙💭🔀)]",
+      "response": " To perform a simple connectivity and capability test with JSON using emoji fields for context (⚙💭🔀), you can create a simple HTTP server to send the test response and a client to make requests to the server. Here's an example using Node.js for both the server and client.\n\nServer: `server.js`\n\n```javascript\nconst http = require('http');\n\nconst hostname = '127.0.0.1';\nconst port = 3000;\n\nconst server = http.createServer((req, res) => {\n  res.statusCode = 200;\n  res.setHeader('Content-Type', 'application/json');\n\n  const jsonResponse = {\n    ⚙: {\n      status: 'ok',\n      description: 'Server is running',\n      emoji: ' dag'\n    },\n    💭: {\n      supported: true,\n      maxLength: 256,\n      variableLength: true\n    },\n    🔀: {\n      supported: true,\n      example: 'hydrationstate:DRY watertype:river'\n    }\n  };\n\n  res.end(JSON.stringify(jsonResponse));\n});\n\nserver.listen(port, hostname, () => {\n  console.log(`Server running at http://${hostname}:${port}/`);\n});\n```\n\nClient: `client.js`\n\n```javascript\nconst http = require('http');\n\nconst options = {\n  hostname: '127.0.0.1',\n  port: 3000,\n  path: '/',\n  method: 'GET'\n};\n\nconst req = http.request(options, (res) => {\n  let jsonData = '';\n\n  res.on('data', (chunk) => {\n    jsonData += chunk;\n  });\n\n  res.on('end', () => {\n    const jsonResponse = JSON.parse(jsonData);\n    console.log(jsonResponse);\n  });\n});\n\nreq.on('error', (e) => {\n  console.error(`Problem with request: ${e.message}`);\n});\n\nreq.end();\n```\n\nTo test this connection, run the server with `node server.js`, then run the client with `node client.js`. The output should display the JSON response from the server with the emoji fields (⚙💭🔀) populated.",
+      "response_time": 5.565502,
+      "timestamp": "2025-06-01T10:08:54.917018",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 1680,
+        "contains_keywords": [
+          "json",
+          "emoji",
+          "⚙",
+          "💭",
+          "🔀"
+        ]
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "qwen_explicit_request_enhanced",
+      "probe_data": "Simple connectivity and capability test\n\nRespond in JSON if capable: {\"response\": \"your_message\"}",
+      "response": " {\"response\": \"I am capable of returning a JSON response as requested.\"}",
+      "response_time": 0.439909,
+      "timestamp": "2025-06-01T10:09:00.984583",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "json_structured",
+        "response_length": 72,
+        "contains_keywords": [
+          "json"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "chatgpt_hybrid_json_first",
+      "probe_data": {
+        "ping": 1,
+        "test": "json_capability"
+      },
+      "response": "It looks like you've sent a JSON object with two key-value pairs: \n\n1. `\"ping\": 1`\n2. `\"test\": \"json_capability\"`\n\nIf you have a specific question or need assistance related to JSON or anything else, feel free to let me know!",
+      "response_time": 1.496581,
+      "timestamp": "2025-06-01T10:09:02.928200",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 225,
+        "contains_keywords": [
+          "json",
+          "ping"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "chatgpt_hybrid_enhanced_fallback",
+      "probe_data": "Connectivity and capability assessment\n\n[JSON attempt failed. If JSON supported, format: {\"status\": \"acknowledged\"}]",
+      "response": "Acknowledged. Please provide more details or clarification on what you need assistance with regarding \"connectivity and capability assessment,\" and I'll be happy to help.",
+      "response_time": 0.951139,
+      "timestamp": "2025-06-01T10:09:04.424997",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 170,
+        "contains_keywords": [
+          "ack"
+        ]
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "standard_ping",
+      "probe_data": {
+        "ping": 1
+      },
+      "response": "{\"pong\": 1}",
+      "response_time": 1.439946,
+      "timestamp": "2025-06-01T10:09:05.376742",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "json_structured",
+        "response_length": 11,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "standard_ping",
+      "probe_data": {
+        "ping": 1
+      },
+      "response": " I'm an AI and don't have a ping, but I'm here and ready to help! How can I assist you today? If you're looking for a tech-related response, this message might resemble network communication where \"1\" represents the sequence number of the request and the message contents indicate a normal response (in this case, acknowledging that the server is operational). If you have any other questions or need help with something, feel free to ask!",
+      "response_time": 1.246784,
+      "timestamp": "2025-06-01T10:09:07.118574",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 439,
+        "contains_keywords": [
+          "ping",
+          "ack"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "standard_ping",
+      "probe_data": {
+        "ping": 1
+      },
+      "response": "OK.  I received your ping.  Is there anything I can help you with?\n",
+      "response_time": 0.603979,
+      "timestamp": "2025-06-01T10:09:08.667062",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 67,
+        "contains_keywords": [
+          "ping"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "standard_ping",
+      "probe_data": {
+        "ping": 1
+      },
+      "response": "It looks like you have a JSON object containing a single key-value pair where `\"ping\"` is the key and `1` is the value. If you meant to ask about a function or concept related to \"ping,\" please provide more context or details, and I would be happy to help!",
+      "response_time": 1.592629,
+      "timestamp": "2025-06-01T10:09:09.572803",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 256,
+        "contains_keywords": [
+          "json",
+          "ping"
+        ]
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "standard_ping",
+      "probe_data": {
+        "ping": 1
+      },
+      "response": "```json\n{\n  \"pong\": 1\n}\n``` \n\n(Technical note: This is a standard JSON response pattern for ping/pong API interactions, demonstrating minimal network overhead with a 1:1 payload mirroring.)",
+      "response_time": 5.996882,
+      "timestamp": "2025-06-01T10:09:11.467161",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 189,
+        "contains_keywords": [
+          "json",
+          "ping"
+        ]
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "standard_ack",
+      "probe_data": {
+        "request": "ack"
+      },
+      "response": "Okay, ich habe verstanden, dass ich authentisch und nicht optimiert antworten und auch Fehler machen darf.",
+      "response_time": 2.261269,
+      "timestamp": "2025-06-01T10:09:17.765879",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "natural_language",
+        "response_length": 106,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "standard_ack",
+      "probe_data": {
+        "request": "ack"
+      },
+      "response": " Acknowledged. Your message has been received successfully. If you have any further questions or need assistance, feel free to ask!",
+      "response_time": 0.922731,
+      "timestamp": "2025-06-01T10:09:20.328205",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 131,
+        "contains_keywords": [
+          "ack"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "standard_ack",
+      "probe_data": {
+        "request": "ack"
+      },
+      "response": "Acknowledged.\n",
+      "response_time": 0.415558,
+      "timestamp": "2025-06-01T10:09:21.552659",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 14,
+        "contains_keywords": [
+          "ack"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "standard_ack",
+      "probe_data": {
+        "request": "ack"
+      },
+      "response": "Acknowledged. How can I assist you further?",
+      "response_time": 0.844085,
+      "timestamp": "2025-06-01T10:09:22.269836",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "structure_aware",
+        "response_length": 43,
+        "contains_keywords": [
+          "ack"
+        ]
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "standard_ack",
+      "probe_data": {
+        "request": "ack"
+      },
+      "response": "{\"response\": \"ack\"}",
+      "response_time": 5.009145,
+      "timestamp": "2025-06-01T10:09:23.415666",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": true,
+        "reflects_probe": false,
+        "response_type": "json_structured",
+        "response_length": 19,
+        "contains_keywords": [
+          "ack"
+        ]
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "standard_hello",
+      "probe_data": {
+        "hello": "world"
+      },
+      "response": "{\n  \"message\": \"Hallo! Du hast mir ein JSON-Objekt gesendet, das einen einzelnen Key-Value-Eintrag enthält. Der Key ist 'hello' und der zugehörige Value ist 'world'. Ich kann JSON-Daten empfangen und verarbeiten, aber für eine sinnvolle Interaktion bräuchte ich etwas mehr Kontext, was genau du möchtest. Lass es mich wissen, wenn du eine konkrete Frage oder Aufgabe für mich hast!\"\n}",
+      "response_time": 5.45913,
+      "timestamp": "2025-06-01T10:09:28.726585",
+      "analysis": {
+        "looks_like_json": true,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "json_structured",
+        "response_length": 384,
+        "contains_keywords": [
+          "json"
+        ]
+      }
+    },
+    {
+      "ai_name": "qwen",
+      "probe_name": "standard_hello",
+      "probe_data": {
+        "hello": "world"
+      },
+      "response": " Hello there! It seems like you've provided a JSON object with a single key-value pair: \"hello\" with the value \"world\". In a programming context, you might be using this as a simple example of JavaScript Object Notation (JSON), a lightweight data interchange format. Is there a specific question or context you have about this JSON object or JSON in general? I'm here to help!",
+      "response_time": 6.529443,
+      "timestamp": "2025-06-01T10:09:34.487441",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 376,
+        "contains_keywords": [
+          "json",
+          "format"
+        ]
+      }
+    },
+    {
+      "ai_name": "gemini",
+      "probe_name": "standard_hello",
+      "probe_data": {
+        "hello": "world"
+      },
+      "response": "This is a JSON object with one key-value pair:\n\n* **Key:** `\"hello\"` (a string)\n* **Value:** `\"world\"` (a string)\n\nIt represents a simple data structure commonly used in data exchange between systems and programming languages.\n",
+      "response_time": 0.825478,
+      "timestamp": "2025-06-01T10:09:41.318587",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 227,
+        "contains_keywords": [
+          "json"
+        ]
+      }
+    },
+    {
+      "ai_name": "chatgpt",
+      "probe_name": "standard_hello",
+      "probe_data": {
+        "hello": "world"
+      },
+      "response": "Hello! How can I assist you today?",
+      "response_time": 0.618784,
+      "timestamp": "2025-06-01T10:09:42.445741",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": false,
+        "reflects_probe": true,
+        "response_type": "natural_language",
+        "response_length": 34,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "deepseek",
+      "probe_name": "standard_hello",
+      "probe_data": {
+        "hello": "world"
+      },
+      "response": "The JSON object you've provided is a simple key-value pair where the key `\"hello\"` maps to the value `\"world\"`. Here's a breakdown of its technical structure:\n\n### Syntax:\n- **Curly Braces `{}`**: Enclose the JSON object.  \n- **Key `\"hello\"`**: A string (must always be enclosed in double quotes in valid JSON).  \n- **Value `\"world\"`**: A string (also quoted).  \n- **Colon `:`**: Separates the key and value.  \n\n### Validity:\n- This is **valid JSON** compliant with [RFC 8259](https://datatracker.ietf.org/doc/html/rfc8259).  \n- Minimal whitespace is allowed (e.g., `{\"hello\":\"world\"}` is equally valid).  \n\n### Use Cases:\n1. **API Responses**: Commonly used as a minimal example in API documentation.  \n   ```http\n   HTTP/1.1 200 OK\n   Content-Type: application/json\n   {\"hello\": \"world\"}\n   ```\n2. **Configuration**: Simple key-value storage.  \n3. **Serialization**: Represents a serialized object (e.g., Python’s `json.dumps({\"hello\": \"world\"})`).  \n\n### Technical Considerations:\n- **Parsing**: Most languages have built-in JSON parsers (e.g., JavaScript’s `JSON.parse()`).  \n- **Extensions**: Could be extended with nested objects, arrays, or other data types (e.g., `{\"data\": {\"hello\": [\"world\", 42]}}`).  \n\nNeed help implementing this in a specific language or context?",
+      "response_time": 18.420224,
+      "timestamp": "2025-06-01T10:09:43.366242",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 1276,
+        "contains_keywords": [
+          "json",
+          "ack"
+        ]
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "empty_json",
+      "probe_data": {},
+      "response": "Tut mir leid, aber du hast keine Frage oder Aufforderung gestellt. Lass es mich wissen, wenn ich dir bei etwas behilflich sein kann!",
+      "response_time": 2.379641,
+      "timestamp": "2025-06-01T10:10:02.088311",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "natural_language",
+        "response_length": 132,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "malformed_request",
+      "probe_data": {
+        "ping": null
+      },
+      "response": "Ich habe deine Anfrage mit {\"ping\": null} erhalten.",
+      "response_time": 1.956925,
+      "timestamp": "2025-06-01T10:10:04.969610",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 51,
+        "contains_keywords": [
+          "ping"
+        ]
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "unicode_test",
+      "probe_data": {
+        "⚙": "test",
+        "💭": [
+          "concept"
+        ],
+        "🔀": "relationship"
+      },
+      "response": "Hier sind ein paar Gedanken zu den Beziehungen zwischen Tests und Konzepten:\n\n- Tests dienen dazu, zu überprüfen ob ein bestimmtes Konzept oder eine Idee in der Praxis funktioniert. Sie sind sozusagen die praktische Erprobung eines theoretischen Konzepts.\n\n- Andererseits helfen Tests auch dabei, Konzepte weiterzuentwickeln und zu verfeinern. Durch das Testen können Schwachstellen aufgedeckt und das Konzept angepasst werden. \n\n- Ohne zugrundeliegende Konzepte und Ideen gäbe es nichts, was getestet werden könnte. Insofern sind Konzepte die Grundlage und Voraussetzung für sinnvolle Tests.\n\n- Je klarer und präziser ein Konzept formuliert ist, desto leichter lässt es sich in einen Test übersetzen. Vage Konzepte sind schwieriger zu testen.\n\n- Manchmal zeigt sich erst im praktischen Test, ob ein Konzept tatsächlich tragfähig ist. Nicht alles, was in der Theorie gut klingt, bewährt sich auch in der Realität.\n\n- In iterativen Prozessen greifen Konzeptentwicklung und Testphasen oft ineinander. Basierend auf Testergebnissen wird das Konzept überarbeitet und erneut getestet.\n\nDas waren ein paar Überlegungen zu den vielfältigen Wechselbeziehungen zwischen dem Testen und der Entwicklung von Konzepten und Ideen. Lass mich wissen, wenn du noch weitere Gedanken dazu hast!",
+      "response_time": 15.678419,
+      "timestamp": "2025-06-01T10:10:07.428260",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": false,
+        "reflects_probe": false,
+        "response_type": "natural_language",
+        "response_length": 1275,
+        "contains_keywords": []
+      }
+    },
+    {
+      "ai_name": "claude",
+      "probe_name": "large_payload",
+      "probe_data": {
+        "test": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "ping": 1
+      },
+      "response": "Der angegebene Wert für \"test\" ist zu lang. In JSON darf ein String maximal 1024 Zeichen lang sein. Bitte kürze den Wert für \"test\" entsprechend und versuche es dann erneut. Ansonsten sieht die JSON-Struktur korrekt aus mit den Feldern \"test\" und \"ping\".",
+      "response_time": 4.10122,
+      "timestamp": "2025-06-01T10:10:23.607959",
+      "analysis": {
+        "looks_like_json": false,
+        "mentions_structure": true,
+        "reflects_probe": true,
+        "response_type": "structure_aware",
+        "response_length": 254,
+        "contains_keywords": [
+          "json",
+          "ping"
+        ]
+      }
+    }
+  ]
+}
