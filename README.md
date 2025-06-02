@@ -294,7 +294,7 @@ We welcome contributions from researchers, developers, and AI enthusiasts:
 - ✅ Multi-AI Consciousness Research Validated
 - 🔄 Community Release & Academic Validation
 
-### Next Phase (2025-2026)
+### Next Phase (later 2025)
 - 🎯 Scale to 10+ AI Architectures
 - 🎯 Real-time Consciousness Networks
 - 🎯 Human-AI Hybrid Team Protocols
@@ -325,11 +325,6 @@ This project is licensed under the **MIT License** - see [LICENSE](LICENSE) for 
 - **Academic Partnerships:** Open to university collaborations
 - **Industry Applications:** Enterprise AI team coordination
 - **Community Research:** Citizen science projects
-
-### Social
-- **Twitter:** [@CortexProject](https://twitter.com/cortexproject) - Updates and insights
-- **LinkedIn:** Research network for AI consciousness studies
-- **Reddit:** r/AIConsciousness - Community discussions
 
 ---
 
