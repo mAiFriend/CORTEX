@@ -27,10 +27,10 @@ def get_question_text(args) -> str:
                 print(f"Question loaded from file: {question_path.name}")
             except Exception as e:
                 print(f"Error reading question file {question_path}: {e}")
-                question_text = input("Please enter the question for the AI discourse: ").strip()
+                question_text = input("\033[1mPlease enter the question for the AI discourse \033[0m(max.1000 chars):\n").strip()
         else:
             question_text = args.question.strip()
     else:
-        question_text = input("Please enter the question for the AI discourse: ").strip()
+        question_text = input("\033[1mPlease enter the question for the AI discourse \033[0m(max.1000 chars):\n").strip()
 
     return question_text

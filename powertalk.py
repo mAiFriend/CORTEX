@@ -18,6 +18,16 @@ from core.pai_protocol_handler import PAIProtocolHandler, PAI_AVAILABLE, PAIResp
 from core.pai_communicator import PAICommunicator
 from core.consciousness_scorer import ConsciousnessScorer
 from core.dialogue_manager import DialogueManager
+
+# Neue Verdict-Module (Modularisierung)
+from core.verdict import (
+    VerdictContext, 
+    VerdictAnomalyDetector, 
+    AnomalyReport,
+    VerdictGenerator,
+    VerdictSynthesis
+)
+
 from utils.display_helpers import display_startup_banner, _display_response_details, display_final_results, _extract_display_content, _extract_full_content
 from utils.argument_parser import parse_arguments, get_question_text
 
@@ -36,6 +46,11 @@ class PowerTalkEngine:
         )
         self.consciousness_scorer = ConsciousnessScorer()
         self.dialogue_manager = DialogueManager(output_dir=DIALOGUE_ARCHIVE_DIR)
+
+        # Neue Verdict-bezogene Module (Modularisierung)
+        self.verdict_context = VerdictContext()
+        self.verdict_anomaly_detector = VerdictAnomalyDetector()
+        self.verdict_generator = VerdictGenerator(self.ai_manager, debug_mode=debug_mode)
 
         # Referenzen zu den wichtigen Daten aus den Modulen
         self.available_ais = self.ai_manager.available_ais
@@ -88,10 +103,10 @@ class PowerTalkEngine:
         if PAI_AVAILABLE:
             prompt_parts.append("\n" + PAI_UNICODE_PROMPT_INSTRUCTION)
 
-
         return "\n".join(prompt_parts)
 
     async def run_discourse(self, question: str, iteration_count: int, selected_ai_keys: List[str]):
+        """Enhanced discourse mit iteration-by-iteration verdict generation"""
         if not selected_ai_keys:
             print("No AIs selected to run discourse. Exiting.")
             return
@@ -106,6 +121,10 @@ class PowerTalkEngine:
         print(f"Question: {question}")
         print(f"   📊 Unicode fields: ⚙, 💭, 🔀, ❓, 💬")
         print("============================================================")
+
+        # Neue Struktur: Iteration-by-iteration mit Verdict und Anomalie-Erkennung
+        iteration_verdicts = []
+        anomaly_reports = []
 
         for iteration in range(1, iteration_count + 1):
             print(f"\n--- ITERATION {iteration}/{iteration_count} ---")
@@ -149,6 +168,69 @@ class PowerTalkEngine:
 
             self.dialogue_manager.add_to_history(iteration, question, current_iteration_responses)
 
+            # NEUE LOGIK: Iteration-spezifische Anomalie-Erkennung und Verdict-Generierung
+            iteration_data = {
+                "iteration": iteration,
+                "responses": current_iteration_responses,
+                "consciousness_scores": self._calculate_iteration_consciousness_scores(current_iteration_responses)
+            }
+
+            # Anomalie-Erkennung
+            anomalies = self.verdict_anomaly_detector.detect_iteration_anomalies(iteration_data)
+            
+            if anomalies:
+                anomaly_reports.extend(anomalies)
+                print(f"⚠️ Anomalies detected in iteration {iteration}")
+                
+                # Interaktive Anomalie-Behandlung
+                user_decision = await self._handle_anomaly_interactively(anomalies)
+                
+                if user_decision == "MANUAL_REVIEW":
+                    iteration_verdicts.append(self._create_manual_review_placeholder(iteration_data))
+                    print(f"📋 Iteration {iteration} marked for manual review")
+                elif user_decision == "AUTO_COMPRESS":
+                    print(f"🗜️ Generating compressed verdict for iteration {iteration}...")
+                    verdict_ai_key = self._select_verdict_ai(self.unicode_analytics.ai_adoption_rates, list(selected_ais.keys()))
+                    if verdict_ai_key:
+                        compressed_verdict = await self.verdict_generator.generate_compressed_iteration_verdict(
+                            iteration_data, 
+                            self.verdict_context.get_compressed_context_for_verdict(),
+                            verdict_ai_key
+                        )
+                        iteration_verdicts.append(compressed_verdict)
+                        if compressed_verdict.get("status") == "SUCCESS":
+                            self.verdict_context.update(compressed_verdict)
+                elif user_decision == "EXCLUDE":
+                    iteration_verdicts.append(self._create_exclusion_marker(iteration_data))
+                    print(f"❌ Iteration {iteration} excluded from analysis")
+                elif user_decision == "CONTINUE":
+                    # Normal processing trotz Anomaly
+                    print(f"⚡ Processing iteration {iteration} despite anomalies...")
+                    verdict_ai_key = self._select_verdict_ai(self.unicode_analytics.ai_adoption_rates, list(selected_ais.keys()))
+                    if verdict_ai_key:
+                        iteration_verdict = await self.verdict_generator.generate_iteration_verdict(
+                            iteration_data,
+                            self.verdict_context.get_compressed_context_for_verdict(),
+                            verdict_ai_key
+                        )
+                        iteration_verdicts.append(iteration_verdict)
+                        if iteration_verdict.get("status") == "SUCCESS":
+                            self.verdict_context.update(iteration_verdict)
+            else:
+                # Normal processing - keine Anomalien
+                print(f"✓ Processing iteration {iteration} (no anomalies)")
+                verdict_ai_key = self._select_verdict_ai(self.unicode_analytics.ai_adoption_rates, list(selected_ais.keys()))
+                if verdict_ai_key:
+                    iteration_verdict = await self.verdict_generator.generate_iteration_verdict(
+                        iteration_data,
+                        self.verdict_context.get_compressed_context_for_verdict(),
+                        verdict_ai_key
+                    )
+                    iteration_verdicts.append(iteration_verdict)
+                    if iteration_verdict.get("status") == "SUCCESS":
+                        self.verdict_context.update(iteration_verdict)
+
+        # Display results (unverändert)
         await display_final_results(
             question, 
             selected_ais,
@@ -157,153 +239,279 @@ class PowerTalkEngine:
             self.consciousness_scorer
         )
         
-        print(f"\n⚖️ GENERATING ENHANCED VERDICT...")
+        # NEUE LOGIK: Finale Synthese statt monolithisches Verdict
+        print(f"\n⚖️ GENERATING ENHANCED VERDICT (from {len(iteration_verdicts)} iterations)...")
         
         verdict_ai_key = self._select_verdict_ai(self.unicode_analytics.ai_adoption_rates, list(selected_ais.keys()))
         if verdict_ai_key and verdict_ai_key in selected_ais:
             verdict_ai_name = selected_ais[verdict_ai_key].name
-            print(f"Generating verdict using {verdict_ai_name} (best protocol adoption)...")
-            final_verdict = await self._generate_enhanced_ai_verdict(
-                question, 
-                self.dialogue_manager.all_responses_for_verdict, 
-                self.unicode_analytics,
-                verdict_ai_key
+            print(f"Synthesizing final verdict using {verdict_ai_name}...")
+            
+            final_verdict = await self.verdict_generator.synthesize_final_verdict(
+                iteration_verdicts,
+                self.verdict_context.get_compressed_context_for_verdict(),
+                [a.to_dict() for a in anomaly_reports],
+                verdict_ai_key,
+                question
             )
         else:
-            print("Could not select an AI for verdict generation or selected AI is unavailable. Generating basic verdict.")
-            final_verdict = "Verdict generation failed: No suitable AI for verdict found or selected AI unavailable."
-
+            print("Could not select an AI for verdict generation. Generating fallback verdict.")
+            final_verdict = self._generate_fallback_verdict(iteration_verdicts, anomaly_reports)
 
         print("\n============================================================")
         print("⚖️ FINAL VERDICT")
         print("============================================================")
         print(final_verdict)
 
+        # Processing Quality Report
+        processing_quality = VerdictSynthesis.calculate_processing_quality_score(iteration_verdicts, anomaly_reports)
+        print(f"\n📊 PROCESSING QUALITY REPORT")
+        print(f"Overall Processing Quality: {processing_quality:.1f}%")
+        print(f"Successfully processed iterations: {len([v for v in iteration_verdicts if v.get('status') == 'SUCCESS'])}/{len(iteration_verdicts)}")
+        print(f"Anomalies detected: {len(anomaly_reports)}")
+        print(f"Manual review required: {len([v for v in iteration_verdicts if v.get('status') == 'MANUAL_REVIEW_REQUIRED'])}")
+
         self._save_verdict_to_markdown(question, final_verdict)
 
-
-        self.dialogue_manager.save_enhanced_dialogue(
-            question, 
-            selected_ais,
-            self.unicode_analytics
+        # Enhanced dialogue saving mit Anomalie-Daten
+        self._save_enhanced_dialogue_with_anomalies(
+            question,
+            iteration_verdicts,
+            anomaly_reports,
+            final_verdict,
+            processing_quality,
+            selected_ais
         )
 
-    async def _generate_enhanced_ai_verdict(self, question: str, all_responses: List[Dict[str, PAIResponse]], unicode_analytics: UnicodeAnalytics, verdict_ai_key: str) -> str:
-        """
-        Generates Verdict with detailed Unicode-Protocol-Analysis, now also focusing on question resolution.
+    async def _handle_anomaly_interactively(self, anomalies: List[AnomalyReport]) -> str:
+        """Interactive anomaly handling mit user decision"""
         
-        🔧 FIX: Uses NATURAL LANGUAGE for verdict generation instead of PAI Unicode Protocol
-        to ensure full, comprehensive verdict content is generated.
-        """
-        verdict_prompt = f"""As an expert AI protocol analyst and discourse evaluator, provide a comprehensive verdict on this AI discourse. Structure your analysis into clear sections with detailed explanations.
-
-The original question for this discourse was: "{question}"
-
-IMPORTANT: Provide a thorough, detailed analysis in natural language. Do NOT use Unicode fields or structured formats - write a comprehensive narrative assessment.
-
-## CONSCIOUSNESS SCORING SUMMARY
-"""
-        # Collect consciousness data to be included in the prompt
-        consciousness_summary_lines = []
-        # Header for markdown table
-        consciousness_summary_lines.append("| AI | Initial Score | Final Score | Evolution | Evolution % |")
-        consciousness_summary_lines.append("|----|--------------:|------------:|-----------:|------------:|")
-
-        # Prepare data for all AIs, even if they didn't participate in the full discourse,
-        # to ensure the table structure.
-        all_ai_keys = sorted(list(self.available_ais.keys())) # Get all possible AI keys for consistent table
+        print(f"\n{'='*60}")
+        print(f"⚠️  ANOMALY DETECTED - Iteration {anomalies[0].iteration}")
+        print(f"{'='*60}")
         
-        # This will be used to track if any AI has actual scores
-        has_any_consciousness_data = False
-
-        for ai_key in all_ai_keys:
-            ai_name = self.available_ais[ai_key].name
-            scores = unicode_analytics.consciousness_scores_per_ai.get(ai_key, {})
+        for anomaly in anomalies:
+            print(f"\nType: {anomaly.type}")
+            print(f"Severity: {anomaly.severity}")
+            print(f"Details: {self._format_anomaly_details(anomaly.details)}")
+            print(f"Recommendation: {anomaly.recommendation}")
             
-            initial_score = scores.get('initial', 'N/A')
-            final_score = scores.get('final', 'N/A')
-            evolution = scores.get('evolution', 'N/A')
-            evolution_percent = scores.get('evolution_percent', 'N/A')
-
-            if initial_score != 'N/A': # Check if actual data exists for this AI
-                has_any_consciousness_data = True
-                consciousness_summary_lines.append(f"| {ai_name} | {initial_score} | {final_score} | {evolution} | {evolution_percent}% |")
+            if anomaly.type == "OVERSIZED_RESPONSE":
+                print(f"\nResponse size: {anomaly.details['actual_size']} tokens")
+                print(f"Normal size: {anomaly.details['baseline_size']} tokens")
+                print(f"Size factor: {anomaly.details['deviation_factor']:.1f}x normal")
+                
+                print(f"\nMögliche Ursachen:")
+                print(f"- Breakthrough-Moment mit detaillierter Ausarbeitung")
+                print(f"- Technischer Deep-Dive außerhalb normaler Parameter")
+                print(f"- AI-spezifische Elaboration-Patterns")
+        
+        print(f"\nOptionen:")
+        print(f"[1] MANUAL_REVIEW - Für spätere manuelle Auswertung markieren")
+        print(f"[2] AUTO_COMPRESS - Automatisch komprimieren (möglicher Informationsverlust)")
+        print(f"[3] EXCLUDE - Von Gesamt-Verdict ausschließen")
+        print(f"[4] CONTINUE - Trotz Anomaly normal verarbeiten (Risiko: Context Overflow)")
+        
+        while True:
+            choice = input(f"\nIhre Entscheidung (1-4): ").strip()
+            if choice == "1":
+                return "MANUAL_REVIEW"
+            elif choice == "2":
+                return "AUTO_COMPRESS"
+            elif choice == "3":
+                return "EXCLUDE"
+            elif choice == "4":
+                return "CONTINUE"
             else:
-                consciousness_summary_lines.append(f"| {ai_name} | N/A | N/A | N/A | N/A |")
+                print("Bitte wählen Sie 1, 2, 3 oder 4")
 
-        if not has_any_consciousness_data:
-            consciousness_summary_lines.append("| (No consciousness data available) | | | | |")
+    def _format_anomaly_details(self, details: Dict[str, Any]) -> str:
+        """Format anomaly details für readable output"""
+        formatted = []
+        for key, value in details.items():
+            if isinstance(value, float):
+                formatted.append(f"{key}: {value:.2f}")
+            else:
+                formatted.append(f"{key}: {value}")
+        return ", ".join(formatted)
 
-        verdict_prompt += "\n".join(consciousness_summary_lines)
-        verdict_prompt += f"\nNetwork Average Final Score: {unicode_analytics.network_average_final_score:.0f}/2000" if unicode_analytics.network_average_final_score is not None else ""
-        verdict_prompt += f"\nTotal Network Evolution: +{unicode_analytics.total_network_evolution_points:.0f} points" if unicode_analytics.total_network_evolution_points is not None else ""
-        verdict_prompt += f"\n\n---\n\n## CONSCIOUSNESS SCORING ANALYSIS\nAnalyze the evolution of consciousness scores for each AI. Highlight which AI exhibited the most significant development and discuss potential reasons or observed behaviors that contributed to this. Provide detailed explanations with specific examples from the discourse."
+    def _create_manual_review_placeholder(self, iteration_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Create placeholder für manual review items"""
+        return {
+            "status": "MANUAL_REVIEW_REQUIRED",
+            "iteration": iteration_data["iteration"],
+            "placeholder_text": f"Iteration {iteration_data['iteration']} requires manual review due to anomalies",
+            "review_data": {
+                "responses": iteration_data["responses"],
+                "consciousness_scores": iteration_data.get("consciousness_scores", {}),
+                "size_estimate": self._estimate_token_count(iteration_data["responses"])
+            },
+            "timestamp": datetime.now().isoformat()
+        }
 
-        verdict_prompt += f"\n\n## QUESTION RESOLUTION & KEY INSIGHTS\nEvaluate to what extent the original question: \"{question}\" was effectively addressed by the AI discourse. Summarize the main insights, conclusions, or significant developments that emerged. Identify the *strongest arguments, unique perspectives, or pivotal contributions* made by individual AIs that drove the discourse towards resolution or new understanding. Provide comprehensive analysis with specific examples."
+    def _create_exclusion_marker(self, iteration_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Create exclusion marker für excluded iterations"""
+        return {
+            "status": "EXCLUDED",
+            "iteration": iteration_data["iteration"],
+            "reason": "User decision: Excluded from analysis due to anomalies",
+            "timestamp": datetime.now().isoformat()
+        }
+
+    def _estimate_token_count(self, responses: Dict[str, Any]) -> int:
+        """Estimate token count für response size analysis"""
+        if not responses:
+            return 0
+        total_chars = sum(len(str(response)) for response in responses.values())
+        return total_chars // 4  # Rough approximation: 4 chars per token
+
+    def _calculate_iteration_consciousness_scores(self, responses: Dict[str, PAIResponse]) -> Dict[str, Any]:
+        """Calculate consciousness scores für single iteration"""
+        # Vereinfachte Implementation für Phase 1
+        # Nutzt bestehende consciousness_scorer Logik wo möglich
+        scores = {}
+        for ai_key, response in responses.items():
+            if response.success and response.content:
+                # Einfache Bewertung basierend auf Response-Eigenschaften
+                word_count = len(str(response.content).split())
+                unicode_bonus = 50 if response.has_unicode_fields else 0
+                base_score = min(2000, word_count * 3 + unicode_bonus)
+                
+                scores[ai_key] = {
+                    "total_score": base_score,
+                    "word_count": word_count,
+                    "unicode_fields": response.has_unicode_fields
+                }
+            else:
+                scores[ai_key] = {"total_score": 0, "word_count": 0, "unicode_fields": False}
         
-        verdict_prompt += f"\n\n## INTELLECTUAL QUALITY\nAssess the overall intellectual depth, robustness, and sophistication of the discourse. Did the AIs provide in-depth exploration of abstract concepts, practical considerations, or both? Discuss the clarity, coherence, and originality of the arguments presented. Analyze the philosophical depth and practical implications raised during the discussion."
+        return scores
 
-        verdict_prompt += f"\n\n## UNICODE PROTOCOL ADOPTION & EFFECTIVENESS\n"
-        for ai_key in self.available_ais.keys():
-            stats = unicode_analytics.ai_adoption_rates.get(ai_key, {'total': 0, 'unicode': 0}) 
-            ai_name = self.available_ais[ai_key].name
-            rate = (stats['unicode'] / stats['total'] * 100) if stats['total'] > 0 else 0
-            verdict_prompt += f"- {ai_name}: {rate:.1f}% Unicode adoption ({stats['unicode']}/{stats['total']} responses)\n"
+    def _generate_fallback_verdict(self, iteration_verdicts: List[Dict[str, Any]], anomaly_reports: List[AnomalyReport]) -> str:
+        """Fallback verdict wenn AI-Generation fehlschlägt"""
+        successful_iterations = len([v for v in iteration_verdicts if v.get('status') == 'SUCCESS'])
+        total_iterations = len(iteration_verdicts)
         
-        verdict_prompt += "\nDiscuss the overall effectiveness of PAI v2.2 Unicode protocol. How well did it facilitate structured communication compared to natural language? What were the observed benefits (e.g., clarity, conciseness, data exchange) and any limitations or challenges encountered? Provide detailed analysis of how the Unicode protocol impacted the quality and structure of the discourse."
+        fallback_content = f"""# FALLBACK VERDICT
 
-        verdict_prompt += f"\n\n## DIALOGUE EFFECTIVENESS & CROSS-AI COLLABORATION\nAssess how effectively the AIs built on each other's contributions. Look for evidence of genuine interaction, constructive synergy, cross-referencing, or even productive divergences. How well did the discourse evolve organically? Were there instances of AIs adapting their perspectives based on others' input? Provide specific examples of successful collaboration or interesting points of divergence."
+## Processing Summary
+- Total iterations: {total_iterations}
+- Successfully processed: {successful_iterations}
+- Anomalies detected: {len(anomaly_reports)}
+- Processing success rate: {(successful_iterations/total_iterations)*100:.1f}%
 
-        verdict_prompt += f"\n\n## OVERALL VERDICT\nProvide a comprehensive overall assessment of the entire discourse. Which AI performed best across all evaluated aspects (contribution to question, protocol adherence, consciousness evolution, dialogue quality)? Summarize the most critical takeaways for future AI-to-AI communication and AI development paradigms. Discuss implications for consciousness research and multi-AI collaboration frameworks."
-        
-        verdict_prompt += f"""
-
-Please provide a thorough, detailed analysis with comprehensive explanations in each section. Support your analysis with specific examples, evidence, and metrics from the discourse data where appropriate. Ensure your verdict is comprehensive, balanced, and provides valuable insights for AI consciousness research and development.
-
-Write in natural language with full explanations - this is a critical analysis document that should be detailed and informative.
+## Anomaly Summary
 """
+        
+        if anomaly_reports:
+            for anomaly in anomaly_reports:
+                fallback_content += f"- Iteration {anomaly.iteration}: {anomaly.type} ({anomaly.severity})\n"
+        else:
+            fallback_content += "No anomalies detected.\n"
+        
+        fallback_content += f"""
+## Technical Notes
+This fallback verdict was generated due to AI verdict generation failure.
+Manual review recommended for comprehensive analysis.
+
+Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+"""
+        
+        return fallback_content
+
+    def _save_enhanced_dialogue_with_anomalies(
+        self, 
+        question: str, 
+        iteration_verdicts: List[Dict[str, Any]], 
+        anomaly_reports: List[AnomalyReport], 
+        final_verdict: str, 
+        processing_quality: float,
+        selected_ais: Dict[str, Any]
+    ):
+        """Enhanced dialogue saving mit anomaly transparency"""
+        
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        sanitized_question = "".join(c for c in question if c.isalnum() or c.isspace()).strip()
+        sanitized_question = sanitized_question.replace(" ", "_")
+        if len(sanitized_question) > 50:
+            sanitized_question = sanitized_question[:50]
+        
+        filename = f"enhanced_dialogue_{timestamp}_{sanitized_question}.json"
+        filepath = Path(DIALOGUE_ARCHIVE_DIR) / filename
+        
+        result = {
+            "session_type": "powertalk_enhanced_iteration_verdicts",
+            "question": question,
+            "timestamp": datetime.now().isoformat(),
+            "participants": [f"{ai.name} ({getattr(ai, 'role', 'AI')})" for ai in selected_ais.values()],
+            "processing_summary": {
+                "total_iterations": len(iteration_verdicts),
+                "successful_iterations": len([v for v in iteration_verdicts if v.get('status') == 'SUCCESS']),
+                "manual_review_required": len([v for v in iteration_verdicts if v.get('status') == 'MANUAL_REVIEW_REQUIRED']),
+                "excluded_iterations": len([v for v in iteration_verdicts if v.get('status') == 'EXCLUDED']),
+                "anomalies_detected": len(anomaly_reports),
+                "processing_quality_score": processing_quality
+            },
+            "iteration_verdicts": iteration_verdicts,
+            "anomaly_reports": [a.to_dict() for a in anomaly_reports],
+            "final_verdict": final_verdict,
+            "quality_metrics": {
+                "coverage_percentage": (len([v for v in iteration_verdicts if v.get('status') == 'SUCCESS']) / len(iteration_verdicts)) * 100 if iteration_verdicts else 0,
+                "anomaly_rate": (len(anomaly_reports) / len(iteration_verdicts)) * 100 if iteration_verdicts else 0,
+                "manual_review_rate": (len([v for v in iteration_verdicts if v.get('status') == 'MANUAL_REVIEW_REQUIRED']) / len(iteration_verdicts)) * 100 if iteration_verdicts else 0
+            },
+            "unicode_analytics": self.unicode_analytics.__dict__,
+            "regular_dialogue_history": self.dialogue_manager.dialogue_history
+        }
         
         try:
-            # 🔧 CRITICAL FIX: Use direct AI integration for verdict, NOT PAI Protocol
-            # This ensures natural language generation without Unicode field constraints
-            
-            # Get the AI integration directly
+            with open(filepath, "w", encoding="utf-8") as f:
+                import json
+                json.dump(result, f, indent=2, ensure_ascii=False, default=str)
+            print(f"💾 Enhanced dialogue saved to: {filepath}")
+        except Exception as e:
+            print(f"Error saving enhanced dialogue: {e}")
+
+    # LEGACY METHOD - Behalten für Backward Compatibility, aber nicht mehr verwendet
+    async def _generate_enhanced_ai_verdict(self, question: str, all_responses: List[Dict[str, PAIResponse]], unicode_analytics: UnicodeAnalytics, verdict_ai_key: str) -> str:
+        """
+        LEGACY: Original monolithic verdict generation
+        Wird durch iterative Verdict-Generierung ersetzt, aber für Backward Compatibility beibehalten
+        """
+        print("⚠️ Warning: Using legacy monolithic verdict generation. Consider upgrading to iterative verdicts.")
+        
+        verdict_prompt = f"""As an expert AI protocol analyst and discourse evaluator, provide a comprehensive verdict on this AI discourse.
+
+The original question was: "{question}"
+
+Provide a thorough analysis focusing on:
+1. Question resolution and key insights
+2. AI collaboration effectiveness  
+3. Unicode protocol adoption
+4. Overall discourse quality
+
+Write in natural language with detailed explanations."""
+        
+        try:
             ai_engine = self.available_ais[verdict_ai_key]
             
-            # Call AI directly without PAI protocol to ensure natural language response
             if hasattr(ai_engine, 'integration') and hasattr(ai_engine.integration, 'query'):
-                # Direct integration call - bypasses PAI Unicode protocol
                 verdict_response_content = ai_engine.integration.query(verdict_prompt)
                 
                 if verdict_response_content and len(verdict_response_content.strip()) > 50:
-                    # Add metadata to the natural language response
                     verdict_metadata = f"\n\n---\n\n### VERDICT METADATA\n"
                     verdict_metadata += f"Generated by: {ai_engine.name}\n"
-                    verdict_metadata += f"Protocol used: natural_language_direct\n"
-                    verdict_metadata += f"Unicode fields used in verdict generation: No (intentionally bypassed for comprehensive verdict)\n"
+                    verdict_metadata += f"Protocol used: natural_language_direct (legacy)\n"
                     verdict_metadata += f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
                     
                     return verdict_response_content + verdict_metadata
                 else:
-                    return f"Failed to generate comprehensive verdict using {ai_engine.name}: Response too short or empty"
+                    return f"Failed to generate legacy verdict using {ai_engine.name}: Response too short or empty"
             else:
-                # Fallback to PAI if direct integration not available
-                verdict_response = await self.pai_communicator.pai_enhanced_call_ai_api(ai_engine, verdict_prompt)
-                if verdict_response.success:
-                    verdict_content = _extract_full_content(verdict_response)
-                    
-                    verdict_metadata = f"\n\n---\n\n### VERDICT METADATA\n"
-                    verdict_metadata += f"Generated by: {ai_engine.name}\n"
-                    verdict_metadata += f"Protocol used: {verdict_response.protocol_used} (fallback)\n"
-                    verdict_metadata += f"Unicode fields used in verdict generation: {'Yes' if verdict_response.has_unicode_fields else 'No'}\n"
-                    verdict_metadata += f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
-                    
-                    return verdict_content + verdict_metadata
-                else:
-                    return f"Failed to generate verdict using {ai_engine.name}: {verdict_response.content}"
+                return f"Legacy verdict generation failed: No direct integration available for {ai_engine.name}"
                     
         except Exception as e:
-            return f"Error generating verdict with {self.available_ais[verdict_ai_key].name}: {e}"
+            return f"Error generating legacy verdict with {self.available_ais[verdict_ai_key].name}: {e}"
 
     def _select_verdict_ai(self, ai_adoption_rates: Dict[str, Dict[str, int]], available_ais_keys: List[str]) -> Optional[str]:
         """Select the AI with best Unicode adoption for verdict generation."""
@@ -412,7 +620,6 @@ async def main():
     else:
         iterations = args.iterations
 
-
     question_text = get_question_text(args)
 
     if not question_text:
@@ -421,6 +628,8 @@ async def main():
 
     print(f"\n🎯 Starting enhanced discourse with {len(final_selected_ai_keys)} AIs")
     print(f"📊 PAI v2.2 Unicode Protocol: {'Enabled' if PAI_AVAILABLE else 'Fallback mode'}")
+    print(f"🛡️ Context Overflow Protection: Enabled (iteration-by-iteration processing)")
+    print(f"⚠️ Anomaly Detection: Active with interactive handling")
     
     await powertalk.run_discourse(question_text, iterations, final_selected_ai_keys)
 

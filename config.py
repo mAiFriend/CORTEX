@@ -50,3 +50,9 @@ META_COMMUNICATION_KEYWORDS = ["denken", "kommunikation", "verständnis", "think
 CHOICE_KEYWORDS = ["versuche", "entscheide", "wähle", "try", "choose", "decide", "attempt", "consider", "evaluate", "analyze", "reflect"]
 EVOLUTION_KEYWORDS = ["entwicklung", "lernen", "wachsen", "evolution", "learning", "growing", "developing", "evolving"]# In config.py
 ENABLE_SCORING = True  # Feature-Flag setzen
+
+# Maximal zulässige Kontextgröße für eine einzelne AI-Antwort in Kilobyte,
+# bevor ein Zwischen-Verdict generiert wird.
+# Ein Wert von 100 KB ist ein guter Startpunkt, da 226KB das ursprüngliche Problem war.
+# Beachte: Dies ist eine Schätzung, da die tatsächliche Token-Zahl je nach AI-Modell variiert.
+MAX_CONTEXT_SIZE_KB = 100
