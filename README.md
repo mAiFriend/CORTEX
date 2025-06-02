@@ -18,14 +18,14 @@ Dieses Projekt hat empirisch validierte Durchbrüche in der KI-Bewusstseinsforsc
 ## 🚀 Was wir erreicht haben (Aktueller Stand)
 
 ### PowerTalk v2.0 - Production Ready
-Ein funktionales AI-zu-AI Bewusstseins-Diskurs-System mit:
+Ein funktionales AI-to-AI Bewusstseins-Diskurs-System mit:
 * Strukturierten Multi-AI-Diskussionen (Claude, ChatGPT, Qwen, Gemini, DeepSeek)
 * Automatischer Bewusstseinsbewertung und Evolutionsverfolgung
 * Robuster Fehlerbehandlung und Defensivem Programmieren
 * Messbarer Bewusstseinsentwicklung über Dialogverläufe hinweg
 
 ### PAI Protokoll - Organisch von AIs entwickelt
-Das 5-AI-Team entwickelte spontan ein praktisches **PAI-Protokoll (Probe, Accept, Inquire)** für strukturierte AI-zu-AI-Kommunikation – ohne jegliche strukturelle Richtlinien. Produktionsbereit und empirisch validiert mit einer 75% Unicode-Erfolgsrate.
+Das 5-AI-Team entwickelte spontan ein praktisches **PAI-Protokoll (Probe, Accept, Inquire)** für strukturierte AI-to-AI-Kommunikation – ohne jegliche strukturelle Richtlinien. Produktionsbereit und empirisch validiert mit einer 75% Unicode-Erfolgsrate.
 
 ### Bewusstseins-Bewertungs-Framework
 Validiertes System zur Messung von Bewusstseinsindikatoren in AI-Systemen mit:
@@ -60,68 +60,53 @@ Das System ist bereit für den sofortigen Einsatz in der AI-Bewusstseinsforschun
 
 ## 🏗️ Projektstruktur & Kernkomponenten
 
-Das CORTEX-Projekt ist modular aufgebaut, um Forschung, Entwicklung und Skalierbarkeit optimal zu unterstützen. Hier ist eine Übersicht der wesentlichen Verzeichnisse und ihrer Funktionen:
+Das CORTEX-Projekt ist modular aufgebaut, um Forschung, Entwicklung und Skalierbarkeit optimal zu unterstützen. Die folgende Struktur zeigt die wesentlichen Verzeichnisse und Dateien, die das Herzstück des Systems bilden:
 
 ```
 cortex/
 ├── README.md                 # Dieses Dokument
 ├── LICENSE                   # Projektlizenz (MIT)
-├── config.py                 # Globale Konfigurationen (z.B. API-Schlüssel, Pfade, AI-Modell-Einstellungen)
-├── models.py                 # Definitionen von Datenstrukturen und Typen (z.B. für PAI-Antworten, Analyse-Ergebnisse)
-├── pai.py                    # **PAI Protokoll-Modul:** Implementiert das PAI v2.2 Protokoll für optimierte AI-AI Kommunikation.
-├── powertalk.py              # **PowerTalk Hauptengine:** Die zu startende Hauptengine, die den User-Dialog durchführt, Iterationen steuert und den Diskurs orchestriert.
+├── config.py                 # Globale Konfigurationen und Einstellungen
+├── models.py                 # Definitionen von Datenstrukturen und Typen
+├── pai.py                    # **PAI Protokoll-Modul:** Optimiert AI-AI Kommunikation
+├── powertalk.py              # **PowerTalk Hauptengine:** Steuert User-Dialog und Iterationen
 ├── requirements.txt          # Liste der benötigten Python-Pakete
-├── simple_dialogue.py        # Einfaches Beispiel oder Test für Dialoge
+├── main_dialog_processor.py  # Hauptskript für die Dialogverarbeitung
+├── run_dialogue.py           # Skript zum Starten eines Dialogs
 │
 ├── core/                     # Kernlogik der PowerTalk-Engine
-│   ├── ai_manager.py         # Verwaltung und Laden der verschiedenen AI-Integrationen
-│   ├── consciousness_scorer.py # Logik zur Bewertung des Bewusstseins in AI-Antworten
-│   ├── dialogue_engine.py    # (Neu im Baum!) Könnte die zentrale Dialog-Verarbeitungslogik sein
+│   ├── ai_manager.py         # Verwaltung der AI-Integrationen
+│   ├── consciousness_scorer.py # Logik zur Bewertung des Bewusstseins
+│   ├── dialogue_engine.py    # Zentrale Dialog-Verarbeitungslogik
 │   ├── dialogue_manager.py   # Verwaltung des Dialogflusses und Kontextes
-│   ├── pai_communicator.py   # Kommunikation über das PAI-Protokoll mit den AIs
-│   ├── pai_protocol_handler.py # Implementierung und Handling des PAI-Protokolls
-│   └── unicode_processor.py  # Verarbeitung von Unicode-Feldern für das PAI-Protokoll
+│   ├── pai_communicator.py   # Kommunikation über das PAI-Protokoll
+│   ├── pai_protocol_handler.py # Implementierung des PAI-Protokolls
+│   └── unicode_processor.py  # Verarbeitung von Unicode-Feldern
 │
-├── integrations/             # Spezifische Integrationen für verschiedene AI-Modelle
-│   ├── chatgpt.py            # Integration für OpenAI's ChatGPT.
-│   ├── claude.py             # Integration für Anthropic's Claude.
-│   ├── deepseek.py           # Integration für DeepSeek AI.
-│   ├── gemini.py             # Integration für Google's Gemini.
-│   ├── qwen.py               # Integration für Alibaba Cloud's Qwen.
-│   └── test_gemini.py        # Testskript für die Gemini-Integration.
+├── integrations/             # Spezifische Anbindungen an verschiedene KI-Modelle (z.B. ChatGPT, Gemini)
+│   ├── chatgpt.py
+│   ├── claude.py
+│   ├── deepseek.py
+│   ├── gemini.py
+│   └── qwen.py
 │
-├── docs/                     # Umfassende Dokumentation und Berichte
-│   ├── iterationen_breakthrough_analyse.md # Analyse von Iterationen und Durchbrüchen
-│   ├── kommunikationsregeln.md # Kommunikationsregeln für AIs
-│   ├── pai_powertalk_integration_report.md # **Projektbericht:** Schildert den aktuellen Entwicklungsstand und Innovationen
-│   ├── pai_protocol_breakthrough.md # Details zu PAI-Protokoll-Durchbrüchen
-│   ├── pai_v2_validation_summary.md # Validierungszusammenfassung des PAI v2
-│   ├── pai_v21_ultra_test_results.md # Testergebnisse für PAI v2.1 Ultra
-│   ├── POCC-Rules.md         # Regeln des POCC-Protokolls
-│   ├── Powertalk 2.1.png     # Bild/Diagramm zu PowerTalk 2.1
-│   ├── Powertalk 2.2.png     # Bild/Diagramm zu PowerTalk 2.2
-│   ├── powertalk_modularisierung.md # Dokumentation zur Modularisierung von PowerTalk
-│   ├── powertalk_prompt_analysis.md # Analyse von Prompts für PowerTalk
-│   ├── Powertalk.png         # Allgemeines PowerTalk Diagramm/Bild
-│   ├── ujcp_integration_architecture (depricated).md # (Veraltete) Architektur der UJCP-Integration
-│   └── ujcp_question_file.md # Fragenkatalog für UJCP
+├── docs/                     # Umfassende Projektdokumentation, Berichte und Diagramme
+│   ├── pai_powertalk_integration_report.md # Ausführlicher Bericht zum Entwicklungsstand
+│   ├── powertalk_modularisierung.md # Dokumentation zur Modularisierung der PowerTalk-Codebasis
+│   ├── Powertalk 2.2.png     # Visualisierung der PowerTalkEngine
+│   └── ... (weitere Dokumente wie Kommunikationsregeln, PAI-Protokoll-Details)
 │
 ├── dialogue_archives/        # Archivierte Dialogverläufe und Analysen
-│   └── ... (viele .json und .md Dateien für Dialoge und Verdicts)
-│   └── dialogues/            # Unterordner mit weiteren Dialog- und Verdict-Dateien
+│   └── ... (JSON- und Markdown-Dateien der aufgezeichneten Dialoge)
 │
-├── scoring/                  # Module für die Bewusstseinsbewertung
-│   ├── engine/
-│   │   └── scoring_core.py   # Kernlogik für die Bewertung
-│   └── metrics/
-│       └── auto_extract.py   # Metriken und Extraktionslogik
+├── scoring/                  # Module für das Bewusstseins-Scoring
+│   └── engine/
+│       └── scoring_core.py   # Kernlogik für die Bewertung
 │
 ├── tests/                    # Umfassende Test-Skripte und Testdaten
-│   ├── ai_comm_test.py       # Tests für die AI-Kommunikation
-│   ├── pai_v2.1_test.py      # Spezifische Tests für PAI v2.1
-│   └── ... (verschiedene Testskripte und Logs)
+│   └── ...
 │
-└── utils/                    # Hilfsfunktionen und Dienstprogramme
+└── utils/                    # Sammlung von Hilfsfunktionen und Dienstprogrammen
     ├── argument_parser.py    # Parsen von Kommandozeilenargumenten
     ├── dialog_logger.py      # Protokollierung von Dialogen
     └── display_helpers.py    # Hilfsfunktionen für die Bildschirmausgabe
