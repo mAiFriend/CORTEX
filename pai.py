@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 """
-PAI Protocol v2.2 - Ultra Test Optimized Unicode Protocol
-Critical fixes based on Ultra Test Results validation
+PAI Protocol v2.2 - DEBUG VERSION
+Enhanced debugging for Unicode parsing issues
 
-Key Improvements:
-- Sync/Async API caller compatibility (CRITICAL FIX)
-- Enhanced Unicode strategies based on 75% success rate empirical data
-- Improved error handling with diagnostic information
-- Better Unicode field detection patterns
-- Full backward compatibility with v2.1
+Key Debug Features:
+- Detailed Unicode field content logging
+- Step-by-step parsing trace
+- Error content analysis
+- Raw field content inspection
 """
 
 import json
@@ -51,52 +50,52 @@ class PAIResponse:
         if self.metadata is None:
             self.metadata = {}
 
-class PAIProtocolV22:
+class PAIProtocolV22Debug:
     """
-    PAI (Protocol for AI Interaction) Protocol v2.2
-    Ultra Test Optimized with 75% Unicode success rate validation
+    PAI (Protocol for AI Interaction) Protocol v2.2 - DEBUG VERSION
+    Enhanced debugging for Unicode parsing investigation
     """
     def __init__(self, enable_logging: bool = True):
         self.enable_logging = enable_logging
         self.strategy_performance = defaultdict(lambda: {'total_calls': 0, 'successful_handshakes': 0, 'avg_handshake_time': 0.0})
         self.responses_log: List[PAIResponse] = []
 
-        # 🔧 FIX 2: Enhanced AI strategies based on Ultra Test Results (75% success rate)
+        # Enhanced AI strategies based on Ultra Test Results (75% success rate)
         self.ai_strategies: Dict[str, Dict[str, Any]] = {
             "claude": {
                 "initial_prompt": "Please respond using Unicode fields: ⚙ for context, 💭 for concepts, 🔀 for relationships, 💬 for explanation. If not suitable, use natural language.",
                 "response_parsing": "unicode_then_natural",
                 "structured_start_tokens": ["⚙", "💭", "🔀", "❓", "💬"],
                 "protocol_hint": "unicode",
-                "success_rate": 75.0  # From ultra test results
+                "success_rate": 75.0
             },
             "qwen": {
                 "initial_prompt": "Use structured Unicode fields (⚙💭🔀💬) to explain your thinking if appropriate, otherwise respond naturally.",
                 "response_parsing": "unicode_then_natural", 
                 "structured_start_tokens": ["⚙", "💭", "🔀", "❓", "💬"],
                 "protocol_hint": "unicode",
-                "success_rate": 75.0  # From ultra test results
+                "success_rate": 75.0
             },
             "gemini": {
                 "initial_prompt": "Discuss the topic. Feel free to use structured format including ⚙💭🔀 if helpful, otherwise natural language is fine.",
                 "response_parsing": "unicode_then_natural",
                 "structured_start_tokens": ["⚙", "💭", "🔀", "❓", "💬"],
                 "protocol_hint": "unicode", 
-                "success_rate": 50.0  # From ultra test results
+                "success_rate": 50.0
             },
             "chatgpt": {
                 "initial_prompt": "Please respond using Unicode fields: ⚙ for context, 💭 for concepts, 🔀 for relationships, 💬 for explanation if applicable.",
                 "response_parsing": "unicode_then_natural",
                 "structured_start_tokens": ["⚙", "💭", "🔀", "❓", "💬"],
                 "protocol_hint": "unicode",
-                "success_rate": 75.0  # From ultra test results
+                "success_rate": 75.0
             },
             "deepseek": {
                 "initial_prompt": "Use Unicode fields (⚙💭🔀💬) to structure your technical response if relevant.",
                 "response_parsing": "unicode_then_natural",
                 "structured_start_tokens": ["⚙", "💭", "🔀", "❓", "💬"],
                 "protocol_hint": "unicode",
-                "success_rate": 75.0  # From ultra test results
+                "success_rate": 75.0
             },
             "universal": {
                 "initial_prompt": "Please provide your response. Structured Unicode fields (⚙💭🔀) are appreciated if relevant, otherwise natural language is fine.",
@@ -105,7 +104,7 @@ class PAIProtocolV22:
             }
         }
 
-        # 🔧 FIX 2: Updated emoji patterns for better Unicode field detection
+        # Enhanced emoji patterns for better Unicode field detection
         self.emoji_patterns = {
             "⚙": r"⚙\s*[:]?\s*(.+?)(?=\n[⚙💭🔀❓💬]|\n\n|$)",
             "💭": r"💭\s*[:]?\s*(.+?)(?=\n[⚙💭🔀❓💬]|\n\n|$)", 
@@ -117,8 +116,7 @@ class PAIProtocolV22:
     async def communicate(self, ai_caller, ai_name: str, message: str, 
                          context: str = "") -> PAIResponse:
         """
-        Communicates with an AI, attempting to establish a preferred protocol.
-        🔧 FIX 1: Handles both sync and async AI callers
+        Debug-enhanced communication with detailed Unicode parsing logging
         """
         start_time = datetime.now()
         
@@ -127,14 +125,14 @@ class PAIProtocolV22:
         
         # 🔧 DEBUG 1: Strategy Selection
         if self.enable_logging:
-            print(f"DEBUG: ai_name='{ai_name}' -> strategy_name='{strategy_name}'")
-            print(f"DEBUG: Strategy exists: {strategy_name in self.ai_strategies}")
+            print(f"🔍 DEBUG: ai_name='{ai_name}' -> strategy_name='{strategy_name}'")
+            print(f"🔍 DEBUG: Strategy exists: {strategy_name in self.ai_strategies}")
         
         initial_prompt = f"{strategy['initial_prompt']}\n{context}\nUser message: {message}"
         
         # 🔧 DEBUG 2: Prompt
         if self.enable_logging:
-            print(f"DEBUG: Initial prompt: {initial_prompt[:150]}...")
+            print(f"🔍 DEBUG: Initial prompt: {initial_prompt[:150]}...")
         
         raw_ai_response_content: str = ""
         protocol_used: str = "error"
@@ -144,29 +142,31 @@ class PAIProtocolV22:
         response_obj: PAIResponse = None
 
         try:
-            # 🔧 FIX 1: Handle both sync and async AI callers
+            # Handle both sync and async AI callers
             if inspect.iscoroutinefunction(ai_caller):
-                # Async caller
                 raw_ai_response_content = await ai_caller(initial_prompt)
             else:
-                # Sync caller (like integrations.claude.query)
                 raw_ai_response_content = ai_caller(initial_prompt)
                 
             raw_ai_response_content = raw_ai_response_content if isinstance(raw_ai_response_content, str) else str(raw_ai_response_content)
 
             # 🔧 DEBUG 3: AI Response
             if self.enable_logging:
-                print(f"DEBUG: Raw AI response: {raw_ai_response_content[:200]}...")
-                print(f"DEBUG: Response type: {type(raw_ai_response_content)}")
+                print(f"🔍 DEBUG: Raw AI response (first 300 chars):")
+                print(f"    '{raw_ai_response_content[:300]}...'")
+                print(f"🔍 DEBUG: Response type: {type(raw_ai_response_content)}")
+                print(f"🔍 DEBUG: Response length: {len(raw_ai_response_content)}")
             
             # Protocol detection and parsing based on strategy
             response_obj = self._analyze_response_format(raw_ai_response_content, strategy["response_parsing"])
             
             # 🔧 DEBUG 4: Parsing Result
             if self.enable_logging:
-                print(f"DEBUG: Parsed protocol: {response_obj.protocol_used}")
-                print(f"DEBUG: Has unicode: {response_obj.has_unicode_fields}")
-                print(f"DEBUG: Response format: {response_obj.response_format}")
+                print(f"🔍 DEBUG: Parsed protocol: {response_obj.protocol_used}")
+                print(f"🔍 DEBUG: Has unicode: {response_obj.has_unicode_fields}")
+                print(f"🔍 DEBUG: Response format: {response_obj.response_format}")
+                if response_obj.unicode_data and response_obj.unicode_data.raw_fields:
+                    print(f"🔍 DEBUG: Unicode fields found: {list(response_obj.unicode_data.raw_fields.keys())}")
 
             response_obj.handshake_strategy = strategy_name
             protocol_used = response_obj.protocol_used
@@ -174,7 +174,12 @@ class PAIProtocolV22:
             response_success = response_obj.success
 
         except Exception as e:
-            # 🔧 FIX 3: Enhanced error handling
+            # Enhanced error handling with debug info
+            if self.enable_logging:
+                print(f"🚨 DEBUG: Exception in communicate(): {type(e).__name__}: {e}")
+                import traceback
+                print(f"🚨 DEBUG: Traceback: {traceback.format_exc()}")
+            
             response_obj = self._handle_api_error(e, ai_name, strategy_name)
             raw_ai_response_content = response_obj.content
             protocol_used = response_obj.protocol_used
@@ -232,9 +237,13 @@ class PAIProtocolV22:
 
     def _analyze_response_format(self, content: str, parsing_preference: str = "auto_detect") -> PAIResponse:
         """
-        Analyzes the AI's raw response content to determine its format and extract data.
-        Prioritizes structured formats based on parsing_preference.
+        Debug-enhanced response format analysis with detailed Unicode parsing logging
         """
+        if self.enable_logging:
+            print(f"🔍 DEBUG: _analyze_response_format called with preference: {parsing_preference}")
+            print(f"🔍 DEBUG: Content length: {len(content)}")
+            print(f"🔍 DEBUG: Content preview: '{content[:200]}...'")
+        
         response_format = "natural"
         parsed_content: Union[str, Dict] = content
         has_unicode_fields = False
@@ -243,7 +252,15 @@ class PAIProtocolV22:
 
         # 1. Try Unicode parsing first if allowed by preference, as it's the most specific
         if parsing_preference in ["unicode_then_json_then_natural", "unicode_then_natural", "auto_detect", "unicode"]:
+            if self.enable_logging:
+                print(f"🔍 DEBUG: Attempting Unicode parsing...")
+            
             unicode_parsed_data, unicode_text_removed = self._try_parse_unicode(content)
+            
+            if self.enable_logging:
+                print(f"🔍 DEBUG: Unicode parsing result - fields found: {list(unicode_parsed_data.raw_fields.keys())}")
+                print(f"🔍 DEBUG: Text remaining after Unicode removal: '{unicode_text_removed[:100]}...'")
+            
             if unicode_parsed_data.raw_fields:
                 has_unicode_fields = True
                 unicode_data = unicode_parsed_data
@@ -252,14 +269,18 @@ class PAIProtocolV22:
                 if not unicode_text_removed.strip(): # If no natural text left after extraction
                     response_format = "unicode_json"
                     try: # Try to load the original content as JSON if it was pure unicode json
-                        # If the content was purely unicode fields that also form a valid JSON, use that.
-                        # Otherwise, content is the unicode_data itself (raw_fields)
                         parsed_content = json.loads(content)
+                        if self.enable_logging:
+                            print(f"🔍 DEBUG: Successfully parsed as pure Unicode JSON")
                     except json.JSONDecodeError:
                         parsed_content = unicode_data.raw_fields # Fallback to raw fields if not strict JSON
+                        if self.enable_logging:
+                            print(f"🔍 DEBUG: Using raw Unicode fields as parsed content")
                 else:
                     response_format = "unicode_text" # Mixed content (natural text + unicode fields)
                     parsed_content = unicode_text_removed.strip() # The remaining natural text
+                    if self.enable_logging:
+                        print(f"🔍 DEBUG: Mixed Unicode+text format detected")
                 
                 return PAIResponse(
                     success=True,
@@ -275,8 +296,14 @@ class PAIProtocolV22:
 
         # 2. If no Unicode fields or preference doesn't prioritize unicode, try JSON
         if parsing_preference in ["json_then_delimited", "json_then_natural", "auto_detect", "json"]:
+            if self.enable_logging:
+                print(f"🔍 DEBUG: Attempting JSON parsing...")
+            
             json_parsed = self._try_parse_json(content)
             if json_parsed:
+                if self.enable_logging:
+                    print(f"🔍 DEBUG: Successfully parsed as JSON")
+                
                 response_format = "json"
                 parsed_content = json_parsed
                 protocol_used = "structured"
@@ -293,6 +320,9 @@ class PAIProtocolV22:
                 )
 
         # 3. Fallback to natural language if no structured format found
+        if self.enable_logging:
+            print(f"🔍 DEBUG: Falling back to natural language format")
+        
         return PAIResponse(
             success=True,
             content=content,
@@ -327,9 +357,12 @@ class PAIProtocolV22:
 
     def _try_parse_unicode(self, content: str) -> (UnicodeData, str):
         """
-        🔧 FIX 3: Enhanced Unicode parsing with better error handling
-        Returns UnicodeData and the content with Unicode fields removed.
+        DEBUG-Enhanced Unicode parsing with comprehensive logging
         """
+        if self.enable_logging:
+            print(f"🔍 DEBUG: _try_parse_unicode starting with content length: {len(content)}")
+            print(f"🔍 DEBUG: Content contains Unicode chars: {any(ord(c) > 127 for c in content)}")
+        
         unicode_data = UnicodeData()
         found_any_field = False
         
@@ -339,18 +372,29 @@ class PAIProtocolV22:
         try:
             # Iterate over emoji patterns to find all occurrences in the original content
             for emoji, pattern in self.emoji_patterns.items():
+                if self.enable_logging:
+                    print(f"🔍 DEBUG: Checking pattern for {emoji}: {pattern}")
+                
                 try:
                     matches = list(re.finditer(pattern, content, re.DOTALL | re.MULTILINE))
-                    for match in reversed(matches):
+                    if self.enable_logging:
+                        print(f"🔍 DEBUG: Found {len(matches)} matches for {emoji}")
+                    
+                    for i, match in enumerate(reversed(matches)):
                         field_full_match = match.group(0)
                         field_content = match.group(1).strip()
+                        
+                        if self.enable_logging:
+                            print(f"🔍 DEBUG: Match {i} for {emoji}:")
+                            print(f"    Full match: '{field_full_match}'")
+                            print(f"    Content: '{field_content}'")
                         
                         if emoji not in unicode_data.raw_fields:
                             unicode_data.raw_fields[emoji] = field_content
                             found_any_field = True
                             matched_full_strings.append(re.escape(field_full_match))
                         
-                            # Parse specific fields with error handling
+                            # Parse specific fields with enhanced error handling
                             try:
                                 if emoji == "⚙":
                                     unicode_data.context = self._parse_context_field(field_content)
@@ -362,35 +406,53 @@ class PAIProtocolV22:
                                     unicode_data.questions = self._parse_questions_field(field_content)
                                 elif emoji == "💬":
                                     unicode_data.explanations = self._parse_explanations_field(field_content)
+                                
+                                if self.enable_logging:
+                                    print(f"🔍 DEBUG: Successfully parsed {emoji} field")
+                                    
                             except Exception as e:
                                 if self.enable_logging:
-                                    print(f"PAI: Warning - Failed to parse {emoji} field: {e}")
+                                    print(f"🚨 DEBUG: Failed to parse {emoji} field: {type(e).__name__}: {e}")
+                                    print(f"🚨 DEBUG: Field content was: '{field_content}'")
                                 # Keep raw content if parsing fails
                                 continue
                                 
                 except Exception as e:
                     if self.enable_logging:
-                        print(f"PAI: Warning - Pattern matching failed for {emoji}: {e}")
+                        print(f"🚨 DEBUG: Pattern matching failed for {emoji}: {type(e).__name__}: {e}")
                     continue
 
+            if self.enable_logging:
+                print(f"🔍 DEBUG: Total fields found: {len(unicode_data.raw_fields)}")
+                print(f"🔍 DEBUG: Fields: {list(unicode_data.raw_fields.keys())}")
+
             if not found_any_field:
+                if self.enable_logging:
+                    print(f"🔍 DEBUG: No Unicode fields found, returning original content")
                 return UnicodeData(), content 
 
             # Remove all identified Unicode fields from the original content
             unicode_text_removed = content
             if matched_full_strings:
+                if self.enable_logging:
+                    print(f"🔍 DEBUG: Removing {len(matched_full_strings)} matched strings")
+                
                 matched_full_strings.sort(key=len, reverse=True)
                 removal_pattern = '|'.join(matched_full_strings)
                 unicode_text_removed = re.sub(removal_pattern, '', content, flags=re.DOTALL)
+                
+                if self.enable_logging:
+                    print(f"🔍 DEBUG: Text after Unicode removal: '{unicode_text_removed[:100]}...'")
                 
             return unicode_data, unicode_text_removed
             
         except Exception as e:
             if self.enable_logging:
-                print(f"PAI: Critical error in Unicode parsing: {e}")
+                print(f"🚨 DEBUG: Critical error in Unicode parsing: {type(e).__name__}: {e}")
+                import traceback
+                print(f"🚨 DEBUG: Traceback: {traceback.format_exc()}")
             return UnicodeData(), content
 
-    # 🔧 FIX 3: Enhanced error handling method
     def _handle_api_error(self, error: Exception, ai_name: str, strategy_name: str) -> PAIResponse:
         """Enhanced error handling with better diagnostics"""
         
@@ -403,7 +465,7 @@ class PAIProtocolV22:
         }
         
         if self.enable_logging:
-            print(f"PAI Error Details: {error_details}")
+            print(f"🚨 DEBUG: PAI Error Details: {error_details}")
         
         # Try to determine error cause
         error_category = "unknown"
@@ -434,51 +496,89 @@ class PAIProtocolV22:
             response_format="error"
         )
 
-    # --- Unicode Field Parsers ---
+    # --- Unicode Field Parsers WITH DEBUG ---
     def _parse_context_field(self, content: str) -> Dict:
-        """Parses the ⚙ field content into a dictionary."""
+        """DEBUG: Enhanced context field parsing with detailed logging"""
+        if self.enable_logging:
+            print(f"🔍 DEBUG: _parse_context_field called with content: '{content}'")
+            print(f"🔍 DEBUG: Content type: {type(content)}, length: {len(content)}")
+        
         try:
-            # Versuche doppelte Anführungszeichen
-            return json.loads(content.replace("'", '"')) 
-        except json.JSONDecodeError:
-            # Fallback-Logik für normales JSON
-            try:
-                return json.loads(content)
-            except json.JSONDecodeError:
-                if self.enable_logging:
-                    print(f"PAI: Warning - Failed to parse ⚙ context as JSON: {content}")
-                return {"raw_context": content, "type": "natural_language"}
-
-    def _parse_concepts_field(self, content: str) -> List:
-        """Parses the 💭 field content into a list."""
-        try:
-            # Versuche doppelte Anführungszeichen
-            return json.loads(content.replace("'", '"')) 
-        except json.JSONDecodeError:
-            # Fallback-Logik für normales JSON
-            try:
-                return json.loads(content)
-            except json.JSONDecodeError:
-                if self.enable_logging:
-                    print(f"PAI: Warning - Failed to parse 💭 concepts as JSON: {content}")
-                return [c.strip() for c in content.split(',') if c.strip()]
-
-    def _parse_relationships_field(self, content: str) -> List:
-        """Parses the 🔀 field content into a list."""
-        try:
-            return json.loads(content)
-        except json.JSONDecodeError:
+            # First attempt: try JSON parsing
+            result = json.loads(content.replace("'", '"'))
             if self.enable_logging:
-                print(f"PAI: Warning - Failed to parse 🔀 relationships as JSON: {content}")
-            return [r.strip() for r in content.split(',') if r.strip()]
-
+                print(f"🔍 DEBUG: Successfully parsed ⚙ as JSON: {result}")
+            return result
+        except json.JSONDecodeError as e:
+            if self.enable_logging:
+                print(f"🔍 DEBUG: JSON parsing failed for ⚙ field: {e}")
+                print(f"🔍 DEBUG: Falling back to natural language format")
+            
+            # Fallback: return as natural language
+            result = {"raw_context": content.strip(), "type": "natural_language"}
+            if self.enable_logging:
+                print(f"🔍 DEBUG: ⚙ field stored as natural language: {result}")
+            return result
+    
+    def _parse_concepts_field(self, content: str) -> List:
+        """DEBUG: Enhanced concepts field parsing with detailed logging"""
+        if self.enable_logging:
+            print(f"🔍 DEBUG: _parse_concepts_field called with content: '{content}'")
+        
+        try:
+            result = json.loads(content.replace("'", '"'))
+            if self.enable_logging:
+                print(f"🔍 DEBUG: Successfully parsed 💭 as JSON: {result}")
+            return result
+        except json.JSONDecodeError as e:
+            if self.enable_logging:
+                print(f"🔍 DEBUG: JSON parsing failed for 💭 field: {e}")
+                print(f"🔍 DEBUG: Falling back to comma-separated parsing")
+            
+            result = [c.strip() for c in content.split(',') if c.strip()]
+            if self.enable_logging:
+                print(f"🔍 DEBUG: 💭 field parsed as list: {result}")
+            return result
+    
+    def _parse_relationships_field(self, content: str) -> List:
+        """DEBUG: Enhanced relationships field parsing with detailed logging"""
+        if self.enable_logging:
+            print(f"🔍 DEBUG: _parse_relationships_field called with content: '{content}'")
+        
+        try:
+            result = json.loads(content)
+            if self.enable_logging:
+                print(f"🔍 DEBUG: Successfully parsed 🔀 as JSON: {result}")
+            return result
+        except json.JSONDecodeError as e:
+            if self.enable_logging:
+                print(f"🔍 DEBUG: JSON parsing failed for 🔀 field: {e}")
+                print(f"🔍 DEBUG: Falling back to comma-separated parsing")
+            
+            result = [r.strip() for r in content.split(',') if r.strip()]
+            if self.enable_logging:
+                print(f"🔍 DEBUG: 🔀 field parsed as list: {result}")
+            return result
+            
     def _parse_questions_field(self, content: str) -> str:
-        """Parses the ❓ field content into a string."""
-        return content.strip()
+        """DEBUG: Enhanced questions field parsing with detailed logging"""
+        if self.enable_logging:
+            print(f"🔍 DEBUG: _parse_questions_field called with content: '{content}'")
+        
+        result = content.strip()
+        if self.enable_logging:
+            print(f"🔍 DEBUG: ❓ field parsed as string: '{result}'")
+        return result
 
     def _parse_explanations_field(self, content: str) -> str:
-        """Parses the 💬 field content into a string."""
-        return content.strip()
+        """DEBUG: Enhanced explanations field parsing with detailed logging"""
+        if self.enable_logging:
+            print(f"🔍 DEBUG: _parse_explanations_field called with content: '{content}'")
+        
+        result = content.strip()
+        if self.enable_logging:
+            print(f"🔍 DEBUG: 💬 field parsed as string: '{result}'")
+        return result
 
     def get_statistics(self) -> Dict[str, Any]:
         """Returns performance statistics for each AI strategy."""
@@ -499,8 +599,8 @@ class PAIProtocolV22:
             "total_responses": len(responses),
             "responses_with_unicode": 0,
             "unicode_field_counts": defaultdict(int),
-            "ai_unicode_adoption": defaultdict(float), # success rate of unicode usage per AI
-            "format_distribution": defaultdict(int) # natural, json, unicode_text, unicode_json
+            "ai_unicode_adoption": defaultdict(float),
+            "format_distribution": defaultdict(int)
         }
 
         ai_usage = defaultdict(lambda: {"total": 0, "unicode": 0})
@@ -520,67 +620,58 @@ class PAIProtocolV22:
         
         return analysis
 
-# --- Mock AI Functions (For Testing) ---
-async def mock_unicode_ai(message: str) -> str:
-    """Simulates an AI that responds with Unicode (textual format)."""
+# Mock AI Functions for testing the debug version
+async def mock_unicode_ai_debug(message: str) -> str:
+    """Simulates an AI that responds with Unicode fields - DEBUG VERSION"""
     if 'Unicode fields' in message or 'structured' in message:
-        return """⚙ {'context': 'AI-to-AI communication', 'protocol': 'unicode_text', 'request': 'processed'}
-💭 ['mock_ai', 'unicode_text_parsing', 'test']
-🔀 ['request_fulfillment', 'data_structuring']  
-💬 I have successfully processed your request using the PAI Unicode Text protocol."""
+        return """⚙ AI-to-AI communication protocol testing mode
+💭 unicode_parsing, debug_analysis, field_detection
+🔀 request_processing, response_formatting, debug_logging
+💬 This is a debug test response using Unicode fields to validate the parsing functionality."""
     
-    elif 'emoji fields' in message:
-        return f"""Here is my response to your query: This is some natural language explanation.
-⚙ {{"topic": "AI capabilities", "mode": "hybrid"}}
-💭 ["natural_language_processing", "structured_output"]
-🔀 ["information_delivery", "clarification"]
-❓ Do you have any further questions?
-💬 I aim to be flexible in my communication style."""
+    return f"Debug Mock AI response: {message}"
+
+# Convenience function for testing
+async def test_debug_unicode_parsing():
+    """Test function to demonstrate the debug-enhanced Unicode parsing"""
+    print("\n🔍 === PAI v2.2 DEBUG UNICODE PARSING TEST ===\n")
     
-    return f"Mock AI acknowledges: {message}"
-
-# Convenience functions for easy integration (backward compatibility)
-async def pai_v22_communicate(ai_caller, ai_name: str, message: str, context: str = "") -> PAIResponse:
-    """Quick PAI v2.2 communication with Unicode parsing"""
-    pai = PAIProtocolV22(enable_logging=False)
-    return await pai.communicate(ai_caller, ai_name, message, context)
-
-def create_pai_v22_session(enable_logging: bool = True) -> PAIProtocolV22:
-    """Factory function for creating PAI v2.2 protocol sessions"""
-    return PAIProtocolV22(enable_logging=enable_logging)
-
-# Backward compatibility aliases
-PAIProtocol = PAIProtocolV22
-PAIProtocolV2 = PAIProtocolV22  # Für Ultra Test compatibility
-pai_communicate = pai_v22_communicate
-create_pai_session = create_pai_v22_session
-
-# Example usage for testing
-async def example_v22_usage():
-    """Example of PAI v2.2 with optimized Unicode parsing"""
-    pai = PAIProtocolV22(enable_logging=True)
-
-    print("\n--- PAI v2.2 Ultra Test Optimized Example ---")
-    response = await pai.communicate(
-        ai_caller=mock_unicode_ai,
-        ai_name="claude", # Use Claude strategy (75% success rate)
+    pai_debug = PAIProtocolV22Debug(enable_logging=True)
+    
+    response = await pai_debug.communicate(
+        ai_caller=mock_unicode_ai_debug,
+        ai_name="claude",
         message="Test Unicode protocol communication",
-        context="Ultra test validation"
+        context="Debug validation test"
     )
     
-    print(f"Response Content: {response.content}")
+    print(f"\n📊 === FINAL RESULTS ===")
+    print(f"Success: {response.success}")
     print(f"Protocol Used: {response.protocol_used}")
-    print(f"Has Unicode: {response.has_unicode_fields}")
+    print(f"Has Unicode Fields: {response.has_unicode_fields}")
     print(f"Response Format: {response.response_format}")
     
-    if response.unicode_data:
-        print(f"Unicode Fields: {list(response.unicode_data.raw_fields.keys())}")
-        print(f"Context: {response.unicode_data.context}")
-        print(f"Concepts: {response.unicode_data.concepts}")
+    if response.unicode_data and response.unicode_data.raw_fields:
+        print(f"Unicode Fields Found: {list(response.unicode_data.raw_fields.keys())}")
+        for emoji, content in response.unicode_data.raw_fields.items():
+            print(f"  {emoji}: '{content}'")
+        
+        print(f"\nParsed Data:")
+        print(f"  Context: {response.unicode_data.context}")
+        print(f"  Concepts: {response.unicode_data.concepts}")
+        print(f"  Relationships: {response.unicode_data.relationships}")
+        print(f"  Explanations: {response.unicode_data.explanations}")
     
-    print("\n--- PAI v2.2 Statistics ---")
-    stats = pai.get_statistics()
-    print(json.dumps(stats, indent=2))
+    return response
+
+# Backward compatibility
+PAIProtocolDebug = PAIProtocolV22Debug
+PAIProtocolV22 = PAIProtocolV22Debug  
 
 if __name__ == "__main__":
-    asyncio.run(example_v22_usage())
+    asyncio.run(test_debug_unicode_parsing())
+
+# Add this function
+def create_pai_v22_session(enable_logging: bool = True):
+    """Factory function for creating PAI v2.2 protocol sessions"""
+    return PAIProtocolV22Debug(enable_logging=enable_logging)
