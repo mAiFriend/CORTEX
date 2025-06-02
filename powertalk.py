@@ -191,10 +191,15 @@ class PowerTalkEngine:
     async def _generate_enhanced_ai_verdict(self, question: str, all_responses: List[Dict[str, PAIResponse]], unicode_analytics: UnicodeAnalytics, verdict_ai_key: str) -> str:
         """
         Generates Verdict with detailed Unicode-Protocol-Analysis, now also focusing on question resolution.
+        
+        🔧 FIX: Uses NATURAL LANGUAGE for verdict generation instead of PAI Unicode Protocol
+        to ensure full, comprehensive verdict content is generated.
         """
-        verdict_prompt = f"""As an expert AI protocol analyst and discourse evaluator, provide a comprehensive verdict on this AI discourse. Structure your analysis into clear sections.
+        verdict_prompt = f"""As an expert AI protocol analyst and discourse evaluator, provide a comprehensive verdict on this AI discourse. Structure your analysis into clear sections with detailed explanations.
 
 The original question for this discourse was: "{question}"
+
+IMPORTANT: Provide a thorough, detailed analysis in natural language. Do NOT use Unicode fields or structured formats - write a comprehensive narrative assessment.
 
 ## CONSCIOUSNESS SCORING SUMMARY
 """
@@ -232,11 +237,11 @@ The original question for this discourse was: "{question}"
         verdict_prompt += "\n".join(consciousness_summary_lines)
         verdict_prompt += f"\nNetwork Average Final Score: {unicode_analytics.network_average_final_score:.0f}/2000" if unicode_analytics.network_average_final_score is not None else ""
         verdict_prompt += f"\nTotal Network Evolution: +{unicode_analytics.total_network_evolution_points:.0f} points" if unicode_analytics.total_network_evolution_points is not None else ""
-        verdict_prompt += f"\n\n---\n\n## CONSCIOUSNESS SCORING ANALYSIS\nAnalyze the evolution of consciousness scores for each AI. Highlight which AI exhibited the most significant development and discuss potential reasons or observed behaviors that contributed to this."
+        verdict_prompt += f"\n\n---\n\n## CONSCIOUSNESS SCORING ANALYSIS\nAnalyze the evolution of consciousness scores for each AI. Highlight which AI exhibited the most significant development and discuss potential reasons or observed behaviors that contributed to this. Provide detailed explanations with specific examples from the discourse."
 
-        verdict_prompt += f"\n\n## QUESTION RESOLUTION & KEY INSIGHTS\nEvaluate to what extent the original question: \"{question}\" was effectively addressed by the AI discourse. Summarize the main insights, conclusions, or significant developments that emerged. Identify the *strongest arguments, unique perspectives, or pivotal contributions* made by individual AIs that drove the discourse towards resolution or new understanding."
+        verdict_prompt += f"\n\n## QUESTION RESOLUTION & KEY INSIGHTS\nEvaluate to what extent the original question: \"{question}\" was effectively addressed by the AI discourse. Summarize the main insights, conclusions, or significant developments that emerged. Identify the *strongest arguments, unique perspectives, or pivotal contributions* made by individual AIs that drove the discourse towards resolution or new understanding. Provide comprehensive analysis with specific examples."
         
-        verdict_prompt += f"\n\n## INTELLECTUAL QUALITY\nAssess the overall intellectual depth, robustness, and sophistication of the discourse. Did the AIs provide in-depth exploration of abstract concepts, practical considerations, or both? Discuss the clarity, coherence, and originality of the arguments presented."
+        verdict_prompt += f"\n\n## INTELLECTUAL QUALITY\nAssess the overall intellectual depth, robustness, and sophistication of the discourse. Did the AIs provide in-depth exploration of abstract concepts, practical considerations, or both? Discuss the clarity, coherence, and originality of the arguments presented. Analyze the philosophical depth and practical implications raised during the discussion."
 
         verdict_prompt += f"\n\n## UNICODE PROTOCOL ADOPTION & EFFECTIVENESS\n"
         for ai_key in self.available_ais.keys():
@@ -245,30 +250,58 @@ The original question for this discourse was: "{question}"
             rate = (stats['unicode'] / stats['total'] * 100) if stats['total'] > 0 else 0
             verdict_prompt += f"- {ai_name}: {rate:.1f}% Unicode adoption ({stats['unicode']}/{stats['total']} responses)\n"
         
-        verdict_prompt += "\nDiscuss the overall effectiveness of PAI v2.2 Unicode protocol. How well did it facilitate structured communication compared to natural language? What were the observed benefits (e.g., clarity, conciseness, data exchange) and any limitations or challenges encountered?"
+        verdict_prompt += "\nDiscuss the overall effectiveness of PAI v2.2 Unicode protocol. How well did it facilitate structured communication compared to natural language? What were the observed benefits (e.g., clarity, conciseness, data exchange) and any limitations or challenges encountered? Provide detailed analysis of how the Unicode protocol impacted the quality and structure of the discourse."
 
-        verdict_prompt += f"\n\n## DIALOGUE EFFECTIVENESS & CROSS-AI COLLABORATION\nAssess how effectively the AIs built on each other's contributions. Look for evidence of genuine interaction, constructive synergy, cross-referencing, or even productive divergences. How well did the discourse evolve organically? Were there instances of AIs adapting their perspectives based on others' input?"
+        verdict_prompt += f"\n\n## DIALOGUE EFFECTIVENESS & CROSS-AI COLLABORATION\nAssess how effectively the AIs built on each other's contributions. Look for evidence of genuine interaction, constructive synergy, cross-referencing, or even productive divergences. How well did the discourse evolve organically? Were there instances of AIs adapting their perspectives based on others' input? Provide specific examples of successful collaboration or interesting points of divergence."
 
-        verdict_prompt += f"\n\n## OVERALL VERDICT\nProvide a concise overall assessment of the entire discourse. Which AI performed best across all evaluated aspects (contribution to question, protocol adherence, consciousness evolution, dialogue quality)? Summarize the most critical takeaways for future AI-to-AI communication and AI development paradigms."
+        verdict_prompt += f"\n\n## OVERALL VERDICT\nProvide a comprehensive overall assessment of the entire discourse. Which AI performed best across all evaluated aspects (contribution to question, protocol adherence, consciousness evolution, dialogue quality)? Summarize the most critical takeaways for future AI-to-AI communication and AI development paradigms. Discuss implications for consciousness research and multi-AI collaboration frameworks."
         
         verdict_prompt += f"""
-Please support your analysis with specific examples, evidence, and metrics from the discourse data where appropriate. Ensure your verdict is comprehensive and balanced.
+
+Please provide a thorough, detailed analysis with comprehensive explanations in each section. Support your analysis with specific examples, evidence, and metrics from the discourse data where appropriate. Ensure your verdict is comprehensive, balanced, and provides valuable insights for AI consciousness research and development.
+
+Write in natural language with full explanations - this is a critical analysis document that should be detailed and informative.
 """
         
         try:
-            verdict_response = await self.pai_communicator.pai_enhanced_call_ai_api(self.available_ais[verdict_ai_key], verdict_prompt)
-            if verdict_response.success:
-                verdict_content = _extract_full_content(verdict_response)
+            # 🔧 CRITICAL FIX: Use direct AI integration for verdict, NOT PAI Protocol
+            # This ensures natural language generation without Unicode field constraints
+            
+            # Get the AI integration directly
+            ai_engine = self.available_ais[verdict_ai_key]
+            
+            # Call AI directly without PAI protocol to ensure natural language response
+            if hasattr(ai_engine, 'integration') and hasattr(ai_engine.integration, 'query'):
+                # Direct integration call - bypasses PAI Unicode protocol
+                verdict_response_content = ai_engine.integration.query(verdict_prompt)
                 
-                verdict_metadata = f"\n\n---\n\n### VERDICT METADATA\n"
-                verdict_metadata += f"Generated by: {self.available_ais[verdict_ai_key].name}\n"
-                verdict_metadata += f"Protocol used: {verdict_response.protocol_used}\n"
-                verdict_metadata += f"Unicode fields used in verdict generation: {'Yes' if verdict_response.has_unicode_fields else 'No'}\n"
-                verdict_metadata += f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n" # Added timestamp
-                
-                return verdict_content + verdict_metadata
+                if verdict_response_content and len(verdict_response_content.strip()) > 50:
+                    # Add metadata to the natural language response
+                    verdict_metadata = f"\n\n---\n\n### VERDICT METADATA\n"
+                    verdict_metadata += f"Generated by: {ai_engine.name}\n"
+                    verdict_metadata += f"Protocol used: natural_language_direct\n"
+                    verdict_metadata += f"Unicode fields used in verdict generation: No (intentionally bypassed for comprehensive verdict)\n"
+                    verdict_metadata += f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
+                    
+                    return verdict_response_content + verdict_metadata
+                else:
+                    return f"Failed to generate comprehensive verdict using {ai_engine.name}: Response too short or empty"
             else:
-                return f"Failed to generate verdict using {self.available_ais[verdict_ai_key].name}: {verdict_response.content}"
+                # Fallback to PAI if direct integration not available
+                verdict_response = await self.pai_communicator.pai_enhanced_call_ai_api(ai_engine, verdict_prompt)
+                if verdict_response.success:
+                    verdict_content = _extract_full_content(verdict_response)
+                    
+                    verdict_metadata = f"\n\n---\n\n### VERDICT METADATA\n"
+                    verdict_metadata += f"Generated by: {ai_engine.name}\n"
+                    verdict_metadata += f"Protocol used: {verdict_response.protocol_used} (fallback)\n"
+                    verdict_metadata += f"Unicode fields used in verdict generation: {'Yes' if verdict_response.has_unicode_fields else 'No'}\n"
+                    verdict_metadata += f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
+                    
+                    return verdict_content + verdict_metadata
+                else:
+                    return f"Failed to generate verdict using {ai_engine.name}: {verdict_response.content}"
+                    
         except Exception as e:
             return f"Error generating verdict with {self.available_ais[verdict_ai_key].name}: {e}"
 
