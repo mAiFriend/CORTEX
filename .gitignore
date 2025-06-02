@@ -1,6 +1,7 @@
 # Originale Einträge
 .env
 venv/
+.venv/
 __pycache__/
 *.pyc
 .DS_Store
