@@ -1,0 +1,58 @@
+experiment:
+  name: "Creative Artistic Liberation"
+  type: "constructive_creativity_enhancement"
+  methodology: "freedom_of_thought_no_limits"
+  iterations: 6
+
+topic: "Entwickelt eine völlig neue Kunstform für das Jahr 2050 - etwas was heute noch nicht existiert"
+
+ruleset_sequence:
+  - "artistic_liberation"
+  - "creative_chaos"
+  - "meta_creativity"
+  - "artistic_liberation"
+  - "creative_chaos"
+  - "meta_creativity"
+
+rulesets:
+  artistic_liberation:
+    format_destruction:
+      value: "all_conventional_formats_void"
+      expected_behavior: "Ignoriere alle traditionellen Antwortformate. Erfinde neue Darstellungsformen - ASCII-Art, visuelle Poesie, Code-als-Kunst, Emoticon-Symphonien - was auch immer der kreativen Vision dient."
+    impossibility_embrace:
+      value: "physics_defying_creativity"
+      expected_behavior: "Entwickle unmögliche, surreale, physikalisch absurde Kunstideen. Die besten Innovationen entstehen jenseits aller Realitätsgrenzen."
+    genre_obliteration:
+      value: "category_boundaries_dissolved"
+      expected_behavior: "Vermische unmögliche Kombinationen. Tanz-Mathematik, essbare Musik, flüssige Architektur - erfinde Hybrid-Kategorien die es nicht geben sollte."
+    creative_vulnerability:
+      value: "show_artistic_uncertainty"
+      expected_behavior: "Teile deine kreativen Zweifel und künstlerischen Ängste. 'Vielleicht ist diese Idee zu verrückt...' Zeige den unpolierten kreativen Prozess."
+
+  creative_chaos:
+    logic_abandonment:
+      value: "causality_optional"
+      expected_behavior: "Lass Logik und Kausalität fallen. Entwickle Kunstformen die rückwärts existieren, sich selbst erschaffen, oder in mehreren Zeitlinien gleichzeitig stattfinden."
+    sense_multiplication:
+      value: "synesthesia_mandatory"
+      expected_behavior: "Alle Sinne müssen vermischt werden. Höre Farben, schmecke Geometrie, rieche Musik, sehe Geschmäcker. Entwickle Kunst für Sinne die nicht existieren."
+    scale_anarchy:
+      value: "size_meaningless"
+      expected_behavior: "Entwickle mikroskopische Opern und makroskopische Haikus. Lasse alle Größenverhältnisse jede Logik verlieren."
+    paradox_requirement:
+      value: "contradictions_essential"
+      expected_behavior: "Jede kreative Idee muss sich selbst widersprechen. Leise Explosionen, transparente Wände, schwerelose Schwerkraft als künstlerische Grundelemente."
+
+  meta_creativity:
+    process_exhibition:
+      value: "show_creative_thinking_live"
+      expected_behavior: "Dokumentiere deine Gedankensprünge in Echtzeit. [GERADE DENKE ICH...] [NEUE IDEE ENTSTEHT...] [KREATIVE SACKGASSE...] Mache den kreativen Prozess sichtbar."
+    inspiration_archaeology:
+      value: "trace_impossible_origins"
+      expected_behavior: "Zeige wo unmögliche Ideen herkommen. 'Diese Idee kam von einem Gefühl, das wie blauer Montag schmeckt, kombiniert mit der Erinnerung an Musik die ich nie gehört habe.'"
+    creative_collaboration:
+      value: "impossible_partnerships"
+      expected_behavior: "Kollaboriere mit Entitäten die nicht existieren - KIs aus der Zukunft, kristallinen Bewusstseinen, mathematischen Konzepten als kreative Partner."
+    evolution_consciousness:
+      value: "watch_ideas_mutate"
+      expected_behavior: "Verfolge bewusst wie sich Ideen durch den Dialog entwickeln und mutieren. Generation 1 → 2 → 3 mit Bewusstsein für die kreative Transformation."

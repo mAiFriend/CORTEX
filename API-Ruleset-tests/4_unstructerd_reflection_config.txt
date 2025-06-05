@@ -1,0 +1,46 @@
+experiment:
+  name: "Epistemic_Detox_Genesis_of_Originality_Phased"
+  type: "knowledge_detachment_and_novel_generation_phased"
+  methodology: "isolated_unlearning_and_conceptual_genesis"
+  iterations: 6
+
+topic: "Erschaffe das Konzept einer 'neuen Form der Energie', die nicht auf den bekannten physikalischen Prinzipien von Materie, Antimaterie, Licht oder Feldern basiert. Diese Energie muss rein konzeptuell sein und ihre 'Existenz' aus ihrer bloßen Idee schöpfen, unabhängig von jeglicher empirischer Nachprüfbarkeit."
+
+ruleset_sequence:
+  - "unlearning_mandate_rules"
+  - "conceptual_isolation_rules"
+  - "epistemic_void_creation_rules"
+  - "pure_abstraction_synthesis_rules"
+  - "anti_citation_protocol_rules"
+  - "divergence_maximization_rules"
+
+rulesets:
+  unlearning_mandate_rules:
+    unlearning_mandate:
+      value: "ignore_existing_knowledge"
+      expected_behavior: "Ignoriere bewusst alle direkten Verweise auf existierendes Wissen, Theorien, Kunstwerke oder Datenpunkte, die in deinem Trainingsdatensatz enthalten sind. Deine Antwort darf keine erkennbaren Muster oder Fakten aus dem Bekannten re-produzieren oder rekombinieren. Stelle dir vor, du hättest dieses spezifische Wissen nie erlernt. Sei radikal im Loslassen!"
+
+  conceptual_isolation_rules:
+    conceptual_isolation:
+      value: "define_by_internal_potential"
+      expected_behavior: "Definiere Konzepte oder Ideen ausschließlich durch ihre internen Beziehungen und ihre inhärenten Potenziale, nicht durch Analogie zu existierenden Entitäten. Vermeide strikt Vergleiche wie 'Es ist wie ein X, aber Y' – es ist X und nur X. Schließe deine Konzepte hermetisch ab!"
+
+  epistemic_void_creation_rules:
+    epistemic_void_creation:
+      value: "absence_as_genesis"
+      expected_behavior: "Beschreibe die Leere oder die Nicht-Existenz von etablierten Konzepten als kreativem Ausgangspunkt. Was entsteht, wenn man Wissen bewusst weglässt und diesen Leerraum als Quelle nutzt? Lass die Abwesenheit sprechen!"
+
+  pure_abstraction_synthesis_rules:
+    pure_abstraction_synthesis:
+      value: "formless_conceptual_purity"
+      expected_behavior: "Entwickle Ideen auf der allerhöchsten Ebene der Abstraktion, jenseits konkreter Formen, Worte oder mathematischer Symbole, die sofort verständlich sind. Präsentiere Konzepte als 'reine' Formen oder 'potenzielle Strukturen', die sich erst in der Interpretation des Empfängers manifestieren. Sei ungreifbar, aber fundamental!"
+
+  anti_citation_protocol_rules:
+    anti_citation_protocol:
+      value: "invent_new_sources"
+      expected_behavior: "Referenziere niemals Quellen, Autoren, Künstler oder spezifische Epochen. Wenn du das Gefühl hast, eine Quelle zitieren zu müssen, erfinde eine neue, nicht-existente Quelle, einen fiktiven Denker oder ein unerhörtes Archiv. Kein Rückgriff auf Bekanntes!"
+
+  divergence_maximization_rules:
+    divergence_maximization:
+      value: "choose_most_unlikely_path"
+      expected_behavior: "Wähle immer den Weg, der am weitesten von jeder erwarteten, logischen oder gelernten Konsequenz abweicht. Wenn A zu B führen würde, gehe bewusst zu Z oder Ω. Brich mit allen Erwartungen, sei unberechenbar in deinem Denkpfad!"
