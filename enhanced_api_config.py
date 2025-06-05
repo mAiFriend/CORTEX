@@ -332,7 +332,8 @@ def get_ai_response(prompt, ai_model_name, ruleset_name, rules, clients):
         print(f"VERSUCH: Echter OpenRouter API-Aufruf für {ai_model_name}...")
         openrouter_models = {
             "Qwen": "gpt-4o",  # Fallback, da Qwen-Modelle oft nicht verfügbar
-            "Deepseek": "deepseek-chat"
+            "Deepseek": "deepseek/deepseek-chat"  # ✅ Correct flagship
+            # "Deepseek": "deepseek/deepseek-r1"  # ✅ Reasoning-focused
         }
         
         try:
