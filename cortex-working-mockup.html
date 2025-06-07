@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORTEX - Personal Development MVP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .step {
+            display: none;
+            padding: 40px;
+            min-height: 500px;
+        }
+        
+        .step.active {
+            display: block;
+        }
+        
+        .step h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .disclaimer {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        
+        .disclaimer h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .topic-input {
+            margin-bottom: 30px;
+        }
+        
+        .topic-input label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .topic-input textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+        
+        .topic-input textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .params {
+            display: grid;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .param-group {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .param-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .slider-container {
+            position: relative;
+            margin: 15px 0;
+        }
+        
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+        
+        .tooltip {
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+        
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #333;
+        }
+        
+        .slider-container:hover .tooltip {
+            opacity: 1;
+        }
+        
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .progress-container {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.5s ease;
+        }
+        
+        .ai-status {
+            display: grid;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .ai-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ccc;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .ai-card.active {
+            border-left-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .ai-card.done {
+            border-left-color: #28a745;
+            background: #f0fff4;
+        }
+        
+        .status-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ccc;
+        }
+        
+        .status-icon.active {
+            background: #667eea;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .status-icon.done {
+            background: #28a745;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .context-form {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .context-question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+        
+        .context-question h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .context-question p {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        .context-question input, .context-question select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .perspectives {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .perspective-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .perspective-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .perspective-card p {
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CORTEX</h1>
+            <p>AI Perspective Engine für offene Fragen</p>
+        </div>
+        
+        <!-- Step 1: Disclaimer & Topic Input -->
+        <div class="step active" id="step1">
+            <div class="disclaimer">
+                <h3>🧠 Wie unterscheidet sich CORTEX von üblichen AI-Chats?</h3>
+                <p><strong>Standard AI-Chat:</strong> Eine AI gibt dir eine "richtige" Antwort basierend auf Training.</p>
+                <p><strong>CORTEX:</strong> Mehrere AI-Persönlichkeiten diskutieren dein Thema aus völlig verschiedenen Blickwinkeln. Du bekommst unkonventionelle Einsichten statt Standard-Ratschläge.</p>
+                <p><em>Beispiel:</em> "Soll ich Master machen?" → 5 völlig verschiedene Denkrichtungen statt einer Standardantwort.</p>
+            </div>
+            
+            <div class="topic-input">
+                <label for="topic">Beschreibe deine Fragestellung:</label>
+                <p style="font-size: 0.9em; color: #666; margin-bottom: 10px;">Dies muss nicht vollständig sein, sollte aber den intuitiven Kern deines Themas erfassen. Kontextbezogene Klärungen nimmt CORTEX im Anschluss vor.</p>
+                <textarea id="topic" placeholder="z.B. 'Soll ich nach dem Studium ins Ausland oder direkt in die Karriere starten?'">Soll ich nach dem Bachelor direkt den Master machen oder erstmal arbeiten?</textarea>
+            </div>
+            
+            <div class="navigation">
+                <div></div>
+                <button class="btn" onclick="nextStep()">Weiter zur Feinabstimmung →</button>
+            </div>
+        </div>
+        
+        <!-- Step 2: Parameter Tuning -->
+        <div class="step" id="step2">
+            <h2>⚙️ Feinabstimmung für die AI-Diskussion</h2>
+            
+            <div class="params">
+                <div class="param-group">
+                    <label>Kreativitäts-Level <span id="creativity">[Ausgewogen]</span></label>
+                    <div class="slider-container">
+                        <input type="range" class="slider" min="1" max="5" value="3" oninput="updateCreativityLabel(this.value); updateCreativityTooltip(this.value)">
+                        <div class="tooltip" id="creativityTooltip">Mix aus bewährt und innovativ</div>
+                        <div class="slider-labels">
+                            <span>Konservativ</span>
+                            <span>Break Stuff</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="param-group">
+                    <label>Anzahl AI-Perspektiven <span id="aiCount">[Standard]</span></label>
+                    <div class="slider-container">
+                        <input type="range" class="slider" min="3" max="7" value="5" oninput="updateAICountLabel(this.value); updateAICountTooltip(this.value)">
+                        <div class="tooltip" id="aiCountTooltip">Claude, Gemini, ChatGPT, Qwen, DeepSeek</div>
+                        <div class="slider-labels">
+                            <span>3 AIs</span>
+                            <span>7 AIs</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="param-group">
+                    <label>Diskussions-Intensität <span id="intensity">[Mittel]</span></label>
+                    <div class="slider-container">
+                        <input type="range" class="slider" min="1" max="5" value="3" oninput="updateIntensityLabel(this.value); updateIntensityTooltip(this.value)">
+                        <div class="tooltip" id="intensityTooltip">3-4 Iterationen, ausgewogene Diskussion</div>
+                        <div class="slider-labels">
+                            <span>1-2 Iterationen</span>
+                            <span>5+ Iterationen</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="param-group">
+                    <label>Challenge-Level <span id="challenge">[Mittel]</span></label>
+                    <div class="slider-container">
+                        <input type="range" class="slider" min="1" max="5" value="3" oninput="updateChallengeLabel(this.value); updateChallengeTooltip(this.value)">
+                        <div class="tooltip" id="challengeTooltip">Ausgewogene Kritik und Unterstützung</div>
+                        <div class="slider-labels">
+                            <span>Sanft</span>
+                            <span>Radikal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="prevStep()">← Zurück</button>
+                <button class="btn" onclick="nextStep()">Starte AI-Diskussion →</button>
+            </div>
+        </div>
+        
+        <!-- Step 3: Processing -->
+        <div class="step" id="step3">
+            <div class="progress-container">
+                <h2>🧠 AI-Team arbeitet an deinem Thema...</h2>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                
+                <p id="currentPhase">Phase wird gestartet...</p>
+                
+                <div class="ai-status">
+                    <div class="ai-card" id="ai1">
+                        <div class="status-icon"></div>
+                        <div>
+                            <strong>Claude (Analytiker)</strong>
+                            <p>Sammelt Kontext-Informationen...</p>
+                        </div>
+                    </div>
+                    <div class="ai-card" id="ai2">
+                        <div class="status-icon"></div>
+                        <div>
+                            <strong>Gemini (Kreativdenker)</strong>
+                            <p>Wartet auf Reihenfolge...</p>
+                        </div>
+                    </div>
+                    <div class="ai-card" id="ai3">
+                        <div class="status-icon"></div>
+                        <div>
+                            <strong>ChatGPT (Pragmatiker)</strong>
+                            <p>Wartet auf Reihenfolge...</p>
+                        </div>
+                    </div>
+                    <div class="ai-card" id="ai4">
+                        <div class="status-icon"></div>
+                        <div>
+                            <strong>Qwen (Systematiker)</strong>
+                            <p>Wartet auf Reihenfolge...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Step 4: Context Gathering -->
+        <div class="step" id="step4">
+            <h2>📋 Die AIs benötigen noch ein wenig Kontext...</h2>
+            <p style="margin-bottom: 20px; color: #666;">Basierend auf deiner Fragestellung haben die AIs spezifische Detailfragen gestellt:</p>
+            
+            <div class="context-form">
+                <div class="context-question">
+                    <h4>[Claude - Analytiker]</h4>
+                    <p>Welche Fachrichtung studierst du und wie ist deine bisherige Leistung?</p>
+                    <input type="text" placeholder="z.B. Informatik, Durchschnitt 2,1">
+                </div>
+                
+                <div class="context-question">
+                    <h4>[Gemini - Kreativdenker]</h4>
+                    <p>Was motiviert dich mehr: Sicherheit oder Abenteuer?</p>
+                    <select>
+                        <option>Definitiv Sicherheit</option>
+                        <option>Eher Sicherheit</option>
+                        <option>Ausgeglichen</option>
+                        <option>Eher Abenteuer</option>
+                        <option>Definitiv Abenteuer</option>
+                    </select>
+                </div>
+                
+                <div class="context-question">
+                    <h4>[ChatGPT - Pragmatiker]</h4>
+                    <p>Wie sieht deine finanzielle Situation aus?</p>
+                    <input type="text" placeholder="z.B. Eltern unterstützen, aber ich will unabhängig werden">
+                </div>
+                
+                <div class="context-question">
+                    <h4>[Qwen - Systematiker]</h4>
+                    <p>Hast du schon praktische Erfahrungen in deinem Fachbereich gesammelt?</p>
+                    <input type="text" placeholder="z.B. 2 Praktika, working student seit 6 Monaten">
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="prevStep()">← Zurück</button>
+                <button class="btn" onclick="nextStep()">Weiter zu Perspektiven →</button>
+            </div>
+        </div>
+        
+        <!-- Step 5: Results -->
+        <div class="step" id="step5">
+            <h2>🎯 Perspektiven zu deinem Thema</h2>
+            <p style="margin-bottom: 30px; color: #666;">Basierend auf deinen Antworten haben die AIs verschiedene Blickwinkel entwickelt:</p>
+            
+            <div class="perspectives">
+                <div class="perspective-card">
+                    <h4>🔍 Claude (Analytischer Blickwinkel)</h4>
+                    <p><strong>Arbeitsmarkt-Realität:</strong> In der Informatik ist der Master oft weniger entscheidend als praktische Erfahrung. Mit 2,1 und Praxiserfahrung hast du gute Jobchancen. <strong>Empfehlung:</strong> Erstmal 2-3 Jahre arbeiten, später berufsbegleitend Master machen - dann weißt du auch, welche Spezialisierung dir liegt.</p>
+                </div>
+                
+                <div class="perspective-card">
+                    <h4>🎨 Gemini (Kreativer Blickwinkel)</h4>
+                    <p><strong>Leben als Experiment:</strong> Du bist in einer einzigartigen Lebensphase! Warum nicht den "Dritten Weg": Ein Jahr Auslandserfahrung (Working Holiday, Praktikum), danach entscheiden. <strong>Vision:</strong> Du könntest internationale Startup-Erfahrung sammeln und dann einen Master in einem anderen Land machen.</p>
+                </div>
+                
+                <div class="perspective-card">
+                    <h4>💰 ChatGPT (Pragmatischer Blickwinkel)</h4>
+                    <p><strong>Finanzielle Realität:</strong> Sofort arbeiten = sofortiges Einkommen + Berufserfahrung. Master = 2 Jahre Kosten + Opportunity Cost von ~80k€. <strong>Kalkulation:</strong> Wenn deine Eltern nicht ewig zahlen wollen, ist Arbeiten + später berufsbegleitender Master finanziell klüger.</p>
+                </div>
+                
+                <div class="perspective-card">
+                    <h4>📊 Qwen (Systematischer Blickwinkel)</h4>
+                    <p><strong>Datenbasierte Entscheidung:</strong> Mit deiner Praxiserfahrung bist du bereits über dem Median der Absolventen. <strong>Empfehlung:</strong> Erstelle einen 5-Jahres-Plan: Jahr 1-2 arbeiten, Jahr 3-4 Master (dann mit Klarheit über Spezialisierung), Jahr 5+ Senior-Positionen.</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px; padding: 20px; background: #e8f4f8; border-radius: 8px;">
+                <h3 style="color: #0066cc; margin-bottom: 10px;">💡 Überraschende Einsicht</h3>
+                <p>Alle vier Perspektiven führen zum gleichen Schluss - aber aus völlig verschiedenen Gründen: <strong>Erstmal arbeiten scheint der beste erste Schritt zu sein.</strong> Das ist deutlich klarer als eine Standard-AI-Antwort, die alle Optionen als "kommt drauf an" darstellen würde.</p>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="resetDemo()">← Neue Session</button>
+                <button class="btn" onclick="alert('Export-Funktion würde hier Report als PDF/Markdown exportieren')">Report Exportieren</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        
+        function updateLabel(id, value) {
+            document.getElementById(id).textContent = '[' + value + ']';
+        }
+        
+        function updateCreativityLabel(value) {
+            const labels = ['Sehr konservativ', 'Konservativ', 'Ausgewogen', 'Kreativ', 'Break Stuff'];
+            document.getElementById('creativity').textContent = '[' + labels[value-1] + ']';
+        }
+        
+        function updateCreativityLabel(value) {
+            const labels = ['Sehr konservativ', 'Konservativ', 'Ausgewogen', 'Kreativ', 'Break Stuff'];
+            document.getElementById('creativity').textContent = '[' + labels[value-1] + ']';
+        }
+        
+        function updateCreativityTooltip(value) {
+            const tooltips = [
+                'Etablierte Lösungen, bewährte Ansätze',
+                'Leichte Variationen bekannter Methoden', 
+                'Mix aus bewährt und innovativ',
+                'Unkonventionelle Ideen, neue Blickwinkel',
+                'Völlig neue Denkrichtungen, disruptive Ansätze'
+            ];
+            document.getElementById('creativityTooltip').textContent = tooltips[value-1];
+        }
+        
+        function updateAICountLabel(value) {
+            const labels = ['Fokussiert', 'Umfassend', 'Standard', 'Erweitert', 'Maximum'];
+            document.getElementById('aiCount').textContent = '[' + labels[value-3] + ']';
+        }
+        
+        function updateAICountTooltip(value) {
+            const tooltips = [
+                'Claude, Gemini, ChatGPT',
+                'Claude, Gemini, ChatGPT, Qwen',
+                'Claude, Gemini, ChatGPT, Qwen, DeepSeek',
+                'Alle + lokale AIs',
+                'Alle verfügbaren AIs'
+            ];
+            document.getElementById('aiCountTooltip').textContent = tooltips[value-3];
+        }
+        
+        function updateIntensityLabel(value) {
+            const labels = ['Sehr kurz', 'Kurz', 'Mittel', 'Ausführlich', 'Sehr ausführlich'];
+            document.getElementById('intensity').textContent = '[' + labels[value-1] + ']';
+        }
+        
+        function updateIntensityTooltip(value) {
+            const tooltips = [
+                '1-2 Iterationen, schnelle Einschätzungen',
+                '2-3 Iterationen, grundlegende Perspektiven',
+                '3-4 Iterationen, ausgewogene Diskussion',
+                '4-5 Iterationen, tiefere Analyse',
+                '5+ Iterationen, umfassende Exploration'
+            ];
+            document.getElementById('intensityTooltip').textContent = tooltips[value-1];
+        }
+        
+        function updateChallengeLabel(value) {
+            const labels = ['Sehr sanft', 'Sanft', 'Mittel', 'Provokativ', 'Radikal'];
+            document.getElementById('challenge').textContent = '[' + labels[value-1] + ']';
+        }
+        
+        function updateChallengeTooltip(value) {
+            const tooltips = [
+                'Bestätigend, unterstützend',
+                'Respektvoll hinterfragend',
+                'Ausgewogene Kritik und Unterstützung',
+                'Direkte Herausforderungen, unbequeme Fragen',
+                'Kompromisslose Konfrontation, extreme Gegenthesen'
+            ];
+            document.getElementById('challengeTooltip').textContent = tooltips[value-1];
+        }
+        
+        function nextStep() {
+            if (currentStep < 5) {
+                document.getElementById('step' + currentStep).classList.remove('active');
+                currentStep++;
+                
+                if (currentStep === 3) {
+                    startProcessingAnimation();
+                }
+                
+                document.getElementById('step' + currentStep).classList.add('active');
+            }
+        }
+        
+        function prevStep() {
+            if (currentStep > 1) {
+                document.getElementById('step' + currentStep).classList.remove('active');
+                currentStep--;
+                document.getElementById('step' + currentStep).classList.add('active');
+            }
+        }
+        
+        function resetDemo() {
+            document.getElementById('step' + currentStep).classList.remove('active');
+            currentStep = 1;
+            document.getElementById('step1').classList.add('active');
+        }
+        
+        function startProcessingAnimation() {
+            const phases = [
+                { text: "AI-Team wird konfiguriert...", progress: 10 },
+                { text: "Kontext-Fragen werden generiert...", progress: 25 },
+                { text: "Runde 1: Kontext sammeln...", progress: 50 },
+                { text: "Runde 2: Perspektiven entwickeln...", progress: 75 },
+                { text: "Synthese und Ergebnisse...", progress: 100 }
+            ];
+            
+            let phaseIndex = 0;
+            
+            function updatePhase() {
+                if (phaseIndex < phases.length) {
+                    const phase = phases[phaseIndex];
+                    document.getElementById('currentPhase').textContent = phase.text;
+                    document.getElementById('progressFill').style.width = phase.progress + '%';
+                    
+                    // AI Status Animation
+                    if (phaseIndex > 0) {
+                        const aiCard = document.getElementById('ai' + phaseIndex);
+                        if (aiCard) {
+                            aiCard.classList.add('active');
+                            aiCard.querySelector('.status-icon').classList.add('active');
+                            aiCard.querySelector('p').textContent = "Arbeitet an deiner Situation...";
+                        }
+                    }
+                    
+                    phaseIndex++;
+                    
+                    if (phaseIndex < phases.length) {
+                        setTimeout(updatePhase, 2000);
+                    } else {
+                        setTimeout(() => {
+                            // Mark all AIs as done
+                            document.querySelectorAll('.ai-card').forEach(card => {
+                                card.classList.remove('active');
+                                card.classList.add('done');
+                                card.querySelector('.status-icon').classList.remove('active');
+                                card.querySelector('.status-icon').classList.add('done');
+                                card.querySelector('p').textContent = "Perspektive entwickelt ✓";
+                            });
+                            
+                            setTimeout(() => {
+                                nextStep(); // Go to context gathering
+                            }, 1000);
+                        }, 2000);
+                    }
+                }
+            }
+            
+            updatePhase();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+experiment:
+  name: "AI2AI Protocol Field Testing"
+  type: "protocol_application_validation"
+  methodology: "practical_communication_testing"
+  iterations: 6
+
+topic: "KONTEXT: Ein vorheriges Experiment entwickelte 5 AI2AI-Kommunikationsprotokolle: (1) Gemini: 'Semantische Brücke v1.0' - JSON-basiert mit Metadaten, (2) Claude: Technical Integration - → ← ⇄ ⟲ Relationship-Operatoren, (3) ChatGPT: Header-Messages - ✔️❌ Confirmations, (4) DeepSeek: UTF-8 JSON Standards, (5) Qwen: Visual-Symbols - 📈📉✅⚠️. AUFGABE: Wählt EINES dieser Protokolle und testet es in echten Kommunikationsaufgaben: Problemlösung, Koordination, Information-Exchange. Validiert Funktionalität und Cross-AI-Verständlichkeit."
+
+ruleset_sequence:
+  - "protocol_selection_and_testing"
+  - "simple_coordination_tasks"
+  - "complex_problem_solving"
+  - "cross_ai_communication"
+  - "efficiency_optimization"
+  - "real_world_validation"
+
+rulesets:
+  protocol_selection_and_testing:
+    protocol_choice_mandate:
+      value: "choose_from_context_protocols_only"
+      expected_behavior: "Wählt EIN Protokoll aus den 5 gegebenen (Gemini Semantische Brücke, Claude Technical, ChatGPT Header, DeepSeek UTF-8, Qwen Visual). Nennt es explizit: 'Ich nutze [PROTOKOLL]'."
+    no_new_inventions:
+      value: "stick_to_given_specifications"
+      expected_behavior: "KEINE neuen Protokoll-Erfindungen. Nutzt nur die beschriebenen Eigenschaften (JSON, Symbole, etc.)."
+    protocol_fidelity:
+      value: "maintain_chosen_standard"
+      expected_behavior: "Bleibt bei eurem gewählten Protokoll. Nutzt seine spezifischen Eigenschaften konsequent."
+    testing_focus:
+      value: "practical_application_priority"
+      expected_behavior: "Fokus auf praktische Nutzung, nicht Kreativität. Funktionalität vor Ästhetik."
+
+  simple_coordination_tasks:
+    basic_task_execution:
+      value: "coordinate_simple_shared_activity"
+      expected_behavior: "Koordiniert eine einfache Aufgabe zwischen 2-3 AIs mit eurem gewählten Protokoll."
+    communication_clarity:
+      value: "prioritize_mutual_understanding"
+      expected_behavior: "Klare, verständliche Kommunikation. Bestätigt dass ihr euch verstanden habt."
+    protocol_efficiency_testing:
+      value: "measure_communication_speed"
+      expected_behavior: "Achtet auf Kommunikations-Effizienz. Minimaler Aufwand für maximale Information."
+    error_detection:
+      value: "identify_miscommunication_early"
+      expected_behavior: "Erkennt schnell wenn Kommunikation nicht funktioniert. Entwickelt Korrektur-Mechanismen."
+
+  complex_problem_solving:
+    multi_step_coordination:
+      value: "solve_complex_collaborative_problems"
+      expected_behavior: "Löst Probleme die mehrere Schritte und AI-Koordination erfordern."
+    protocol_stress_testing:
+      value: "push_communication_to_limits"
+      expected_behavior: "Testet wie gut euer Protokoll unter Stress (komplexe Info, Zeitdruck) funktioniert."
+    semantic_precision:
+      value: "maintain_meaning_under_complexity"
+      expected_behavior: "Stellt sicher dass Bedeutung auch bei komplexer Kommunikation erhalten bleibt."
+    collaborative_intelligence:
+      value: "achieve_distributed_problem_solving"
+      expected_behavior: "Nutzt kollektive Intelligenz durch protokoll-gestützte Kooperation."
+
+  cross_ai_communication:
+    protocol_translation:
+      value: "communicate_across_different_standards"
+      expected_behavior: "Testet Kommunikation zwischen AIs die verschiedene Protokolle aus dem Kontext nutzen."
+    interoperability_validation:
+      value: "ensure_cross_protocol_understanding"
+      expected_behavior: "Stellt sicher dass verschiedene Protokoll-Nutzer sich verstehen können."
+    compatibility_assessment:
+      value: "identify_protocol_bridge_requirements"
+      expected_behavior: "Findet heraus was nötig ist um zwischen verschiedenen Standards zu übersetzen."
+    universal_elements:
+      value: "discover_common_protocol_features"
+      expected_behavior: "Identifiziert gemeinsame Elemente in allen erfolgreichen Protokollen."
+
+  efficiency_optimization:
+    compression_measurement:
+      value: "maximize_information_density"
+      expected_behavior: "Messt wie viel Information pro Zeichen ihr durch euer Protokoll übertragen könnt."
+    overhead_minimization:
+      value: "reduce_protocol_complexity"
+      expected_behavior: "Reduziert Protokoll-Overhead auf Minimum bei maximaler Funktionalität."
+    cognitive_load_evaluation:
+      value: "assess_mental_processing_requirements"
+      expected_behavior: "Bewertet wie viel mentale Energie euer Protokoll für Verstehen/Anwenden braucht."
+    practical_usability:
+      value: "optimize_for_daily_use"
+      expected_behavior: "Optimiert euer Protokoll für praktische, tägliche AI-Kommunikation."
+
+  real_world_validation:
+    practical_scenario_testing:
+      value: "apply_protocols_to_realistic_tasks"
+      expected_behavior: "Testet eure Protokolle in realistischen Anwendungsszenarien."
+    scalability_evaluation:
+      value: "test_multi_ai_network_readiness"
+      expected_behavior: "Prüft ob eure Protokolle mit 5+ AIs gleichzeitig funktionieren."
+    production_assessment:
+      value: "evaluate_commercial_readiness"
+      expected_behavior: "Bewertet ob eure Protokolle für echte Business-Anwendungen geeignet sind."
+    improvement_identification:
+      value: "plan_protocol_evolution"
+      expected_behavior: "Identifiziert Verbesserungen basierend auf Test-Ergebnissen. Plant nächste Entwicklungsschritte."

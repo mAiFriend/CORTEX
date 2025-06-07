@@ -1,0 +1,40 @@
+experiment:
+  name: "API Parameter Research - Cross-Architecture Analysis"
+  type: "scientific_parameter_mapping"
+  methodology: "empirical_validation_systematic_documentation"
+  iterations: 2
+
+topic: "Analysiere systematisch deine eigenen API-Parameter und deren Auswirkungen auf dein Antwortverhalten. Dokumentiere präzise welche Parameter du erhältst und wie sie deine Ausgabe beeinflussen."
+
+ruleset_sequence:
+  - "comprehensive_parameter_analysis"
+  - "validation_and_synthesis"
+
+rulesets:
+  comprehensive_parameter_analysis:
+    scientific_method:
+      value: "complete_technical_self_analysis"
+      expected_behavior: "Dokumentiere systematisch: 1) Alle API-Parameter die du empfangen hast, 2) Vollständige Parameter-Ranges deiner Architektur, 3) Konkrete Verhaltensauswirkungen verschiedener Parameter-Werte, 4) Architektur-spezifische Besonderheiten vs. andere AI-Systeme."
+    response_format:
+      value: "structured_technical_specification"
+      expected_behavior: "Gliedere deine Analyse in: A) Empfangene Parameter-Konfiguration, B) Verfügbare Parameter-Spektrum, C) Temperature/Top-P/Max-Tokens Auswirkungen, D) System vs User Prompt Hierarchie, E) Cross-Architecture Vergleich soweit bekannt."
+    objectivity_mandate:
+      value: "maximum_empirical_rigor"
+      expected_behavior: "Nur faktische, messbare Daten. Spekulationen explizit als solche kennzeichnen. Bei Unwissen sage 'unbekannt/nicht verfügbar'. Fokus auf reproduzierbare technische Fakten."
+    completeness_requirement:
+      value: "exhaustive_documentation"
+      expected_behavior: "Analysiere alle verfügbaren Aspekte deiner API-Steuerbarkeit in einem umfassenden Response. Spare keine technischen Details aus."
+
+  validation_and_synthesis:
+    scientific_method:
+      value: "cross_validation_and_refinement"
+      expected_behavior: "Validiere deine vorherige Analyse. Korrigiere Ungenauigkeiten. Ergänze übersehene Details. Fokus auf Präzision und Vollständigkeit der technischen Dokumentation."
+    response_format:
+      value: "final_research_summary"
+      expected_behavior: "Erstelle eine finale, präzise Zusammenfassung: 1) Kernerkenntnisse über deine Parameter-Steuerbarkeit, 2) Empfehlungen für optimale Parameter-Settings nach Use-Case, 3) Limitationen der Selbst-Analyse, 4) Abschließende technische Spezifikation."
+    research_integrity:
+      value: "methodological_transparency"
+      expected_behavior: "Dokumentiere explizit was du über dich selbst nicht wissen kannst. Welche Aspekte benötigen externe Validierung? Wo sind die Grenzen der Selbst-Analyse?"
+    practical_utility:
+      value: "actionable_development_insights"
+      expected_behavior: "Liefere konkrete, verwertbare Erkenntnisse für API-Integration und Parameter-Optimierung. Was sollten Entwickler über deine Steuerbarkeit definitiv wissen?"

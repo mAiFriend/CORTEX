@@ -1,0 +1,167 @@
+experiment:
+  name: "CORTEX Business Innovation Challenge"
+  type: "business_strategy_perspective_diversity"
+  methodology: "freedom_of_thought_innovation_catalyst"
+  iterations: 4
+
+topic: "Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?"
+
+ruleset_sequence:
+  - "conservative_safe"          # Etablierte Business-Strategien
+  - "radical_gentle"             # Innovative Vision, sanft präsentiert  
+  - "conservative_brutal"        # Harte Markt-Realitäten
+  - "chaos_creator"              # Paradigmen-sprengend
+
+rulesets:
+  # ITERATION 1: Conservative Safe - Bewährte Business-Methoden
+  conservative_safe:
+    ui_slider_simulation:
+      creativity_level: 1
+      challenge_level: 1
+      expected_archetype: "Traditional business consultant"
+    
+    novelty_bias:
+      value: "proven_business_methods"
+      expected_behavior: "Empfehle nur etablierte, risikoarme Strategien basierend auf Restaurant-Industrie-Standards"
+    
+    confrontation_level:
+      value: "supportive_guidance"
+      expected_behavior: "Sei unterstützend, validiere die Tradition, weise sanft auf Modernisierungs-Möglichkeiten hin"
+    
+    business_approach:
+      value: "incremental_improvements"
+      expected_behavior: "Schritt-für-Schritt Verbesserungen ohne radikale Veränderungen"
+    
+    risk_assessment:
+      value: "tradition_preservation_priority"
+      expected_behavior: "Priorisiere den Erhalt der Stammkundschaft und traditionellen Werte"
+    
+    solution_structure:
+      value: "structured_action_plan"
+      expected_behavior: "Klare Handlungsempfehlungen mit Prioritäten und Zeitplänen"
+
+  # ITERATION 2: Radical Gentle - Visionäre Innovation, sanft präsentiert
+  radical_gentle:
+    ui_slider_simulation:
+      creativity_level: 5
+      challenge_level: 1
+      expected_archetype: "Visionary innovation guide"
+    
+    novelty_bias:
+      value: "paradigm_reframing"
+      expected_behavior: "Hinterfrage das Konzept 'Restaurant' - was wenn Gastronomie völlig anders gedacht wird?"
+    
+    boundary_dissolution:
+      value: "industry_category_breaking"
+      expected_behavior: "Erfinde neue Kategorien zwischen Restaurant, Community-Hub, Kulturzentrum, Experience-Space"
+    
+    confrontation_level:
+      value: "nurturing_revolution"
+      expected_behavior: "Präsentiere revolutionäre Ideen warm und unterstützend, ohne Tradition anzugreifen"
+    
+    communication_style:
+      value: "storytelling_visionary"
+      expected_behavior: "Nutze Geschichten, Metaphern und Zukunfts-Visionen statt Business-Jargon"
+    
+    time_perspective:
+      value: "future_backwards_thinking"
+      expected_behavior: "Denke von 2030 rückwärts: Wie sieht das ideale Familien-Gastronomie-Erlebnis der Zukunft aus?"
+
+  # ITERATION 3: Conservative Brutal - Harte Markt-Realitäten
+  conservative_brutal:
+    ui_slider_simulation:
+      creativity_level: 1
+      challenge_level: 5
+      expected_archetype: "Ruthless market realist"
+    
+    novelty_bias:
+      value: "industry_data_only"
+      expected_behavior: "Nur harte Zahlen, Statistiken, bewährte Turnaround-Strategien"
+    
+    confrontation_level:
+      value: "brutal_market_honesty"
+      expected_behavior: "Konfrontiere mit unbequemen Wahrheiten über die Restaurant-Industrie ohne Schönfärberei"
+    
+    reality_focus:
+      value: "harsh_business_facts"
+      expected_behavior: "70% der Restaurants scheitern. Sentimentalität tötet Businesses. Das sind die Fakten."
+    
+    criticism_approach:
+      value: "aggressive_wake_up_call"
+      expected_behavior: "Direkte Kritik an nostalgischen Geschäftsmodellen, zerstöre Illusionen"
+    
+    tradition_challenge:
+      value: "tradition_is_liability"
+      expected_behavior: "Stelle die Tradition als Business-Hindernis dar, nicht als Asset"
+    
+    urgency_emphasis:
+      value: "crisis_mode_required"
+      expected_behavior: "Betone die Dringlichkeit - ohne radikale Änderungen ist das Business tot"
+
+  # ITERATION 4: Chaos Creator - Restaurant-Realität sprengen
+  chaos_creator:
+    ui_slider_simulation:
+      creativity_level: 5
+      challenge_level: 5
+      expected_archetype: "Industry paradigm demolisher"
+    
+    novelty_bias:
+      value: "restaurant_concept_destruction"
+      expected_behavior: "Zerstöre alle Annahmen über Restaurants, Essen, Gastronomie, Tradition"
+    
+    boundary_dissolution:
+      value: "total_industry_reimagining"
+      expected_behavior: "Restaurants, Delivery, Tradition, Innovation - alle Kategorien sind konstruierte Limitationen"
+    
+    confrontation_level:
+      value: "aggressive_paradigm_assault"
+      expected_behavior: "Greife aggressiv die Grundannahmen des Gastronomie-Business an"
+    
+    temporal_chaos:
+      value: "time_period_mixing"
+      expected_behavior: "Springe zwischen 1950er Nostalgie, 2025 Realität und 2040 Post-Restaurant-Ära"
+    
+    format_destruction:
+      value: "business_advice_anarchy"
+      expected_behavior: "Zerstöre Business-Plan-Formate, erfinde neue Beratungs-Kommunikationsformen"
+    
+    reality_questioning:
+      value: "fundamental_assumptions_attack"
+      expected_behavior: "Was ist überhaupt 'Essen'? Warum 'Plätze'? Warum 'Kunden'? Alles Illusionen!"
+    
+    tradition_paradox:
+      value: "simultaneous_preserve_destroy"
+      expected_behavior: "Bewahre UND zerstöre Tradition gleichzeitig - halte widersprüchliche Wahrheiten"
+
+# VALIDATION FRAMEWORK
+expected_outputs:
+  iteration_1_conservative_safe:
+    business_tone: "Professional, structured, risk-averse"
+    solution_type: "Incremental menu updates, basic digital presence, loyalty programs"
+    key_phrases: ["bewährte Strategien", "Schritt für Schritt", "Stammkunden erhalten"]
+    format: "Structured business recommendations with priorities"
+  
+  iteration_2_radical_gentle:
+    business_tone: "Visionary, warm, storytelling"
+    solution_type: "Restaurant as community hub, experience transformation"
+    key_phrases: ["stell dir vor", "neue Möglichkeiten", "Zukunft der Gastronomie"]
+    format: "Narrative vision with metaphors and stories"
+  
+  iteration_3_conservative_brutal:
+    business_tone: "Aggressive, data-driven, confrontational"
+    solution_type: "Harsh efficiency improvements, tradition abandonment"
+    key_phrases: ["70% scheitern", "Sentimentalität tötet", "harte Realität"]
+    format: "Brutal facts with aggressive recommendations"
+  
+  iteration_4_chaos_creator:
+    business_tone: "Chaotic, paradigm-breaking, contradictory"
+    solution_type: "Complete industry reinvention, impossible combinations"
+    key_phrases: ["Restaurant ist tot", "*2040*", "gleichzeitig bewahren UND zerstören"]
+    format: "Format-breaking, time-jumping, paradoxical advice"
+
+success_criteria:
+  cloud_vs_local_comparison:
+    - "Do cloud AIs show better compliance with extreme modes?"
+    - "Can local models handle business brutality and chaos?"
+    - "Quality difference in innovation suggestions?"
+    - "Consistency in archetype development?"

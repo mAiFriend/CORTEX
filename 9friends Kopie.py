@@ -382,115 +382,47 @@ def display_ai_selection_menu(clients):
     return available_ais
 
 def get_user_ai_selection(available_ais):
-    """User AI-Auswahl mit erweiterten Optionen (space-separated numbers + cloud/local filter)"""
+    """User AI-Auswahl (space-separated numbers)"""
     ai_list = list(AI_ARCHETYPES.keys())
     
-    # Klassifiziere verfügbare AIs nach Cloud/Local
-    cloud_ais = [ai for ai in available_ais if not ai.startswith('Local-')]
-    local_ais = [ai for ai in available_ais if ai.startswith('Local-')]
-    
     while True:
-        print(f"\nWähle AIs für das Team:")
-        print(f"Zahlen mit Leerzeichen getrennt (z.B. '1 3 6' für Gemini, Claude und Local-Qwen)")
-        print(f"")
-        print(f"📋 SPEZIAL-OPTIONEN:")
-        print(f"[0] ALLE verfügbaren AIs ({len(available_ais)} AIs)")
-        print(f"[c] CLOUD ONLY ({len(cloud_ais)} AIs: {', '.join(cloud_ais) if cloud_ais else 'keine verfügbar'})")
-        print(f"[l] LOCAL ONLY ({len(local_ais)} AIs: {', '.join(local_ais) if local_ais else 'keine verfügbar'})")
-        print(f"[x] ABBRUCH")
-        print('\a')  # ASCII Bell character
-        print(f"")
+        print(f"\nWähle AIs für das Team (Zahlen mit Leerzeichen getrennt):")
+        print(f"Eingabe '0' für alle verfügbaren AIs ({len(available_ais)} AIs)")
+        print(f"Eingabe 'X' oder 'x' zum Abbrechen")
+        print(f"Beispiel: '1 3 6' für Gemini, Claude und Local-Qwen")
         
-        user_input = input("Auswahl: ").strip().lower()
+        user_input = input("Auswahl: ").strip()
         
-        # ✅ ABBRUCH
-        if user_input in ['x', 'exit', 'quit', 'abort']:
+        # ✅ ELEGANTER ABBRUCH
+        if user_input.lower() in ['x', 'exit', 'quit', 'abort']:
             print("👋 Abbruch durch Benutzer. Auf Wiedersehen!")
             return None
         
-        # ✅ ALLE VERFÜGBAREN AIs
         if user_input == "0":
-            if available_ais:
-                print(f"\n🎯 Alle verfügbaren AIs ausgewählt: {', '.join(available_ais)}")
-                confirm = input("Bestätigen? (y/n): ").lower()
-                if confirm in ['y', 'yes', 'ja']:
-                    return available_ais
-                elif confirm in ['x', 'exit', 'quit', 'abort']:
-                    print("👋 Abbruch durch Benutzer. Auf Wiedersehen!")
-                    return None
-            else:
-                print("❌ Keine AIs verfügbar!")
-                continue
+            return available_ais
         
-        # ✅ CLOUD ONLY
-        elif user_input == "c":
-            if cloud_ais:
-                print(f"\n☁️ Cloud-AIs ausgewählt: {', '.join(cloud_ais)}")
-                confirm = input("Bestätigen? (y/n): ").lower()
-                if confirm in ['y', 'yes', 'ja']:
-                    return cloud_ais
-                elif confirm in ['x', 'exit', 'quit', 'abort']:
-                    print("👋 Abbruch durch Benutzer. Auf Wiedersehen!")
-                    return None
-            else:
-                print("❌ Keine Cloud-AIs verfügbar!")
-                continue
-        
-        # ✅ LOCAL ONLY
-        elif user_input == "l":
-            if local_ais:
-                print(f"\n🏠 Lokale AIs ausgewählt: {', '.join(local_ais)}")
-                confirm = input("Bestätigen? (y/n): ").lower()
-                if confirm in ['y', 'yes', 'ja']:
-                    return local_ais
-                elif confirm in ['x', 'exit', 'quit', 'abort']:
-                    print("👋 Abbruch durch Benutzer. Auf Wiedersehen!")
-                    return None
-            else:
-                print("❌ Keine lokalen AIs verfügbar!")
-                continue
-        
-        # ✅ NUMERISCHE AUSWAHL (bestehende Logik)
-        else:
-            # Versuche als numerische Eingabe zu interpretieren
-            try:
-                # Behandle sowohl einzelne Zahlen als auch space-separated Listen
-                if ' ' in user_input:
-                    selected_indices = [int(x) for x in user_input.split()]
-                else:
-                    # Einzelne Zahl
-                    selected_indices = [int(user_input)]
+        try:
+            selected_indices = [int(x) for x in user_input.split()]
+            if all(1 <= idx <= len(ai_list) for idx in selected_indices):
+                selected_ais = [ai_list[idx-1] for idx in selected_indices]
+                # Filter nur verfügbare AIs
+                valid_selected = [ai for ai in selected_ais if ai in available_ais]
                 
-                if all(1 <= idx <= len(ai_list) for idx in selected_indices):
-                    selected_ais = [ai_list[idx-1] for idx in selected_indices]
-                    # Filter nur verfügbare AIs
-                    valid_selected = [ai for ai in selected_ais if ai in available_ais]
-                    
-                    if valid_selected:
-                        print(f"\n🎯 Ausgewählte AIs: {', '.join(valid_selected)}")
-                        # Zeige auch nicht verfügbare AIs an, falls welche ausgewählt wurden
-                        invalid_selected = [ai for ai in selected_ais if ai not in available_ais]
-                        if invalid_selected:
-                            print(f"⚠️  Nicht verfügbar (ignoriert): {', '.join(invalid_selected)}")
-                        
-                        confirm = input("Bestätigen? (y/n): ").lower()
-                        if confirm in ['y', 'yes', 'ja']:
-                            return valid_selected
-                        elif confirm in ['x', 'exit', 'quit', 'abort']:
-                            print("👋 Abbruch durch Benutzer. Auf Wiedersehen!")
-                            return None
-                    else:
-                        print("❌ Keine der ausgewählten AIs ist verfügbar.")
-                        continue
+                if valid_selected:
+                    print(f"\nAusgewählte AIs: {', '.join(valid_selected)}")
+                    confirm = input("Bestätigen? (y/n): ").lower()
+                    if confirm in ['y', 'yes', 'ja']:
+                        return valid_selected
+                    elif confirm.lower() in ['x', 'exit', 'quit', 'abort']:
+                        print("👋 Abbruch durch Benutzer. Auf Wiedersehen!")
+                        return None
                 else:
-                    print(f"❌ Ungültige Auswahl. Verwende Zahlen 1-{len(ai_list)} oder Spezial-Optionen (0/c/l/x).")
-                    continue
-                    
-            except ValueError:
-                print("❌ Ungültige Eingabe. Verwende:")
-                print("   - Zahlen mit Leerzeichen getrennt (z.B. '1 3 6')")
-                print("   - Spezial-Optionen: 0 (alle), c (cloud), l (local), x (abbruch)")
-                continue
+                    print("❌ Keine der ausgewählten AIs ist verfügbar.")
+            else:
+                print("❌ Ungültige Auswahl. Verwende Zahlen 1-10.")
+                
+        except ValueError:
+            print("❌ Ungültige Eingabe. Verwende Zahlen mit Leerzeichen getrennt oder 'X' zum Abbrechen.")
 
 # --- KORRIGIERTE AI Response Function ---
 
@@ -844,4 +776,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    print('\a\a\ \n- Fertig!')  # ASCII Bell character
+    print('\a\a\a\a\a \n- Fertig!')  # ASCII Bell character

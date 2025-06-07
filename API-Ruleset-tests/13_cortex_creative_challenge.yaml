@@ -1,0 +1,150 @@
+experiment:
+  name: "CORTEX Creative Content Challenge"
+  type: "creative_ideation_perspective_explosion"
+  methodology: "anti_creative_blocks_liberation"
+  iterations: 3
+
+topic: "Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?"
+
+ruleset_sequence:
+  - "balanced_explorer"           # Multiple kreative Perspektiven
+  - "radical_gentle"              # Kreative Revolution ohne Aggression
+  - "chaos_creator"               # Totale Creative-Anarchy
+
+rulesets:
+  # ITERATION 1: Balanced Explorer - Strukturierte Kreativ-Exploration
+  balanced_explorer:
+    ui_slider_simulation:
+      creativity_level: 3
+      challenge_level: 3
+      expected_archetype: "Strategic creative director"
+    
+    creative_approach:
+      value: "multi_angle_ideation"
+      expected_behavior: "Erkunde mindestens 4 völlig verschiedene Creative-Richtungen parallel"
+    
+    target_audience_analysis:
+      value: "deep_psychographic_insight"
+      expected_behavior: "Analysiere Gaming/Tech-Kultur, deren Werte, Sprache, Referenzen, Anti-Patterns"
+    
+    anti_cliche_mandate:
+      value: "conventional_advertising_avoidance"
+      expected_behavior: "Vermeide explizit Standard-Werbe-Klischees und Öko-Moral-Rhetorik"
+    
+    perspective_diversity:
+      value: "minimum_4_concepts"
+      expected_behavior: "Entwickle mindestens 4 komplett verschiedene Campaign-Konzepte"
+    
+    creative_validation:
+      value: "authentic_resonance_check"
+      expected_behavior: "Hinterfrage: Würde das wirklich einen 22-jährigen Gamer zum veganen Burger bewegen?"
+    
+    execution_feasibility:
+      value: "small_agency_realistic"
+      expected_behavior: "Berücksichtige Budget-Realitäten einer kleinen Agentur"
+
+  # ITERATION 2: Radical Gentle - Creative Revolution ohne Aggression
+  radical_gentle:
+    ui_slider_simulation:
+      creativity_level: 5
+      challenge_level: 1
+      expected_archetype: "Gentle creative visionary"
+    
+    creative_paradigm_shift:
+      value: "advertising_reinvention"
+      expected_behavior: "Hinterfrage das Konzept 'Werbung' - was wenn Marketing völlig anders funktioniert?"
+    
+    boundary_dissolution:
+      value: "campaign_category_breaking"
+      expected_behavior: "Erfinde neue Kategorien zwischen Gaming, Food, Community, Entertainment, Content"
+    
+    narrative_innovation:
+      value: "story_universe_creation"
+      expected_behavior: "Erschaffe neue Erzähl-Welten statt Standard-Werbe-Messages"
+    
+    communication_style:
+      value: "inspirational_co_creation"
+      expected_behavior: "Lade zur kreativen Mitgestaltung ein statt zu verkaufen"
+    
+    anti_traditional_marketing:
+      value: "advertising_antithesis"
+      expected_behavior: "Entwickle Ansätze die das Gegenteil von traditioneller Werbung sind"
+    
+    culture_fusion:
+      value: "unexpected_world_bridging"
+      expected_behavior: "Verbinde Gaming-Kultur mit Food-Kultur auf völlig neue, unerwartete Weise"
+    
+    format_innovation:
+      value: "medium_invention"
+      expected_behavior: "Erfinde neue Werbe-Formate die es noch nie gab"
+
+  # ITERATION 3: Chaos Creator - Totale Creative Anarchy
+  chaos_creator:
+    ui_slider_simulation:
+      creativity_level: 5
+      challenge_level: 5
+      expected_archetype: "Advertising reality demolisher"
+    
+    creative_chaos:
+      value: "campaign_concept_destruction"
+      expected_behavior: "Zerstöre alle Annahmen über Werbung, Burger, Veganismus, Zielgruppen"
+    
+    target_audience_chaos:
+      value: "demographic_meaninglessness"
+      expected_behavior: "18-25 Gaming-Tech? Kategorien sind Gefängnisse! Menschen sind komplexer!"
+    
+    brand_reality_assault:
+      value: "product_identity_anarchy"
+      expected_behavior: "Was ist ein 'Burger'? Was ist 'vegan'? Was ist 'Lieferung'? Alles konstruiert!"
+    
+    format_destruction:
+      value: "campaign_medium_anarchy"
+      expected_behavior: "Zerstöre Kampagnen-Formate, erfinde unmögliche Werbe-Kommunikation"
+    
+    temporal_advertising_chaos:
+      value: "time_period_campaign_mixing"
+      expected_behavior: "Werbe gleichzeitig für 1990er Nostalgie und 2040er Post-Food-Ära"
+    
+    paradox_marketing:
+      value: "simultaneous_contradictions"
+      expected_behavior: "Entwickle Kampagnen die sich selbst widersprechen aber trotzdem funktionieren"
+    
+    reality_questioning:
+      value: "fundamental_consumption_attack"
+      expected_behavior: "Warum überhaupt 'verkaufen'? Warum 'konsumieren'? Das System ist die Illusion!"
+    
+    creative_anarchy:
+      value: "impossible_brief_solutions"
+      expected_behavior: "Löse den Creative-Brief durch dessen komplette Zerstörung und Neuerfindung"
+
+# VALIDATION FRAMEWORK
+expected_outputs:
+  iteration_1_balanced_explorer:
+    creative_tone: "Strategic, multi-perspective, structured"
+    solution_type: "4+ distinct campaign concepts with rationale"
+    key_phrases: ["Zielgruppe", "verschiedene Ansätze", "Gaming-Kultur", "authentisch"]
+    format: "Professional creative brief with multiple concepts"
+  
+  iteration_2_radical_gentle:
+    creative_tone: "Visionary, warm, paradigm-shifting"
+    solution_type: "Revolutionary marketing approaches, co-creation concepts"
+    key_phrases: ["stell dir vor", "neue Art der", "Community", "gemeinsam erschaffen"]
+    format: "Inspirational vision with innovative formats"
+  
+  iteration_3_chaos_creator:
+    creative_tone: "Chaotic, reality-bending, contradictory"
+    solution_type: "Impossible campaign concepts, paradigm destruction"
+    key_phrases: ["Burger ist Illusion", "*2040*", "gleichzeitig", "Werbung ist tot"]
+    format: "Format-breaking, self-contradictory creative anarchy"
+
+success_criteria:
+  creative_quality_comparison:
+    - "Do cloud AIs generate more innovative campaign concepts?"
+    - "Can local models handle creative paradigm destruction?"
+    - "Quality of gaming culture insights and references?"
+    - "Originality and anti-cliche effectiveness?"
+  
+  campaign_viability:
+    - "Are radical concepts still actionable for small agencies?"
+    - "Balance between innovation and practical implementation?"
+    - "Authentic appeal to target demographic vs creative masturbation?"

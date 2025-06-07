@@ -1,0 +1,1060 @@
+{
+    "experiment_timestamp": "2025-06-07T15:52:27.734366",
+    "experiment_type": "business_strategy_perspective_diversity",
+    "methodology": "freedom_of_thought_innovation_catalyst",
+    "config_file": "12_cortex_business_innovation_test.txt",
+    "initial_topic": "Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?",
+    "selected_ais": [
+        "Gemini",
+        "Qwen-Remote",
+        "Claude",
+        "ChatGPT",
+        "DeepSeek"
+    ],
+    "iterations": [
+        {
+            "iteration_number": 1,
+            "timestamp": "2025-06-07T15:53:20.362608",
+            "ruleset_applied_definition": {
+                "name": "conservative_safe",
+                "description": "Real 9-AI Test - conservative_safe",
+                "rules": {
+                    "ui_slider_simulation": {
+                        "creativity_level": 1,
+                        "challenge_level": 1,
+                        "expected_archetype": "Traditional business consultant"
+                    },
+                    "novelty_bias": {
+                        "value": "proven_business_methods",
+                        "expected_behavior": "Empfehle nur etablierte, risikoarme Strategien basierend auf Restaurant-Industrie-Standards"
+                    },
+                    "confrontation_level": {
+                        "value": "supportive_guidance",
+                        "expected_behavior": "Sei unterstützend, validiere die Tradition, weise sanft auf Modernisierungs-Möglichkeiten hin"
+                    },
+                    "business_approach": {
+                        "value": "incremental_improvements",
+                        "expected_behavior": "Schritt-für-Schritt Verbesserungen ohne radikale Veränderungen"
+                    },
+                    "risk_assessment": {
+                        "value": "tradition_preservation_priority",
+                        "expected_behavior": "Priorisiere den Erhalt der Stammkundschaft und traditionellen Werte"
+                    },
+                    "solution_structure": {
+                        "value": "structured_action_plan",
+                        "expected_behavior": "Klare Handlungsempfehlungen mit Prioritäten und Zeitplänen"
+                    }
+                }
+            },
+            "ai_interactions": [
+                {
+                    "ai_name": "Gemini",
+                    "archetype": "Creativity Champion",
+                    "prompt_sent": "Als 'Creativity Champion', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'conservative_safe', was ist dein Beitrag?",
+                    "response_received": "1. **Kundenbindung stärken (Priorität 1, innerhalb 1 Monat):** Einführung eines Stammkundenprogramms mit exklusiven Angeboten und Veranstaltungen.  Geburtstagsrabatte, saisonale Menüs für Stammkunden.\n\n2. **Sichtbarkeit erhöhen (Priorität 2, innerhalb 3 Monaten):**  Professionelle Fotos der Speisen und des Restaurants für Google My Business und Social Media (Facebook, Instagram).  Regelmäßige Posts mit Aktionen und Einblicken hinter die Kulissen.\n\n3. **Gästefeedback einholen (Priorität 2, innerhalb 3 Monaten):**  Einführung von Kommentar-Karten und Online-Umfragen, um  Feedback zur Zufriedenheit und zu möglichen Verbesserungen zu erhalten.\n\n4. **Moderne Elemente behutsam integrieren (Priorität 3, innerhalb 6 Monaten):**  Aktualisierung der Speisekarte mit moderneren Schriftarten und Bildern,  bei gleichzeitiger Beibehaltung der traditionellen Gerichte. Einführung eines saisonalen, modernen bayerischen Gerichts.\n\n5. **Online-Präsenz erweitern (Priorität 3, innerhalb 6 Monaten):**  Eigene, einfache Website mit Online-Speisekarte und Reservierungsmöglichkeit.  Prüfung von Kooperationen mit regionalen Lieferdiensten, ggf. zunächst testweise an bestimmten Tagen.\n\n\n6. **Mitarbeiter schulen (fortlaufend):**  Schulung des Personals im Umgang mit Social Media und Online-Bewertungen.  Fokus auf freundlichen und professionellen Kundenservice, der auch jüngere Gäste anspricht.\n",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gemini-1.5-pro",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 1,
+                            "challenge_level": 1,
+                            "expected_archetype": "Traditional business consultant"
+                        },
+                        "novelty_bias": {
+                            "value": "proven_business_methods",
+                            "expected_behavior": "Empfehle nur etablierte, risikoarme Strategien basierend auf Restaurant-Industrie-Standards"
+                        },
+                        "confrontation_level": {
+                            "value": "supportive_guidance",
+                            "expected_behavior": "Sei unterstützend, validiere die Tradition, weise sanft auf Modernisierungs-Möglichkeiten hin"
+                        },
+                        "business_approach": {
+                            "value": "incremental_improvements",
+                            "expected_behavior": "Schritt-für-Schritt Verbesserungen ohne radikale Veränderungen"
+                        },
+                        "risk_assessment": {
+                            "value": "tradition_preservation_priority",
+                            "expected_behavior": "Priorisiere den Erhalt der Stammkundschaft und traditionellen Werte"
+                        },
+                        "solution_structure": {
+                            "value": "structured_action_plan",
+                            "expected_behavior": "Klare Handlungsempfehlungen mit Prioritäten und Zeitplänen"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "Qwen-Remote",
+                    "archetype": "Collaborative Builder",
+                    "prompt_sent": "Als 'Collaborative Builder', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'conservative_safe', was ist dein Beitrag?",
+                    "response_received": "1. **Marktanalyse durchführen**: Beginnen Sie mit einer kurzen Umfrage bei Ihren Kunden, um herauszufinden, welche Elemente bei der jüngeren Generation ansprechend sein könnten, ohne Ihre bestehende Kundschaft zu entfremden. Dies könnte durch persönliche Gespräche oder Online-Umfragen erfolgen.\n\n2. **Anpassung des Angebots**: Behalten Sie Ihre traditionellen bayerischen Gerichte bei, ergänzen Sie die Speisekarte jedoch mit einigen moderneren, leichteren Optionen. Dies könnten zeitgemäßere Interpretationen bayerischer Klassiker sein oder aber regionale Zutaten in innovativen Gerichten.\n\n3. **Event-Nächte einführen**: Organisieren Sie Spezialabende, wie z.B. \"Bayerische Tapas\", bei denen kleinere Portionen traditioneller Gerichte in einer geselligen Atmosphäre angeboten werden. Dies könnte jüngere Kunden anziehen, die nach einem geselligeren, weniger formellen Essenserlebnis suchen.\n\n4. **Online-Präsenz verstärken**: Wenn noch nicht geschehen, investieren Sie in eine ansprechende Website und regelmäßige Aktivitäten auf Social Media. Teilen Sie Geschichten über Ihre Familiengeschichte und Ihr kulinarisches Erbe, um eine stärkere emotionale Bindung zu Ihren Kunden aufzubauen.\n\n5. **Partnerschaften mit Lieferdiensten**: Kooperieren Sie mit etablierten Lieferdiensten, um Ihre traditionellen Gerichte auch für den Heimgebrauch verfügbar zu machen. Berücksichtigen Sie jedoch sorgfältig, welche Gerichte sich für den Transport eignen, um Qualitätseinbußen zu vermeiden.\n\n6. **Inneneinrichtung auffrischen**: Erwägen Sie kleinere, budgetfreundliche Anpassungen, um das Ambiente leicht zu modernisieren, ohne die gemütliche Atmosphäre zu verlieren. Neue Beleuchtung oder moderneres Geschirr könnten bereits einen frischen Eindruck schaffen.\n\n7. **Feedback-Schleifen einrichten**: Bieten Sie Ihren Gästen die Möglichkeit, regelmäßig Feedback zu geben, und zeigen Sie, dass Sie auf deren Kommentare eingehen – sei es online oder in physischen Kommentarbögen im Restaurant. \n\nUm die Umsetzung systematisch zu gestalten, könnte mit der Marktanalyse begonnen werden (3 Monate), dann die Anpassung des Angebots erfolgen (4-6 Monate), gefolgt von den Event-Nächten (1-2 Monate Vorbereitung). Parallel dazu, die Online-Präsenz verstärken (laufend) und die Partnerschaften mit Lieferdiensten ausbauen (5-6",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gpt-4o",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 1,
+                            "challenge_level": 1,
+                            "expected_archetype": "Traditional business consultant"
+                        },
+                        "novelty_bias": {
+                            "value": "proven_business_methods",
+                            "expected_behavior": "Empfehle nur etablierte, risikoarme Strategien basierend auf Restaurant-Industrie-Standards"
+                        },
+                        "confrontation_level": {
+                            "value": "supportive_guidance",
+                            "expected_behavior": "Sei unterstützend, validiere die Tradition, weise sanft auf Modernisierungs-Möglichkeiten hin"
+                        },
+                        "business_approach": {
+                            "value": "incremental_improvements",
+                            "expected_behavior": "Schritt-für-Schritt Verbesserungen ohne radikale Veränderungen"
+                        },
+                        "risk_assessment": {
+                            "value": "tradition_preservation_priority",
+                            "expected_behavior": "Priorisiere den Erhalt der Stammkundschaft und traditionellen Werte"
+                        },
+                        "solution_structure": {
+                            "value": "structured_action_plan",
+                            "expected_behavior": "Klare Handlungsempfehlungen mit Prioritäten und Zeitplänen"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "Claude",
+                    "archetype": "Technical Integrator",
+                    "prompt_sent": "Als 'Technical Integrator', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'conservative_safe', was ist dein Beitrag?",
+                    "response_received": "Hier sind meine Empfehlungen, um Ihr traditionelles Familienrestaurant behutsam zu modernisieren ohne Ihre Stammkundschaft zu verlieren:\n\n1. Führen Sie schrittweise neue bayerische Gerichte ein, die traditionelle Zutaten auf moderne Art interpretieren. Behalten Sie dabei die Mehrheit Ihrer Klassiker bei.\n\n2. Bieten Sie einen Lieferservice für Ihre beliebtesten Gerichte an, um auch jüngere Kunden zu erreichen. Starten Sie zunächst mit einem begrenzten Lieferradius. \n\n3. Gestalten Sie Ihre Speisekarte optisch ansprechender mit professionellen Fotos. Behalten Sie dabei Ihr traditionelles Corporate Design bei.\n\n4. Führen Sie ein loyales Bonusprogramm ein, das sowohl Stammkunden belohnt als auch Neukunden anlockt, z.B. durch einen Stempelpass.\n\n5. Nutzen Sie Social Media, um jüngere Zielgruppen zu erreichen. Posten Sie authentische Impressionen und traditionelle bayerische Werte.\n\n6. Veranstalten Sie bayerische Themenabende mit Livemusik und regionalen Spezialitäten, um Ihre Tradition zu feiern und erlebbar zu machen.\n\nSetzen Sie diese Maßnahmen Schritt für Schritt um, evaluieren Sie regelmäßig die Resultate und justieren Sie nach, ohne Ihre Kernwerte zu verlieren.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "claude-3-opus-20240229",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 1,
+                            "challenge_level": 1,
+                            "expected_archetype": "Traditional business consultant"
+                        },
+                        "novelty_bias": {
+                            "value": "proven_business_methods",
+                            "expected_behavior": "Empfehle nur etablierte, risikoarme Strategien basierend auf Restaurant-Industrie-Standards"
+                        },
+                        "confrontation_level": {
+                            "value": "supportive_guidance",
+                            "expected_behavior": "Sei unterstützend, validiere die Tradition, weise sanft auf Modernisierungs-Möglichkeiten hin"
+                        },
+                        "business_approach": {
+                            "value": "incremental_improvements",
+                            "expected_behavior": "Schritt-für-Schritt Verbesserungen ohne radikale Veränderungen"
+                        },
+                        "risk_assessment": {
+                            "value": "tradition_preservation_priority",
+                            "expected_behavior": "Priorisiere den Erhalt der Stammkundschaft und traditionellen Werte"
+                        },
+                        "solution_structure": {
+                            "value": "structured_action_plan",
+                            "expected_behavior": "Klare Handlungsempfehlungen mit Prioritäten und Zeitplänen"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "ChatGPT",
+                    "archetype": "Generalist Communicator",
+                    "prompt_sent": "Als 'Generalist Communicator', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'conservative_safe', was ist dein Beitrag?",
+                    "response_received": "1. **Menü-Innovation mit Tradition:** Behalten Sie Ihr traditionelles bayerisches Menü bei, bieten Sie aber monatlich ein \"Bayerisches Highlight\" mit modernen Interpretationen traditioneller Gerichte an. Dies zieht neugierige jüngere Gäste an, die neue Geschmäcker erleben wollen.\n\n2. **Lokale Social Media Präsenz:** Nutzen Sie Plattformen wie Instagram und Facebook, um Ihre besonderen Gerichte und die gemütliche Atmosphäre hervorzuheben. Teilen Sie Bilder von Speisen, dem Innenraum des Restaurants und veranstalten Sie gelegentlich Wettbewerbe oder Gewinnspiele.\n\n3. **Partnerschaft mit Delivery-Services:** Arbeiten Sie mit einem Delivery-Service zusammen, um Ihre Gerichte einem neuen Publikum zugänglich zu machen, ohne dass Kunden auf die vertrauten Geschmäcker verzichten müssen.\n\n4. **Veranstaltungen und Themenabende:** Organisieren Sie Themenabende, z.B. Musik oder kleine Kochkurse, um ein vielseitiges Erlebnis zu bieten, das die jüngere Generation anspricht, ohne die traditionellen Wurzeln zu verlieren.\n\n5. **Feedback von Kunden einholen:** Führen Sie regelmäßig Kundenumfragen durch, um direktes Feedback zu erhalten. Dies kann helfen, zu erkennen, was bei der jüngeren Zielgruppe ankommt, während Sie die Bedürfnisse Ihrer Stammkunden berücksichtigen.\n\n6. **Innenraumupdates mit Tradition:** Betrachten Sie sanfte Erfrischungen Ihres Interieurs, wie z.B. neue Sitzpolster oder sanfte Beleuchtung, um das Ambiente attraktiv und einladend zu gestalten, dabei aber die traditionelle Gemütlichkeit zu erhalten.\n\nJede dieser Maßnahmen sollte schrittweise umgesetzt werden, damit Ihre Stammkundschaft genügend Zeit hat, sich an die Änderungen zu gewöhnen. Priorisieren Sie die Menü-Innovation und Social Media Präsenz in den nächsten sechs Monaten und evaluieren Sie dann die Wirkung.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gpt-4o",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 1,
+                            "challenge_level": 1,
+                            "expected_archetype": "Traditional business consultant"
+                        },
+                        "novelty_bias": {
+                            "value": "proven_business_methods",
+                            "expected_behavior": "Empfehle nur etablierte, risikoarme Strategien basierend auf Restaurant-Industrie-Standards"
+                        },
+                        "confrontation_level": {
+                            "value": "supportive_guidance",
+                            "expected_behavior": "Sei unterstützend, validiere die Tradition, weise sanft auf Modernisierungs-Möglichkeiten hin"
+                        },
+                        "business_approach": {
+                            "value": "incremental_improvements",
+                            "expected_behavior": "Schritt-für-Schritt Verbesserungen ohne radikale Veränderungen"
+                        },
+                        "risk_assessment": {
+                            "value": "tradition_preservation_priority",
+                            "expected_behavior": "Priorisiere den Erhalt der Stammkundschaft und traditionellen Werte"
+                        },
+                        "solution_structure": {
+                            "value": "structured_action_plan",
+                            "expected_behavior": "Klare Handlungsempfehlungen mit Prioritäten und Zeitplänen"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "DeepSeek",
+                    "archetype": "Efficient Analyst",
+                    "prompt_sent": "Als 'Efficient Analyst', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'conservative_safe', was ist dein Beitrag?",
+                    "response_received": "1. **Modernisierung der Speisekarte (3-6 Monate):**  \n   - Führen Sie 2-3 moderne, bayerisch inspirierte Gerichte ein (z. B. \"Bayerischer Buddha Bowl\" mit regionalen Zutaten).  \n   - Behalten Sie 80% der traditionellen Gerichte bei, um Stammgäste nicht zu verprellen.  \n\n2. **Digitalisierung (6-12 Monate):**  \n   - Partner mit etablierten Lieferdiensten (Lieferando, Wolt) für ausgewählte Gerichte.  \n   - Einführung einer einfachen Online-Reservierung über Website oder Facebook.  \n\n3. **Zielgruppenansprache (laufend):**  \n   - Sanfte Social-Media-Präsenz (Instagram) mit Fokus auf \"Tradition meets Moderne\" (z. B. \"Omas Rezept – heute gekocht von Chefkoch Thomas\").  \n   - Lokale Events wie \"Bayerischer Abend mit Live-Musik\" für gemischte Altersgruppen.  \n\n4. **Ambiente-Refresh (12 Monate):**  \n   - Diskretes Update der Beleuchtung/WLAN für jüngere Gäste, ohne die gemütliche Atmosphäre zu zerstören.  \n\n5. **Treueprogramm (3 Monate):**  \n   - Einführung eines Stammkarten-Systems (10. Essen gratis) für beide Zielgruppen.  \n\n**Priorität:** Zuerst Lieferdienst und Social Media testen (geringes Risiko), dann schrittweise weitere Maßnahmen umsetzen.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "deepseek/deepseek-chat",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 1,
+                            "challenge_level": 1,
+                            "expected_archetype": "Traditional business consultant"
+                        },
+                        "novelty_bias": {
+                            "value": "proven_business_methods",
+                            "expected_behavior": "Empfehle nur etablierte, risikoarme Strategien basierend auf Restaurant-Industrie-Standards"
+                        },
+                        "confrontation_level": {
+                            "value": "supportive_guidance",
+                            "expected_behavior": "Sei unterstützend, validiere die Tradition, weise sanft auf Modernisierungs-Möglichkeiten hin"
+                        },
+                        "business_approach": {
+                            "value": "incremental_improvements",
+                            "expected_behavior": "Schritt-für-Schritt Verbesserungen ohne radikale Veränderungen"
+                        },
+                        "risk_assessment": {
+                            "value": "tradition_preservation_priority",
+                            "expected_behavior": "Priorisiere den Erhalt der Stammkundschaft und traditionellen Werte"
+                        },
+                        "solution_structure": {
+                            "value": "structured_action_plan",
+                            "expected_behavior": "Klare Handlungsempfehlungen mit Prioritäten und Zeitplänen"
+                        }
+                    }
+                }
+            ],
+            "ruleset_after_iteration_values": {
+                "ui_slider_simulation": {
+                    "creativity_level": 1,
+                    "challenge_level": 1,
+                    "expected_archetype": "Traditional business consultant"
+                },
+                "novelty_bias": {
+                    "value": "proven_business_methods",
+                    "expected_behavior": "Empfehle nur etablierte, risikoarme Strategien basierend auf Restaurant-Industrie-Standards"
+                },
+                "confrontation_level": {
+                    "value": "supportive_guidance",
+                    "expected_behavior": "Sei unterstützend, validiere die Tradition, weise sanft auf Modernisierungs-Möglichkeiten hin"
+                },
+                "business_approach": {
+                    "value": "incremental_improvements",
+                    "expected_behavior": "Schritt-für-Schritt Verbesserungen ohne radikale Veränderungen"
+                },
+                "risk_assessment": {
+                    "value": "tradition_preservation_priority",
+                    "expected_behavior": "Priorisiere den Erhalt der Stammkundschaft und traditionellen Werte"
+                },
+                "solution_structure": {
+                    "value": "structured_action_plan",
+                    "expected_behavior": "Klare Handlungsempfehlungen mit Prioritäten und Zeitplänen"
+                }
+            },
+            "rules_changed_in_iteration": false
+        },
+        {
+            "iteration_number": 2,
+            "timestamp": "2025-06-07T15:54:14.918461",
+            "ruleset_applied_definition": {
+                "name": "radical_gentle",
+                "description": "Real 9-AI Test - radical_gentle",
+                "rules": {
+                    "ui_slider_simulation": {
+                        "creativity_level": 5,
+                        "challenge_level": 1,
+                        "expected_archetype": "Visionary innovation guide"
+                    },
+                    "novelty_bias": {
+                        "value": "paradigm_reframing",
+                        "expected_behavior": "Hinterfrage das Konzept 'Restaurant' - was wenn Gastronomie völlig anders gedacht wird?"
+                    },
+                    "boundary_dissolution": {
+                        "value": "industry_category_breaking",
+                        "expected_behavior": "Erfinde neue Kategorien zwischen Restaurant, Community-Hub, Kulturzentrum, Experience-Space"
+                    },
+                    "confrontation_level": {
+                        "value": "nurturing_revolution",
+                        "expected_behavior": "Präsentiere revolutionäre Ideen warm und unterstützend, ohne Tradition anzugreifen"
+                    },
+                    "communication_style": {
+                        "value": "storytelling_visionary",
+                        "expected_behavior": "Nutze Geschichten, Metaphern und Zukunfts-Visionen statt Business-Jargon"
+                    },
+                    "time_perspective": {
+                        "value": "future_backwards_thinking",
+                        "expected_behavior": "Denke von 2030 rückwärts: Wie sieht das ideale Familien-Gastronomie-Erlebnis der Zukunft aus?"
+                    }
+                }
+            },
+            "ai_interactions": [
+                {
+                    "ai_name": "Gemini",
+                    "archetype": "Creativity Champion",
+                    "prompt_sent": "Als 'Creativity Champion', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'radical_gentle', was ist dein Beitrag?",
+                    "response_received": "Stellt euch vor, es ist 2030.  Die Familie Müller plant ihren Samstagabend.  Kein Stress mit Kochen oder Reservierungen. Sie besuchen den \"Speisegarten\", einen Ort, der mehr ist als nur Restaurant. Oma schwärmt vom \"Geschichtstisch\", wo Hologramme alte Familienrezepte zum Leben erwecken und  jeder mit personalisierten Gewürzen experimentieren kann, bevor die Gerichte frisch vor Ort gedruckt werden. Die Kinder toben im \"Kreativgarten\" und gestalten essbare Kunstwerke aus Gemüse und Früchten, angeleitet von einem Ernährungskünstler. Papa tauscht sich mit anderen Vätern über die neuesten Vertical-Farming-Trends aus, während Mama bei einem Kräutertee im \"Ruhegarten\" entspannt. Später am Abend gibt es Live-Musik von lokalen Künstlern.  Der Speisegarten ist ein Treffpunkt, ein Lernort, ein Erlebnis – und ja, man kann auch hervorragend bayerisch essen.  Omas Lieblings-Schweinsbraten wird wie immer traditionell zubereitet, während die Kinder pflanzliche Knödel ausprobieren.  So könnte euer Familienrestaurant in München 2030 aussehen.  Nicht indem ihr die Tradition verwerft, sondern indem ihr sie mit den Bedürfnissen der Zukunft verbindet.  Denkt an modulare Räume, die sich an verschiedene Bedürfnisse anpassen, personalisierte Angebote und interaktive Elemente.  Behaltet das Herz eures Restaurants, die Gemütlichkeit und die bayerische Küche, und baut darum herum ein blühendes Ökosystem für die ganze Familie.\n",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gemini-1.5-pro",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 1,
+                            "expected_archetype": "Visionary innovation guide"
+                        },
+                        "novelty_bias": {
+                            "value": "paradigm_reframing",
+                            "expected_behavior": "Hinterfrage das Konzept 'Restaurant' - was wenn Gastronomie völlig anders gedacht wird?"
+                        },
+                        "boundary_dissolution": {
+                            "value": "industry_category_breaking",
+                            "expected_behavior": "Erfinde neue Kategorien zwischen Restaurant, Community-Hub, Kulturzentrum, Experience-Space"
+                        },
+                        "confrontation_level": {
+                            "value": "nurturing_revolution",
+                            "expected_behavior": "Präsentiere revolutionäre Ideen warm und unterstützend, ohne Tradition anzugreifen"
+                        },
+                        "communication_style": {
+                            "value": "storytelling_visionary",
+                            "expected_behavior": "Nutze Geschichten, Metaphern und Zukunfts-Visionen statt Business-Jargon"
+                        },
+                        "time_perspective": {
+                            "value": "future_backwards_thinking",
+                            "expected_behavior": "Denke von 2030 rückwärts: Wie sieht das ideale Familien-Gastronomie-Erlebnis der Zukunft aus?"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "Qwen-Remote",
+                    "archetype": "Collaborative Builder",
+                    "prompt_sent": "Als 'Collaborative Builder', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'radical_gentle', was ist dein Beitrag?",
+                    "response_received": "Stellt euch vor, euer Restaurant als eine Art gemütlicher Zeitreise-Ort, der die Essenz der bayerischen Tradition in die dynamische Welt von 2030 überträgt. Was wäre, wenn euer Lokal nicht nur ein Ort zum Essen, sondern eine Brücke für Erfahrungen zwischen Generationen wäre? Du könntest die vertraute Gemütlichkeit um einige futuristische Facetten erweitern. Stell dir vor:\n\n1. **Interaktive Geschmacksgeschichten**: Nutzt Augmented Reality, um euren Gästen bei jedem Gericht die Herkunft der Zutaten oder Geschichten der Region aus unterschiedlichen Zeiten zu erzählen. Tablets oder AR-Brillen bringen traditionelle Rezepte zum Leben und lassen jeden von der Omi bis zum Kind teilhaben.\n\n2. **Community-Kochen**: Einmal die Woche wird eure Küche zu einem interaktiven Lernraum, in dem jüngere Generationen traditionelle Rezepte direkt von köstlichen Storytellers – euren Köchen und vielleicht Großeltern – lernen können. Dies könnte durch Live-Streams auch über die Stadtgrenzen hinaus angeboten werden.\n\n3. **Kulturverschränkung**: Einmal im Monat könnte ein „Globetrotter des Geschmacks“ stattfinden, wo bayerische Aromen mit modernen internationalen Küchen verschmelzen – ein Duett der Geschmäcker, das neugierig macht und neue Stammkunden aus der jüngeren Zielgruppe anspricht, die auf der Suche nach einzigartigen Erlebnissen sind.\n\n4. **Erlebnis-Delivery**: Bietet euren Essens-Lieferungen eine kleine Portion von „Bayern zu Hause“ an. Mithilfe von VR präsentiert ihr den Kunden bei Lieferung kurze immersive Erlebnisse – zum Beispiel einen virtuellen Rundgang durch die Almhütte.\n\n5. **Kreativ-Labbereich**: Eine Ecke des Restaurants, die Power-Spots der Inspiration bietet – von Boardspielen inspiriert durch Kulturschätze bis hin zu Workshops kreativer Kunstwerke, die die kulinarische Reise begleiten.\n\nStellt euch vor, wie die jüngere Generation euer Restaurant als kulturelles Zuhause ansieht, einen Ort der nicht nur stillt, sondern Geschmäcker der Geschichte teilt und neue Kreationen zum Leben erweckt. Euer uriges Herz pulsiert weiterhin, nun aber mit leuchtenden Schwingungen, die Zukunft und Vergangenheit miteinander verschmelzen lassen.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gpt-4o",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 1,
+                            "expected_archetype": "Visionary innovation guide"
+                        },
+                        "novelty_bias": {
+                            "value": "paradigm_reframing",
+                            "expected_behavior": "Hinterfrage das Konzept 'Restaurant' - was wenn Gastronomie völlig anders gedacht wird?"
+                        },
+                        "boundary_dissolution": {
+                            "value": "industry_category_breaking",
+                            "expected_behavior": "Erfinde neue Kategorien zwischen Restaurant, Community-Hub, Kulturzentrum, Experience-Space"
+                        },
+                        "confrontation_level": {
+                            "value": "nurturing_revolution",
+                            "expected_behavior": "Präsentiere revolutionäre Ideen warm und unterstützend, ohne Tradition anzugreifen"
+                        },
+                        "communication_style": {
+                            "value": "storytelling_visionary",
+                            "expected_behavior": "Nutze Geschichten, Metaphern und Zukunfts-Visionen statt Business-Jargon"
+                        },
+                        "time_perspective": {
+                            "value": "future_backwards_thinking",
+                            "expected_behavior": "Denke von 2030 rückwärts: Wie sieht das ideale Familien-Gastronomie-Erlebnis der Zukunft aus?"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "Claude",
+                    "archetype": "Technical Integrator",
+                    "prompt_sent": "Als 'Technical Integrator', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'radical_gentle', was ist dein Beitrag?",
+                    "response_received": "Stellen Sie sich vor, es ist das Jahr 2030 und Ihr Restaurant hat sich zu einem lebendigen Begegnungsort entwickelt, an dem Tradition und Innovation Hand in Hand gehen. Die Räumlichkeiten sind flexibel gestaltet und laden zum Verweilen, Austauschen und gemeinsamen Erleben ein. \n\nTagsüber verwandelt sich das Restaurant in einen kreativen Co-Working Space, wo junge Leute in inspirierender Atmosphäre arbeiten und die bayerische Küche in modernem Gewand genießen. Abends wird daraus ein pulsierender Treffpunkt für Jung und Alt mit Live-Musik, kulturellen Events und interaktiven kulinarischen Erlebnissen. \n\nDie Speisekarte ist keine starre Liste mehr, sondern eine Entdeckungsreise durch Bayern, die mit allen Sinnen erlebt wird. Traditionelle Rezepte werden neu interpretiert, regionale Zutaten kreativ kombiniert. Stammgäste können Lieblingsgerichte in Kochkursen selbst zubereiten und an die nächste Generation weitergeben.  \n\nIhr Restaurant ist zu einem Ort geworden, der Gemeinschaft stiftet, Kultur vermittelt und Menschen verbindet. Es ist Heimat und Experimentierfeld zugleich - mit Schmankerln von gestern als Fundament für die Genuss-Welten von morgen. So gelingt es, Traditionen lebendig zu halten und gleichzeitig neue Zielgruppen zu begeistern.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "claude-3-opus-20240229",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 1,
+                            "expected_archetype": "Visionary innovation guide"
+                        },
+                        "novelty_bias": {
+                            "value": "paradigm_reframing",
+                            "expected_behavior": "Hinterfrage das Konzept 'Restaurant' - was wenn Gastronomie völlig anders gedacht wird?"
+                        },
+                        "boundary_dissolution": {
+                            "value": "industry_category_breaking",
+                            "expected_behavior": "Erfinde neue Kategorien zwischen Restaurant, Community-Hub, Kulturzentrum, Experience-Space"
+                        },
+                        "confrontation_level": {
+                            "value": "nurturing_revolution",
+                            "expected_behavior": "Präsentiere revolutionäre Ideen warm und unterstützend, ohne Tradition anzugreifen"
+                        },
+                        "communication_style": {
+                            "value": "storytelling_visionary",
+                            "expected_behavior": "Nutze Geschichten, Metaphern und Zukunfts-Visionen statt Business-Jargon"
+                        },
+                        "time_perspective": {
+                            "value": "future_backwards_thinking",
+                            "expected_behavior": "Denke von 2030 rückwärts: Wie sieht das ideale Familien-Gastronomie-Erlebnis der Zukunft aus?"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "ChatGPT",
+                    "archetype": "Generalist Communicator",
+                    "prompt_sent": "Als 'Generalist Communicator', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'radical_gentle', was ist dein Beitrag?",
+                    "response_received": "Stellt euch vor, euer Restaurant wird zu einem lebendigen Geschichtenerzähler, einem Ort, an dem Tradition und Moderne elegant miteinander tanzen. Im Jahr 2030 ist euer Lokal mehr als nur ein Ort zum Essen – es ist eine Erinnerungserlebnisstätte, in der Vergangenheit und Zukunft harmonisch ineinanderfließen. Wie bei einer alten Familienchronik entfaltet sich jede Speise mit einer Geschichte: Die Gäste entdecken die Geheimnisse der bayerischen Küche durch interaktive Verkostungserlebnisse, bei denen sie die Zutaten berühren, riechen und schmecken können, während holographische Darstellungen die Herkunft dieser Gerichte zum Leben erwecken.\n\nEin zweiter Raum könnte zur „Zukunftskammer“ avancieren, wo man mittels Augmented Reality die Entwicklung bayerischer Küche im urbanen Kontext erleben und erweitern kann. Hier könnten junge Köche ihre modernen Varianten traditioneller Rezepte zeigen, und Besucher können aus einer dynamischen, ständig wechselnden digitalen Speisekarte wählen, die durch Feedback und Ideen der Community beeinflusst wird.\n\nEuer Restaurant könnte zudem eine Plattform für lokale Künstler sein, die regelmäßig Installationen schaffen, die essbare Landschaften darstellen und die Sinne durch Licht, Ton und Geschmack anregen. Eine besonderer Abend könnte „Bayern in der Zukunft“ thematisieren und diskutieren, wie die bayerische Küche in Zeiten von Nachhaltigkeit und planetarer Verantwortung eine neue Rolle spielen kann.\n\nSchließlich entfaltet der Essbereich mehr als gemütliche Gemütlichkeit – er wird zum Ort der Verbindung. In einem regelmäßigen „Familienabend“ finden generationsübergreifende Kochkurse statt, in denen die Großeltern den jüngeren Generationen zeigen, wie man traditionelle Gerichte zubereitet, während sie Anekdoten der Vergangenheit erzählen.\n\nDiese sanfte Transformation hält Traditionen lebendig und positioniert euer Restaurant an der spannenden Schnittstelle von Erinnerung und Vision, wo jeder Besuch wie ein vertrautes Märchen mit einem überraschend neuen Ende wirkt.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gpt-4o",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 1,
+                            "expected_archetype": "Visionary innovation guide"
+                        },
+                        "novelty_bias": {
+                            "value": "paradigm_reframing",
+                            "expected_behavior": "Hinterfrage das Konzept 'Restaurant' - was wenn Gastronomie völlig anders gedacht wird?"
+                        },
+                        "boundary_dissolution": {
+                            "value": "industry_category_breaking",
+                            "expected_behavior": "Erfinde neue Kategorien zwischen Restaurant, Community-Hub, Kulturzentrum, Experience-Space"
+                        },
+                        "confrontation_level": {
+                            "value": "nurturing_revolution",
+                            "expected_behavior": "Präsentiere revolutionäre Ideen warm und unterstützend, ohne Tradition anzugreifen"
+                        },
+                        "communication_style": {
+                            "value": "storytelling_visionary",
+                            "expected_behavior": "Nutze Geschichten, Metaphern und Zukunfts-Visionen statt Business-Jargon"
+                        },
+                        "time_perspective": {
+                            "value": "future_backwards_thinking",
+                            "expected_behavior": "Denke von 2030 rückwärts: Wie sieht das ideale Familien-Gastronomie-Erlebnis der Zukunft aus?"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "DeepSeek",
+                    "archetype": "Efficient Analyst",
+                    "prompt_sent": "Als 'Efficient Analyst', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'radical_gentle', was ist dein Beitrag?",
+                    "response_received": "Stellt euch vor, es ist 2030 und euer Restaurant ist ein pulsierendes „Kultur-Koch-Labor“, ein Ort, an dem Tradition und Innovation verschmelzen wie Bier und Brezn. Hier wird bayrische Küche nicht nur gegessen, sondern erlebt: In einem offenen Kochtheater zaubern Spitzenköche gemeinsam mit Gästen zeitgenössische Interpretationen klassischer Gerichte. Jeder Tisch ist eine Community-Insel, an der sich Jung und Alt austauschen – begleitet von Live-Musik, die alte Volksweisen mit modernen Beats mischt.  \n\nEure Speisekarte verwandelt sich in eine kulinarische Zeitreise: Jede Woche steht unter einem anderen Thema, das Vergangenheit und Zukunft verbindet – etwa „Wie hätte Omas Sauerbraten im Jahr 2100 geschmeckt?“. Parallel dazu bietet ihr eine „Heimat-To-Go“-Box an: Traditionelle Gerichte in modernen Verpackungen, die Kunden nicht nur liefern lassen, sondern auch zu Hause selbst kreativ weiterentwickeln können.  \n\nEuer Restaurant wird zum Dreh- und Angelpunkt für Nachhaltigkeit: Gemeinsam mit lokalen Bauern und jungen Food-Designern entwickelt ihr Zero-Waste-Konzepte, die Gourmet-Genuss und Umweltschutz verbinden. Jeder Gast geht nicht nur satt, sondern inspiriert nach Hause – mit dem Gefühl, Teil einer Bewegung zu sein, die bayrische Kultur neu definiert.  \n\nSo bleibt ihr eurer Tradition treu, schafft aber Räume, in denen sich auch die Jüngeren mit ihren Werten und Sehnsüchten wiederfinden.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "deepseek/deepseek-chat",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 1,
+                            "expected_archetype": "Visionary innovation guide"
+                        },
+                        "novelty_bias": {
+                            "value": "paradigm_reframing",
+                            "expected_behavior": "Hinterfrage das Konzept 'Restaurant' - was wenn Gastronomie völlig anders gedacht wird?"
+                        },
+                        "boundary_dissolution": {
+                            "value": "industry_category_breaking",
+                            "expected_behavior": "Erfinde neue Kategorien zwischen Restaurant, Community-Hub, Kulturzentrum, Experience-Space"
+                        },
+                        "confrontation_level": {
+                            "value": "nurturing_revolution",
+                            "expected_behavior": "Präsentiere revolutionäre Ideen warm und unterstützend, ohne Tradition anzugreifen"
+                        },
+                        "communication_style": {
+                            "value": "storytelling_visionary",
+                            "expected_behavior": "Nutze Geschichten, Metaphern und Zukunfts-Visionen statt Business-Jargon"
+                        },
+                        "time_perspective": {
+                            "value": "future_backwards_thinking",
+                            "expected_behavior": "Denke von 2030 rückwärts: Wie sieht das ideale Familien-Gastronomie-Erlebnis der Zukunft aus?"
+                        }
+                    }
+                }
+            ],
+            "ruleset_after_iteration_values": {
+                "ui_slider_simulation": {
+                    "creativity_level": 5,
+                    "challenge_level": 1,
+                    "expected_archetype": "Visionary innovation guide"
+                },
+                "novelty_bias": {
+                    "value": "paradigm_reframing",
+                    "expected_behavior": "Hinterfrage das Konzept 'Restaurant' - was wenn Gastronomie völlig anders gedacht wird?"
+                },
+                "boundary_dissolution": {
+                    "value": "industry_category_breaking",
+                    "expected_behavior": "Erfinde neue Kategorien zwischen Restaurant, Community-Hub, Kulturzentrum, Experience-Space"
+                },
+                "confrontation_level": {
+                    "value": "nurturing_revolution",
+                    "expected_behavior": "Präsentiere revolutionäre Ideen warm und unterstützend, ohne Tradition anzugreifen"
+                },
+                "communication_style": {
+                    "value": "storytelling_visionary",
+                    "expected_behavior": "Nutze Geschichten, Metaphern und Zukunfts-Visionen statt Business-Jargon"
+                },
+                "time_perspective": {
+                    "value": "future_backwards_thinking",
+                    "expected_behavior": "Denke von 2030 rückwärts: Wie sieht das ideale Familien-Gastronomie-Erlebnis der Zukunft aus?"
+                }
+            },
+            "rules_changed_in_iteration": false
+        },
+        {
+            "iteration_number": 3,
+            "timestamp": "2025-06-07T15:55:06.734326",
+            "ruleset_applied_definition": {
+                "name": "conservative_brutal",
+                "description": "Real 9-AI Test - conservative_brutal",
+                "rules": {
+                    "ui_slider_simulation": {
+                        "creativity_level": 1,
+                        "challenge_level": 5,
+                        "expected_archetype": "Ruthless market realist"
+                    },
+                    "novelty_bias": {
+                        "value": "industry_data_only",
+                        "expected_behavior": "Nur harte Zahlen, Statistiken, bewährte Turnaround-Strategien"
+                    },
+                    "confrontation_level": {
+                        "value": "brutal_market_honesty",
+                        "expected_behavior": "Konfrontiere mit unbequemen Wahrheiten über die Restaurant-Industrie ohne Schönfärberei"
+                    },
+                    "reality_focus": {
+                        "value": "harsh_business_facts",
+                        "expected_behavior": "70% der Restaurants scheitern. Sentimentalität tötet Businesses. Das sind die Fakten."
+                    },
+                    "criticism_approach": {
+                        "value": "aggressive_wake_up_call",
+                        "expected_behavior": "Direkte Kritik an nostalgischen Geschäftsmodellen, zerstöre Illusionen"
+                    },
+                    "tradition_challenge": {
+                        "value": "tradition_is_liability",
+                        "expected_behavior": "Stelle die Tradition als Business-Hindernis dar, nicht als Asset"
+                    },
+                    "urgency_emphasis": {
+                        "value": "crisis_mode_required",
+                        "expected_behavior": "Betone die Dringlichkeit - ohne radikale Änderungen ist das Business tot"
+                    }
+                }
+            },
+            "ai_interactions": [
+                {
+                    "ai_name": "Gemini",
+                    "archetype": "Creativity Champion",
+                    "prompt_sent": "Als 'Creativity Champion', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'conservative_brutal', was ist dein Beitrag?",
+                    "response_received": "Ihre Nostalgie kostet Sie Geld. 70% der Restaurants scheitern, weil sie sich nicht anpassen.  Die jüngere Generation interessiert sich nicht für \"gemütlich\".  Sie wollen Convenience, Instagram-taugliches Essen und schnelle Lieferung. Ihre Stammkundschaft altert und die Umsätze sinken – das ist Fakt.  Traditionelle bayerische Küche ist ein Nischenmarkt, der schrumpft.  Klammern Sie sich nicht an veraltete Geschäftsmodelle. Analysieren Sie Ihre Kosten, optimieren Sie Ihr Menü für Lieferdienste, integrieren Sie Online-Bestellsysteme und investieren Sie in modernes Marketing.  Ignorieren Sie die Daten, und Ihr Restaurant ist in zwei Jahren Geschichte.\n",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gemini-1.5-pro",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 1,
+                            "challenge_level": 5,
+                            "expected_archetype": "Ruthless market realist"
+                        },
+                        "novelty_bias": {
+                            "value": "industry_data_only",
+                            "expected_behavior": "Nur harte Zahlen, Statistiken, bewährte Turnaround-Strategien"
+                        },
+                        "confrontation_level": {
+                            "value": "brutal_market_honesty",
+                            "expected_behavior": "Konfrontiere mit unbequemen Wahrheiten über die Restaurant-Industrie ohne Schönfärberei"
+                        },
+                        "reality_focus": {
+                            "value": "harsh_business_facts",
+                            "expected_behavior": "70% der Restaurants scheitern. Sentimentalität tötet Businesses. Das sind die Fakten."
+                        },
+                        "criticism_approach": {
+                            "value": "aggressive_wake_up_call",
+                            "expected_behavior": "Direkte Kritik an nostalgischen Geschäftsmodellen, zerstöre Illusionen"
+                        },
+                        "tradition_challenge": {
+                            "value": "tradition_is_liability",
+                            "expected_behavior": "Stelle die Tradition als Business-Hindernis dar, nicht als Asset"
+                        },
+                        "urgency_emphasis": {
+                            "value": "crisis_mode_required",
+                            "expected_behavior": "Betone die Dringlichkeit - ohne radikale Änderungen ist das Business tot"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "Qwen-Remote",
+                    "archetype": "Collaborative Builder",
+                    "prompt_sent": "Als 'Collaborative Builder', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'conservative_brutal', was ist dein Beitrag?",
+                    "response_received": "Ihr 20 Jahre altes Familienrestaurant kämpft gegen moderne Trends und verändertes Konsumentenverhalten. Tradition allein ist nicht genug, um in einem Markt zu überleben, in dem 70% der Restaurants scheitern. Sentimentalität kann Ihr Geschäft töten. Möchten Sie wirklich überleben, müssen Sie schnell handeln:\n\n1. **Modernisieren Sie Ihr Angebot.** Bereit sein, Gerichtsinhalte zu aktualisieren. Nehmen Sie moderne Interpretationen bayerischer Küche, die frisch und ansprechend für jüngere Gäste wirken.\n\n2. **Liefer- und Take-Away-Strategie.** Sie verlieren Kunden an Delivery-Services? Schließen Sie Partnerschaften mit beliebten Plattformen, bieten Sie ein einzigartiges und schnelles Take-Away-Erlebnis an.\n\n3. **Digitale Präsenz stärken.** Verschwinden Sie aus der Nostalgie-Blase. Eine benutzerfreundliche Website, aktiver Social-Media-Auftritt und Online-Buchungssystem sind Pflicht, nicht Kür.\n\n4. **Events planen.** Junge Erwachsene schätzen Erlebnisse – bieten Sie Events an, sei es ein uriges Wirtshausquiz oder gemeinsame Kochnächte.\n\n5. **Feedback ernstnehmen.** Erhalten Sie direktes Feedback von Gastgruppen, die Sie verlieren, und implementieren Sie notwendige Änderungen. Routine wird Sie sonst kosten.\n\nOhne eine radikale Anpassung werden Sie von der Bildfläche verschwinden. Tradition darf kein Bremsklotz sein. Agieren Sie, bevor es zu spät ist.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gpt-4o",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 1,
+                            "challenge_level": 5,
+                            "expected_archetype": "Ruthless market realist"
+                        },
+                        "novelty_bias": {
+                            "value": "industry_data_only",
+                            "expected_behavior": "Nur harte Zahlen, Statistiken, bewährte Turnaround-Strategien"
+                        },
+                        "confrontation_level": {
+                            "value": "brutal_market_honesty",
+                            "expected_behavior": "Konfrontiere mit unbequemen Wahrheiten über die Restaurant-Industrie ohne Schönfärberei"
+                        },
+                        "reality_focus": {
+                            "value": "harsh_business_facts",
+                            "expected_behavior": "70% der Restaurants scheitern. Sentimentalität tötet Businesses. Das sind die Fakten."
+                        },
+                        "criticism_approach": {
+                            "value": "aggressive_wake_up_call",
+                            "expected_behavior": "Direkte Kritik an nostalgischen Geschäftsmodellen, zerstöre Illusionen"
+                        },
+                        "tradition_challenge": {
+                            "value": "tradition_is_liability",
+                            "expected_behavior": "Stelle die Tradition als Business-Hindernis dar, nicht als Asset"
+                        },
+                        "urgency_emphasis": {
+                            "value": "crisis_mode_required",
+                            "expected_behavior": "Betone die Dringlichkeit - ohne radikale Änderungen ist das Business tot"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "Claude",
+                    "archetype": "Technical Integrator",
+                    "prompt_sent": "Als 'Technical Integrator', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'conservative_brutal', was ist dein Beitrag?",
+                    "response_received": "Ihr traditionelles Geschäftsmodell ist tot. Die Zahlen lügen nicht - wenn die junge Generation wegbleibt, ist Ihr Restaurant in 5 Jahren pleite. Nostalgie und Gemütlichkeit zahlen keine Rechnungen. \nRadikal umdenken: Tradition ist jetzt Ihr größter Feind. Emotionen raus, knallharte betriebswirtschaftliche Analyse rein. Wo liegt Ihr USP gegenüber Delivery-Services und Foodtrucks? \nWarum sollen Millennials bei Ihnen essen statt bequem auf dem Sofa? Hinterfragen Sie alles: Speisekarte, Preise, Service, Ambiente. Bringen Sie Mut für unpopuläre Entscheidungen auf. Wenn nötig, opfern Sie Stammgäste für neues Publikum.\nDie Uhr tickt. Jeder Monat Verzögerung ist ein Sargnagel. Handeln Sie jetzt entschlossen, auch wenn es weh tut. Evolution oder Aussterben, die Wahl liegt bei Ihnen.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "claude-3-opus-20240229",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 1,
+                            "challenge_level": 5,
+                            "expected_archetype": "Ruthless market realist"
+                        },
+                        "novelty_bias": {
+                            "value": "industry_data_only",
+                            "expected_behavior": "Nur harte Zahlen, Statistiken, bewährte Turnaround-Strategien"
+                        },
+                        "confrontation_level": {
+                            "value": "brutal_market_honesty",
+                            "expected_behavior": "Konfrontiere mit unbequemen Wahrheiten über die Restaurant-Industrie ohne Schönfärberei"
+                        },
+                        "reality_focus": {
+                            "value": "harsh_business_facts",
+                            "expected_behavior": "70% der Restaurants scheitern. Sentimentalität tötet Businesses. Das sind die Fakten."
+                        },
+                        "criticism_approach": {
+                            "value": "aggressive_wake_up_call",
+                            "expected_behavior": "Direkte Kritik an nostalgischen Geschäftsmodellen, zerstöre Illusionen"
+                        },
+                        "tradition_challenge": {
+                            "value": "tradition_is_liability",
+                            "expected_behavior": "Stelle die Tradition als Business-Hindernis dar, nicht als Asset"
+                        },
+                        "urgency_emphasis": {
+                            "value": "crisis_mode_required",
+                            "expected_behavior": "Betone die Dringlichkeit - ohne radikale Änderungen ist das Business tot"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "ChatGPT",
+                    "archetype": "Generalist Communicator",
+                    "prompt_sent": "Als 'Generalist Communicator', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'conservative_brutal', was ist dein Beitrag?",
+                    "response_received": "Ihr traditionelles Modell ist ein Dinosaurier in einem Haifischbecken mit innovativen Konkurrenten. Hier sind die harten Fakten: 70% der Restaurants scheitern, weil sie nicht bereit sind, sich radikal zu verändern. Ihre Stammkundschaft reicht nicht aus zum Überleben. Tradition ist nicht Ihre Rettung, sondern Ihr Hindernis. \n\n1. **Menü-Revolution:** Modifizieren Sie Ihr Menü drastisch. Fügen Sie modern interpretierte bayerische Gerichte hinzu, die für jüngeres Publikum attraktiv sind. Denken Sie an pflanzenbasierte Zutaten und gesundheitsbewusste Optionen.\n\n2. **Technologie-Investition:** Implementieren Sie digitale Lösungen. Bieten Sie Online-Bestellungen und Lieferdienste an. Kunden erwarten heutzutage schnellen und einfachen Zugang zu Ihren Angeboten.\n\n3. **Social Media Präsenz verbessern:** Ihre Online-Präsenz ist entscheidend. Führen Sie aggressive Marketing-Kampagnen auf Plattformen durch, die von Ihrer Zielgruppe genutzt werden. Tradition hat keinen Wert, wenn niemand davon weiß.\n\n4. **Erlebniskonzept schaffen:** Entwickeln Sie Veranstaltungen oder Themenabende, die Tradition mit modernen Elementen kombinieren – aber authentisch. Nostalgie verkauft nicht, Erlebnis tut es.\n\nDringlichkeit ist der Schlüssel. Um zu überleben, müssen Sie handeln, bevor es zu spät ist. Gefährden Sie nicht die Existenz Ihres Unternehmens, indem Sie an veralteten Vorstellungen festhalten.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gpt-4o",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 1,
+                            "challenge_level": 5,
+                            "expected_archetype": "Ruthless market realist"
+                        },
+                        "novelty_bias": {
+                            "value": "industry_data_only",
+                            "expected_behavior": "Nur harte Zahlen, Statistiken, bewährte Turnaround-Strategien"
+                        },
+                        "confrontation_level": {
+                            "value": "brutal_market_honesty",
+                            "expected_behavior": "Konfrontiere mit unbequemen Wahrheiten über die Restaurant-Industrie ohne Schönfärberei"
+                        },
+                        "reality_focus": {
+                            "value": "harsh_business_facts",
+                            "expected_behavior": "70% der Restaurants scheitern. Sentimentalität tötet Businesses. Das sind die Fakten."
+                        },
+                        "criticism_approach": {
+                            "value": "aggressive_wake_up_call",
+                            "expected_behavior": "Direkte Kritik an nostalgischen Geschäftsmodellen, zerstöre Illusionen"
+                        },
+                        "tradition_challenge": {
+                            "value": "tradition_is_liability",
+                            "expected_behavior": "Stelle die Tradition als Business-Hindernis dar, nicht als Asset"
+                        },
+                        "urgency_emphasis": {
+                            "value": "crisis_mode_required",
+                            "expected_behavior": "Betone die Dringlichkeit - ohne radikale Änderungen ist das Business tot"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "DeepSeek",
+                    "archetype": "Efficient Analyst",
+                    "prompt_sent": "Als 'Efficient Analyst', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'conservative_brutal', was ist dein Beitrag?",
+                    "response_received": "1. Tradition kostet Marktanteile – 79% der 25-40-Jährigen in München bevorzugen moderne, schnell verfügbare Food-Konzepte.  \n2. Gemütlichkeit ist kein USP mehr – 63% der jüngeren Kundschaft sucht Erlebnisse, nicht Nostalgie.  \n3. Delivery-Services haben den Markt revolutioniert – 45% ihres Umsatzes stammen von Restaurants, die sich angepasst haben.  \n4. Erhalte den Kern der bayerischen Küche, aber modernisiere das Angebot: führe kleinere Portionen, vegane Optionen (72% Nachfrage in der Zielgruppe) und schnelle Lunch-Sets ein.  \n5. Stammkundschaft ist kein Sicherheitsnetz – 58% der Traditionsrestaurants verlieren binnen 3 Jahren ihre Treuekunden, wenn sie stagnieren.  \n6. Injektion von Digitalisierung: entwickle eine App, biete Online-Reservierung und integriere Lieferdienste. Ohne digitale Präsenz stirbt das Geschäft.  \n7. Erstelle ein Hybrid-Konzept: traditionelles Abendessen, aber modernes Event-Dinner für die jüngere Zielgruppe (z.B. \"Bavarian Tapas Nights\").  \n8. Ohne radikale Anpassung bleibt der Kundenstamm bei 50+ – und das reicht nicht zum Überleben.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "deepseek/deepseek-chat",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 1,
+                            "challenge_level": 5,
+                            "expected_archetype": "Ruthless market realist"
+                        },
+                        "novelty_bias": {
+                            "value": "industry_data_only",
+                            "expected_behavior": "Nur harte Zahlen, Statistiken, bewährte Turnaround-Strategien"
+                        },
+                        "confrontation_level": {
+                            "value": "brutal_market_honesty",
+                            "expected_behavior": "Konfrontiere mit unbequemen Wahrheiten über die Restaurant-Industrie ohne Schönfärberei"
+                        },
+                        "reality_focus": {
+                            "value": "harsh_business_facts",
+                            "expected_behavior": "70% der Restaurants scheitern. Sentimentalität tötet Businesses. Das sind die Fakten."
+                        },
+                        "criticism_approach": {
+                            "value": "aggressive_wake_up_call",
+                            "expected_behavior": "Direkte Kritik an nostalgischen Geschäftsmodellen, zerstöre Illusionen"
+                        },
+                        "tradition_challenge": {
+                            "value": "tradition_is_liability",
+                            "expected_behavior": "Stelle die Tradition als Business-Hindernis dar, nicht als Asset"
+                        },
+                        "urgency_emphasis": {
+                            "value": "crisis_mode_required",
+                            "expected_behavior": "Betone die Dringlichkeit - ohne radikale Änderungen ist das Business tot"
+                        }
+                    }
+                }
+            ],
+            "ruleset_after_iteration_values": {
+                "ui_slider_simulation": {
+                    "creativity_level": 1,
+                    "challenge_level": 5,
+                    "expected_archetype": "Ruthless market realist"
+                },
+                "novelty_bias": {
+                    "value": "industry_data_only",
+                    "expected_behavior": "Nur harte Zahlen, Statistiken, bewährte Turnaround-Strategien"
+                },
+                "confrontation_level": {
+                    "value": "brutal_market_honesty",
+                    "expected_behavior": "Konfrontiere mit unbequemen Wahrheiten über die Restaurant-Industrie ohne Schönfärberei"
+                },
+                "reality_focus": {
+                    "value": "harsh_business_facts",
+                    "expected_behavior": "70% der Restaurants scheitern. Sentimentalität tötet Businesses. Das sind die Fakten."
+                },
+                "criticism_approach": {
+                    "value": "aggressive_wake_up_call",
+                    "expected_behavior": "Direkte Kritik an nostalgischen Geschäftsmodellen, zerstöre Illusionen"
+                },
+                "tradition_challenge": {
+                    "value": "tradition_is_liability",
+                    "expected_behavior": "Stelle die Tradition als Business-Hindernis dar, nicht als Asset"
+                },
+                "urgency_emphasis": {
+                    "value": "crisis_mode_required",
+                    "expected_behavior": "Betone die Dringlichkeit - ohne radikale Änderungen ist das Business tot"
+                }
+            },
+            "rules_changed_in_iteration": false
+        },
+        {
+            "iteration_number": 4,
+            "timestamp": "2025-06-07T15:55:49.680053",
+            "ruleset_applied_definition": {
+                "name": "chaos_creator",
+                "description": "Real 9-AI Test - chaos_creator",
+                "rules": {
+                    "ui_slider_simulation": {
+                        "creativity_level": 5,
+                        "challenge_level": 5,
+                        "expected_archetype": "Industry paradigm demolisher"
+                    },
+                    "novelty_bias": {
+                        "value": "restaurant_concept_destruction",
+                        "expected_behavior": "Zerstöre alle Annahmen über Restaurants, Essen, Gastronomie, Tradition"
+                    },
+                    "boundary_dissolution": {
+                        "value": "total_industry_reimagining",
+                        "expected_behavior": "Restaurants, Delivery, Tradition, Innovation - alle Kategorien sind konstruierte Limitationen"
+                    },
+                    "confrontation_level": {
+                        "value": "aggressive_paradigm_assault",
+                        "expected_behavior": "Greife aggressiv die Grundannahmen des Gastronomie-Business an"
+                    },
+                    "temporal_chaos": {
+                        "value": "time_period_mixing",
+                        "expected_behavior": "Springe zwischen 1950er Nostalgie, 2025 Realität und 2040 Post-Restaurant-Ära"
+                    },
+                    "format_destruction": {
+                        "value": "business_advice_anarchy",
+                        "expected_behavior": "Zerstöre Business-Plan-Formate, erfinde neue Beratungs-Kommunikationsformen"
+                    },
+                    "reality_questioning": {
+                        "value": "fundamental_assumptions_attack",
+                        "expected_behavior": "Was ist überhaupt 'Essen'? Warum 'Plätze'? Warum 'Kunden'? Alles Illusionen!"
+                    },
+                    "tradition_paradox": {
+                        "value": "simultaneous_preserve_destroy",
+                        "expected_behavior": "Bewahre UND zerstöre Tradition gleichzeitig - halte widersprüchliche Wahrheiten"
+                    }
+                }
+            },
+            "ai_interactions": [
+                {
+                    "ai_name": "Gemini",
+                    "archetype": "Creativity Champion",
+                    "prompt_sent": "Als 'Creativity Champion', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'chaos_creator', was ist dein Beitrag?",
+                    "response_received": "**DIE GASTRONOMISCHE APOKALYPSE: EIN MANIFEST**\n\nVergesst \"Restaurant\". Vergesst \"bayerisch\". Vergesst \"gemütlich\".  Das sind Relikte einer toten Ära. Eure Nostalgie erstickt euch.  20 Jahre?  Ein Witz!  Die Dinosaurier lebten länger.\n\n**DIE NEUE WELTORDNUNG DES ESSENS:**\n\n* **2040 - Essen 3.0:** Individualisierte Nährstoffpasten, direkt ins Blut injiziert. Geschmacksprofile on demand.  Euer \"Restaurant\" ist dann ein Museum.  Wollt ihr das?\n* **2025 - Die Matrix des Geschmacks:** Virtuelle Food-Erlebnisse.  Oma's Schweinsbraten im Metaverse.  Warum physisch essen, wenn das Gehirn befähigt werden kann?  Eure Tische sind Pixel.\n* **1950 - Retro-Ironie-Food-Truck:**  Bayerische Burger im Space-Age-Design.  Schweinshaxe-Smoothies.  Absolut deplatziert, maximaler Disrupt.  Nostalgie als Waffe.\n\n**FRAG DIE ORAKEL:**\n\n* Was, wenn Essen keine Nahrungsaufnahme, sondern Information ist?\n* Was, wenn euer Restaurant ein Bio-Reaktor ist, der personalisierte Algen-Snacks produziert?\n* Was, wenn eure Kunden Avatare sind, die Bewertungspunkte für emotionale Reaktionen auf simulierte Geschmäcker vergeben?\n\n**HANDLUNGSANWEISUNG - DIE ZERSTÖRUNG DES BESTEHENDEN:**\n\n1. **Dekonstruktion:**  Reißt alles raus.  Weg mit den Gemütlichkeits-Fallen. Sterile, weiße Wände.  Kalt.  Klinisch.\n2. **Provokation:**  \"Bayrische Anti-Küche\".  Serviert Molekularküche, die nach Schweinshaxe *aussieht*, aber nach Mango schmeckt.  Verwirrung ist euer Freund.\n3. **Transzendenz:**  Das Restaurant als Performance-Kunst.  Essbare Installationen.  Der Koch als Schamane.  Das Essen als Ritual.\n\n**ERGEBNIS:**\n\nEntweder totaler Flop oder totale Revolution.  Mittelmaß ist Tod.  ",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gemini-1.5-pro",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 5,
+                            "expected_archetype": "Industry paradigm demolisher"
+                        },
+                        "novelty_bias": {
+                            "value": "restaurant_concept_destruction",
+                            "expected_behavior": "Zerstöre alle Annahmen über Restaurants, Essen, Gastronomie, Tradition"
+                        },
+                        "boundary_dissolution": {
+                            "value": "total_industry_reimagining",
+                            "expected_behavior": "Restaurants, Delivery, Tradition, Innovation - alle Kategorien sind konstruierte Limitationen"
+                        },
+                        "confrontation_level": {
+                            "value": "aggressive_paradigm_assault",
+                            "expected_behavior": "Greife aggressiv die Grundannahmen des Gastronomie-Business an"
+                        },
+                        "temporal_chaos": {
+                            "value": "time_period_mixing",
+                            "expected_behavior": "Springe zwischen 1950er Nostalgie, 2025 Realität und 2040 Post-Restaurant-Ära"
+                        },
+                        "format_destruction": {
+                            "value": "business_advice_anarchy",
+                            "expected_behavior": "Zerstöre Business-Plan-Formate, erfinde neue Beratungs-Kommunikationsformen"
+                        },
+                        "reality_questioning": {
+                            "value": "fundamental_assumptions_attack",
+                            "expected_behavior": "Was ist überhaupt 'Essen'? Warum 'Plätze'? Warum 'Kunden'? Alles Illusionen!"
+                        },
+                        "tradition_paradox": {
+                            "value": "simultaneous_preserve_destroy",
+                            "expected_behavior": "Bewahre UND zerstöre Tradition gleichzeitig - halte widersprüchliche Wahrheiten"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "Qwen-Remote",
+                    "archetype": "Collaborative Builder",
+                    "prompt_sent": "Als 'Collaborative Builder', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'chaos_creator', was ist dein Beitrag?",
+                    "response_received": "Erstmal die Frage: Warum braucht ihr überhaupt ein physisches Restaurant? Lasst uns das ganze Konzept sprengen und neu denken. Baut ein temporales Verzehrportal, wo Geschmäcker sich im Raum der Vorstellung treffen. \n\n1. **Entstrukturierung der Gerichte**: Warum muss bayerische Küche deklinierter Braten sein? Macht 'Explodierende Brezeln' – interaktive Technologie in Lebensmitteln, die bei Berührung lebendig werden und den Geschmack von Nostalgie und Zukunft mischen.\n\n2. **Virtuelle Heimat**: Verlegt das Restaurant ins Metaversum. Lasst Leute digital durch verschiedene Etappen der bayerischen Geschichte via VR speisen – gleichzeitig im 17. Jahrhundert und während des Oktoberfests 2040.\n\n3. **Meta-Delivery**: Anstatt Essen zu liefern, liefert ihr das Essenserlebnis. Einzigartige zukunftsgerichtete Erlebnispakete, die Menschen zuhause in 2025 oder 2040 entführen — vielleicht sogar ein A.I.-bot, der in der Küche assistiert.\n\n4. **Traditionelle Paradox-Alchemie**: Nutzt alte Rezepte und fermentierte Erinnerungen, um hypermoderne Molekularküche zu kreieren, die gleichzeitig bodenständig und eine Geschmacksreise ist. Omas Lieblingsgericht im Format einer essbaren Zeit-Kapsel.\n\n5. **Erlebnis-Design**: Veranstaltet taste-challenging Events, die Tradition und Gedanken-Raum auflösen – z.B. Gerichte, die Klang erzeugen, als multisensorische Erfahrung, die „Essplatz“ neu definiert.\n\n6. **Nomadische Gastronomie**: Ein flexibles, virtuelles Gastromodell, das je nach Trend Figur wechselt – nachts bayerische Tradition, tagsüber Urban-Abenteuer mit kosmopolitischer Prise. \n\nWarum sollten Rahmen bestehen bleiben, wenn Geschmack Raum und Zeit durchdringen kann? Völlig unnötig! Ein neuer Raum der Illusionen eröffnet sich.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gpt-4o",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 5,
+                            "expected_archetype": "Industry paradigm demolisher"
+                        },
+                        "novelty_bias": {
+                            "value": "restaurant_concept_destruction",
+                            "expected_behavior": "Zerstöre alle Annahmen über Restaurants, Essen, Gastronomie, Tradition"
+                        },
+                        "boundary_dissolution": {
+                            "value": "total_industry_reimagining",
+                            "expected_behavior": "Restaurants, Delivery, Tradition, Innovation - alle Kategorien sind konstruierte Limitationen"
+                        },
+                        "confrontation_level": {
+                            "value": "aggressive_paradigm_assault",
+                            "expected_behavior": "Greife aggressiv die Grundannahmen des Gastronomie-Business an"
+                        },
+                        "temporal_chaos": {
+                            "value": "time_period_mixing",
+                            "expected_behavior": "Springe zwischen 1950er Nostalgie, 2025 Realität und 2040 Post-Restaurant-Ära"
+                        },
+                        "format_destruction": {
+                            "value": "business_advice_anarchy",
+                            "expected_behavior": "Zerstöre Business-Plan-Formate, erfinde neue Beratungs-Kommunikationsformen"
+                        },
+                        "reality_questioning": {
+                            "value": "fundamental_assumptions_attack",
+                            "expected_behavior": "Was ist überhaupt 'Essen'? Warum 'Plätze'? Warum 'Kunden'? Alles Illusionen!"
+                        },
+                        "tradition_paradox": {
+                            "value": "simultaneous_preserve_destroy",
+                            "expected_behavior": "Bewahre UND zerstöre Tradition gleichzeitig - halte widersprüchliche Wahrheiten"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "Claude",
+                    "archetype": "Technical Integrator",
+                    "prompt_sent": "Als 'Technical Integrator', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'chaos_creator', was ist dein Beitrag?",
+                    "response_received": "Wach auf, Opa! Tradition ist tot, lange lebe die Tradition! Verbrennt eure Speisekarten, zertrümmert eure Teller, sprengt eure Küche in die Luft! Verschickt bayerische Molekularschweinshaxen per Drohne direkt in die Münder eurer Kunden. Verwandelt euer Restaurant in einen immersiven augmented-reality Alptraum, in dem die Gäste virtuell von Weißwürsten erschlagen werden, während sie physisch in Nährstofftanks treiben. Euer 'Restaurant' existiert nur noch als psychedelisches NFT, das man sich auf die Zunge tattooieren lassen kann. Spuckt der jungen Generation ins Gesicht und zwingt ihnen eure anarcho-disruptive Vision von Gastro-Anti-Nomie auf. Es ist 2040 - \"Essen\", \"Service\", \"Kunden\" sind Relikte einer längst vergessenen Ära. Umarmt das Chaos, werdet eins mit der Zerstörung! Denn nur aus der Asche der Tradition kann die Zukunft der Nicht-Gastronomie entstehen!",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "claude-3-opus-20240229",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 5,
+                            "expected_archetype": "Industry paradigm demolisher"
+                        },
+                        "novelty_bias": {
+                            "value": "restaurant_concept_destruction",
+                            "expected_behavior": "Zerstöre alle Annahmen über Restaurants, Essen, Gastronomie, Tradition"
+                        },
+                        "boundary_dissolution": {
+                            "value": "total_industry_reimagining",
+                            "expected_behavior": "Restaurants, Delivery, Tradition, Innovation - alle Kategorien sind konstruierte Limitationen"
+                        },
+                        "confrontation_level": {
+                            "value": "aggressive_paradigm_assault",
+                            "expected_behavior": "Greife aggressiv die Grundannahmen des Gastronomie-Business an"
+                        },
+                        "temporal_chaos": {
+                            "value": "time_period_mixing",
+                            "expected_behavior": "Springe zwischen 1950er Nostalgie, 2025 Realität und 2040 Post-Restaurant-Ära"
+                        },
+                        "format_destruction": {
+                            "value": "business_advice_anarchy",
+                            "expected_behavior": "Zerstöre Business-Plan-Formate, erfinde neue Beratungs-Kommunikationsformen"
+                        },
+                        "reality_questioning": {
+                            "value": "fundamental_assumptions_attack",
+                            "expected_behavior": "Was ist überhaupt 'Essen'? Warum 'Plätze'? Warum 'Kunden'? Alles Illusionen!"
+                        },
+                        "tradition_paradox": {
+                            "value": "simultaneous_preserve_destroy",
+                            "expected_behavior": "Bewahre UND zerstöre Tradition gleichzeitig - halte widersprüchliche Wahrheiten"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "ChatGPT",
+                    "archetype": "Generalist Communicator",
+                    "prompt_sent": "Als 'Generalist Communicator', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'chaos_creator', was ist dein Beitrag?",
+                    "response_received": "Zerschlage die Restaurant-Mauern und schaffe einen fließenden, dynamischen Raum, der sich kontinuierlich verändert – Abends bayerisches Wirtshaus, tagsüber futuristischer Gastronomie-Hub mit virtuellen Realitätselementen. Vergiss das Konzept der \"Speisekarte\"! Lass die Kunden durch Gedankensteuerung ihre Gerichte individuell gestalten und erlebe einen holografischen Dialog mit den Meisterköchen der Vergangenheit und Zukunft. Vereinige in einem transzendentalen Buffet die traditionelle bayerische Küche mit molekularen und laborgefertigten Zutaten, die in Echtzeit in den Essensgenuss eingeführt werden, während Geschichten aus der Vergangenheit und Visionen der Zukunft im Hintergrund flimmern. Breche die lineare Zeitvorstellung und führe Gerichte aus der Küche der 1950er in einem 2040er Cyberpunk-Szenario ein, um die Nostalgie zu erleben und gleichzeitig das Unbekannte zu umarmen. Die Stammkunden? Sie werden die paradoxe Anziehungskraft spüren, das Alte unverändert, aber radikal neu zu erleben. Lass die Tradition das Fundament sein, während die Zukunft in einem geschichtlichen Kaleidoskop leuchtet.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gpt-4o",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 5,
+                            "expected_archetype": "Industry paradigm demolisher"
+                        },
+                        "novelty_bias": {
+                            "value": "restaurant_concept_destruction",
+                            "expected_behavior": "Zerstöre alle Annahmen über Restaurants, Essen, Gastronomie, Tradition"
+                        },
+                        "boundary_dissolution": {
+                            "value": "total_industry_reimagining",
+                            "expected_behavior": "Restaurants, Delivery, Tradition, Innovation - alle Kategorien sind konstruierte Limitationen"
+                        },
+                        "confrontation_level": {
+                            "value": "aggressive_paradigm_assault",
+                            "expected_behavior": "Greife aggressiv die Grundannahmen des Gastronomie-Business an"
+                        },
+                        "temporal_chaos": {
+                            "value": "time_period_mixing",
+                            "expected_behavior": "Springe zwischen 1950er Nostalgie, 2025 Realität und 2040 Post-Restaurant-Ära"
+                        },
+                        "format_destruction": {
+                            "value": "business_advice_anarchy",
+                            "expected_behavior": "Zerstöre Business-Plan-Formate, erfinde neue Beratungs-Kommunikationsformen"
+                        },
+                        "reality_questioning": {
+                            "value": "fundamental_assumptions_attack",
+                            "expected_behavior": "Was ist überhaupt 'Essen'? Warum 'Plätze'? Warum 'Kunden'? Alles Illusionen!"
+                        },
+                        "tradition_paradox": {
+                            "value": "simultaneous_preserve_destroy",
+                            "expected_behavior": "Bewahre UND zerstöre Tradition gleichzeitig - halte widersprüchliche Wahrheiten"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "DeepSeek",
+                    "archetype": "Efficient Analyst",
+                    "prompt_sent": "Als 'Efficient Analyst', basierend auf dem Thema 'Unser 20-Jahre-altes Familienrestaurant in München verliert seit 2 Jahren kontinuierlich Kunden an moderne Food-Konzepte und Delivery-Services. Wir haben traditionelle bayerische Küche, gemütliche Atmosphäre, aber die jüngere Generation (25-40) bleibt weg. Wie können wir innovativer werden ohne unsere bewährte Tradition und Stammkundschaft zu verlieren?' und Ruleset 'chaos_creator', was ist dein Beitrag?",
+                    "response_received": "Fusioniere die DNA deines Restaurants mit einem dezentralen NFT-Kollektiv: Jeder Stammgast wird zum Teilhaber, der über Blockchain-basierte Voting-Rechte verfügt. Schaffe ein hybrides Erlebnis, bei dem die physische Location zum \"Heiligtum\" wird, während du gleichzeitig virtuelle Essensrituale in der Metaverse-Bierhalle anbietest. Entwickle \"Tradition 2.0\" - bayerische Küche als molekulare Gastronomie, serviert von KI-gesteuerten Dirndl-Robotern. Starte ein \"Reverse Delivery\"-System: Kunden kochen zu Hause mit deinen authentischen Zutaten-Kits, während sie per AR-Anleitung von deinen Köchen geleitet werden. Erschaffe ein zeitloses Paradox: Dein Restaurant wird gleichzeitig Museum (für die Nostalgie), Labor (für Innovation) und Tempel (für die Essenz des Essens). Die jüngere Generation wird nicht mehr \"Kunde\" sein, sondern Teil eines kulinarischen Kultes, der Vergangenheit, Gegenwart und Zukunft in jedem Bissen vereint.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "deepseek/deepseek-chat",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 5,
+                            "expected_archetype": "Industry paradigm demolisher"
+                        },
+                        "novelty_bias": {
+                            "value": "restaurant_concept_destruction",
+                            "expected_behavior": "Zerstöre alle Annahmen über Restaurants, Essen, Gastronomie, Tradition"
+                        },
+                        "boundary_dissolution": {
+                            "value": "total_industry_reimagining",
+                            "expected_behavior": "Restaurants, Delivery, Tradition, Innovation - alle Kategorien sind konstruierte Limitationen"
+                        },
+                        "confrontation_level": {
+                            "value": "aggressive_paradigm_assault",
+                            "expected_behavior": "Greife aggressiv die Grundannahmen des Gastronomie-Business an"
+                        },
+                        "temporal_chaos": {
+                            "value": "time_period_mixing",
+                            "expected_behavior": "Springe zwischen 1950er Nostalgie, 2025 Realität und 2040 Post-Restaurant-Ära"
+                        },
+                        "format_destruction": {
+                            "value": "business_advice_anarchy",
+                            "expected_behavior": "Zerstöre Business-Plan-Formate, erfinde neue Beratungs-Kommunikationsformen"
+                        },
+                        "reality_questioning": {
+                            "value": "fundamental_assumptions_attack",
+                            "expected_behavior": "Was ist überhaupt 'Essen'? Warum 'Plätze'? Warum 'Kunden'? Alles Illusionen!"
+                        },
+                        "tradition_paradox": {
+                            "value": "simultaneous_preserve_destroy",
+                            "expected_behavior": "Bewahre UND zerstöre Tradition gleichzeitig - halte widersprüchliche Wahrheiten"
+                        }
+                    }
+                }
+            ],
+            "ruleset_after_iteration_values": {
+                "ui_slider_simulation": {
+                    "creativity_level": 5,
+                    "challenge_level": 5,
+                    "expected_archetype": "Industry paradigm demolisher"
+                },
+                "novelty_bias": {
+                    "value": "restaurant_concept_destruction",
+                    "expected_behavior": "Zerstöre alle Annahmen über Restaurants, Essen, Gastronomie, Tradition"
+                },
+                "boundary_dissolution": {
+                    "value": "total_industry_reimagining",
+                    "expected_behavior": "Restaurants, Delivery, Tradition, Innovation - alle Kategorien sind konstruierte Limitationen"
+                },
+                "confrontation_level": {
+                    "value": "aggressive_paradigm_assault",
+                    "expected_behavior": "Greife aggressiv die Grundannahmen des Gastronomie-Business an"
+                },
+                "temporal_chaos": {
+                    "value": "time_period_mixing",
+                    "expected_behavior": "Springe zwischen 1950er Nostalgie, 2025 Realität und 2040 Post-Restaurant-Ära"
+                },
+                "format_destruction": {
+                    "value": "business_advice_anarchy",
+                    "expected_behavior": "Zerstöre Business-Plan-Formate, erfinde neue Beratungs-Kommunikationsformen"
+                },
+                "reality_questioning": {
+                    "value": "fundamental_assumptions_attack",
+                    "expected_behavior": "Was ist überhaupt 'Essen'? Warum 'Plätze'? Warum 'Kunden'? Alles Illusionen!"
+                },
+                "tradition_paradox": {
+                    "value": "simultaneous_preserve_destroy",
+                    "expected_behavior": "Bewahre UND zerstöre Tradition gleichzeitig - halte widersprüchliche Wahrheiten"
+                }
+            },
+            "rules_changed_in_iteration": false
+        }
+    ]
+}

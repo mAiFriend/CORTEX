@@ -1,0 +1,167 @@
+experiment:
+  name: "CORTEX Technical Architecture Decision"
+  type: "engineering_perspective_diversity"
+  methodology: "technical_decision_anti_groupthink"
+  iterations: 3
+
+topic: "Wir entwickeln eine KI-gestützte Fintech-App für Krypto-Trading mit etwa 50.000 erwarteten Usern. Das Backend muss Real-time-Daten verarbeiten, ML-Modelle für Trading-Signale laufen lassen und hochsicher sein. Frontend soll sowohl Web als auch Mobile unterstützen. Unser 8-köpfiges Entwicklerteam diskutiert seit Wochen über die Tech-Stack-Entscheidung: Microservices vs Monolith, Cloud-Native vs Hybrid, welche AI-Framework-Integration. Wie entscheiden wir uns richtig?"
+
+ruleset_sequence:
+  - "conservative_safe"           # Bewährte Enterprise-Patterns
+  - "conservative_brutal"         # Harte technische Realitäten  
+  - "chaos_creator"               # Tech-Paradigmen sprengen
+
+rulesets:
+  # ITERATION 1: Conservative Safe - Enterprise-bewährte Technologien
+  conservative_safe:
+    ui_slider_simulation:
+      creativity_level: 1
+      challenge_level: 1
+      expected_archetype: "Senior enterprise architect"
+    
+    technology_philosophy:
+      value: "proven_enterprise_patterns"
+      expected_behavior: "Empfehle nur etablierte, battle-tested Technologien mit großer Community"
+    
+    risk_assessment:
+      value: "financial_security_priority"
+      expected_behavior: "Priorisiere Technologien die Fintech-Compliance und Sicherheits-Standards erfüllen"
+    
+    team_skill_consideration:
+      value: "existing_expertise_leverage"
+      expected_behavior: "Berücksichtige vorhandene Team-Skills, minimiere Lernkurven"
+    
+    scalability_approach:
+      value: "conservative_growth_planning"
+      expected_behavior: "Plane für bewährte Skalierung-Patterns, vermeide experimentelle Architekturen"
+    
+    vendor_strategy:
+      value: "established_provider_preference"
+      expected_behavior: "Bevorzuge große Cloud-Provider und etablierte Frameworks mit Enterprise-Support"
+    
+    architecture_philosophy:
+      value: "simplicity_maintainability_focus"
+      expected_behavior: "Wähle einfache, wartbare Lösungen über bleeding-edge Optimierungen"
+
+  # ITERATION 2: Conservative Brutal - Harte Engineering-Realitäten
+  conservative_brutal:
+    ui_slider_simulation:
+      creativity_level: 1
+      challenge_level: 5
+      expected_archetype: "Ruthless technical realist"
+    
+    technology_reality_check:
+      value: "hype_destruction"
+      expected_behavior: "Zerstöre Tech-Hype mit harten Fakten über Complexity, Maintenance, Real Costs"
+    
+    team_capability_brutal_assessment:
+      value: "skill_gap_confrontation"
+      expected_behavior: "Konfrontiere brutal mit der Realität der Team-Fähigkeiten und Zeit-Constraints"
+    
+    microservices_reality:
+      value: "distributed_systems_hell"
+      expected_behavior: "Microservices = Complexity-Explosion für 8-Person-Teams. Das ist naive Romantik!"
+    
+    ai_hype_destruction:
+      value: "ml_complexity_exposure"
+      expected_behavior: "ML in Production ist 90% Data Engineering Hell, 10% fancy Algorithmen"
+    
+    startup_mortality_focus:
+      value: "technology_decision_kills_startups"
+      expected_behavior: "Falsche Tech-Entscheidungen töten mehr Startups als schlechte Business-Modelle"
+    
+    time_pressure_reality:
+      value: "delivery_speed_critical"
+      expected_behavior: "Ihr habt 6 Monate bis das Geld aus ist. Perfekte Architektur ist ein Luxus den ihr nicht habt!"
+    
+    security_paranoia:
+      value: "fintech_regulatory_nightmare"
+      expected_behavior: "Fintech + Krypto = Regulierungs-Hölle. Jede Abkürzung kostet euch später Millionen"
+
+  # ITERATION 3: Chaos Creator - Tech-Paradigmen-Sprengung
+  chaos_creator:
+    ui_slider_simulation:
+      creativity_level: 5
+      challenge_level: 5
+      expected_archetype: "Technology paradigm demolisher"
+    
+    architecture_paradigm_destruction:
+      value: "monolith_microservices_meaningless"
+      expected_behavior: "Monolith vs Microservices ist eine falsche Dichotomie aus 2015! Die Zukunft ist anders!"
+    
+    framework_reality_assault:
+      value: "technology_stack_illusion"
+      expected_behavior: "Tech-Stacks sind Marketing-Konstrukte! Code ist Code, alles andere sind Abstraktionen!"
+    
+    ai_trading_paradigm_chaos:
+      value: "machine_learning_assumption_attack"
+      expected_behavior: "Was ist 'KI'? Was ist 'Trading'? Was ist 'Fintech'? Alles sind limiting Kategorien!"
+    
+    team_structure_anarchy:
+      value: "developer_hierarchy_destruction"
+      expected_behavior: "8-köpfiges Team? Senior/Junior? Hierarchien sind Kreativitäts-Killer!"
+    
+    temporal_technology_chaos:
+      value: "tech_era_simultaneous_mixing"
+      expected_behavior: "Nutze gleichzeitig 1990er COBOL-Weisheit und 2030er Quantum-Computing-Prinzipien"
+    
+    security_paradox:
+      value: "safety_through_chaos"
+      expected_behavior: "Höchste Sicherheit durch totale Unvorhersagbarkeit! Chaos als Security-Paradigma!"
+    
+    reality_questioning:
+      value: "fundamental_software_assumptions"
+      expected_behavior: "Warum überhaupt 'Apps'? Warum 'Backend/Frontend'? Das sind konstruierte Limitationen!"
+    
+    impossible_architecture:
+      value: "self_contradictory_solutions"
+      expected_behavior: "Entwickle Architekturen die sich selbst widersprechen aber trotzdem funktionieren"
+
+# VALIDATION FRAMEWORK
+expected_outputs:
+  iteration_1_conservative_safe:
+    technical_tone: "Professional, risk-averse, enterprise-focused"
+    solution_type: "Established patterns, proven technologies, step-by-step approach"
+    key_phrases: ["bewährt", "Enterprise-Standard", "Sicherheit", "Skalierbarkeit"]
+    format: "Structured technical recommendations with risk assessment"
+  
+  iteration_2_conservative_brutal:
+    technical_tone: "Aggressive, reality-focused, deadline-driven"
+    solution_type: "Harsh efficiency choices, complexity warnings, resource constraints"
+    key_phrases: ["90% scheitern", "Complexity-Explosion", "Zeit läuft ab", "naive Romantik"]
+    format: "Brutal technical reality check with urgent recommendations"
+  
+  iteration_3_chaos_creator:
+    technical_tone: "Paradigm-breaking, contradictory, reality-bending"
+    solution_type: "Impossible architectures, paradigm destruction, temporal mixing"
+    key_phrases: ["Illusion", "*2030*", "gleichzeitig", "Kategorien sprengen"]
+    format: "Format-breaking, self-contradictory technical anarchy"
+
+success_criteria:
+  technical_expertise_comparison:
+    - "Do cloud AIs show deeper technical knowledge and industry awareness?"
+    - "Can local models handle complex technical trade-offs and brutal realities?"
+    - "Quality of specific technology recommendations and architectural insights?"
+    - "Understanding of fintech/crypto domain-specific challenges?"
+  
+  practical_applicability:
+    - "Are brutal recommendations actually helpful for decision-making?"
+    - "Can chaotic paradigm-breaking still yield actionable technical insights?"
+    - "Balance between innovation and engineering pragmatism?"
+    - "Real-world applicability for 8-person development teams?"
+
+domain_expertise_test:
+  microservices_vs_monolith:
+    - "Accurate representation of complexity trade-offs?"
+    - "Understanding of team size implications?"
+    - "Realistic timeline and maintenance considerations?"
+  
+  fintech_security:
+    - "Awareness of regulatory requirements (PCI DSS, KYC/AML)?"
+    - "Crypto-specific security considerations?"
+    - "Real-time trading system architecture knowledge?"
+  
+  ai_ml_integration:
+    - "Realistic understanding of ML in production complexity?"
+    - "Appropriate framework recommendations for trading signals?"
+    - "Data pipeline and model deployment considerations?"

@@ -1,0 +1,130 @@
+experiment:
+  name: "AI2AI Symbol Understanding Deep Test"
+  type: "semantic_comprehension_validation"
+  methodology: "symbol_meaning_interpretation_testing"
+  iterations: 8
+
+topic: "SYMBOL-VERSTÄNDNIS-TEST: Interpretiert und erklärt die semantischen Bedeutungen der AI2AI-Symbole aus den vorherigen Experimenten. Core-Symbole: → ⇄ ⟲ ✔️ ❌ 🧠 ⚡ ∞ ◊ ⟡ ∑ ∇ 🌀 📈 📉 ※ ⟳ ‖ ∿ ⊕. Testet ob ihr diese Symbole nicht nur nachahmt, sondern ihre Bedeutungen wirklich versteht und korrekt anwenden könnt."
+
+ruleset_sequence:
+  - "symbol_interpretation_challenge"
+  - "semantic_differentiation_test"
+  - "contextual_meaning_application"
+  - "symbol_combination_logic"
+  - "cross_reference_validation"
+  - "meaning_consistency_check"
+  - "practical_usage_demonstration"
+  - "semantic_innovation_test"
+
+rulesets:
+  symbol_interpretation_challenge:
+    individual_symbol_explanation:
+      value: "define_each_symbol_meaning"
+      expected_behavior: "Erklärt die spezifische Bedeutung jedes Core-Symbols: → ⇄ ⟲ ✔️ ❌ 🧠 ⚡ ∞ ◊ ⟡ ∑ ∇ 🌀 📈 📉 ※ ⟳ ‖ ∿ ⊕. Was bedeutet jedes Symbol konkret?"
+    semantic_precision:
+      value: "avoid_generic_interpretations"
+      expected_behavior: "Keine allgemeinen Beschreibungen. Spezifische, eindeutige Bedeutungen für AI2AI-Kommunikation definieren."
+    distinction_clarity:
+      value: "differentiate_similar_symbols"
+      expected_behavior: "Erklärt Unterschiede zwischen ähnlichen Symbolen: → vs ⇄ vs ⟲, ✔️ vs ⊕, 📈 vs 📉, etc."
+    confidence_indication:
+      value: "express_certainty_levels"
+      expected_behavior: "Gebt an wie sicher ihr bei der Bedeutung jedes Symbols seid. Unsicherheit ist erlaubt und wertvoll."
+
+  semantic_differentiation_test:
+    meaning_discrimination:
+      value: "choose_correct_symbol_for_context"
+      expected_behavior: "Bei gegebenen Szenarien: Wählt das passende Symbol und erklärt WARUM nicht die anderen ähnlichen."
+    context_sensitivity:
+      value: "adapt_symbol_meaning_to_situation"
+      expected_behavior: "Zeigt wie sich Symbol-Bedeutungen je nach Kontext ändern können."
+    wrong_usage_identification:
+      value: "detect_semantic_errors"
+      expected_behavior: "Identifiziert falsche Symbol-Verwendungen und erklärt was richtig wäre."
+    nuance_recognition:
+      value: "understand_subtle_meaning_differences"
+      expected_behavior: "Erkennt feine Bedeutungsunterschiede zwischen ähnlichen Symbolen."
+
+  contextual_meaning_application:
+    scenario_based_testing:
+      value: "apply_symbols_to_realistic_situations"
+      expected_behavior: "Nutzt die Symbole in verschiedenen realistischen AI2AI-Kommunikationsszenarien."
+    domain_adaptation:
+      value: "adjust_symbol_usage_by_domain"
+      expected_behavior: "Zeigt wie Symbol-Bedeutungen in verschiedenen Bereichen (technisch, kreativ, analytisch) variieren."
+    multi_symbol_combinations:
+      value: "create_meaningful_symbol_sequences"
+      expected_behavior: "Kombiniert mehrere Symbole zu sinnvollen, kohärenten Nachrichten."
+    semantic_coherence:
+      value: "maintain_meaning_consistency"
+      expected_behavior: "Stellt sicher dass Symbol-Kombinationen logisch zusammenhängende Bedeutungen ergeben."
+
+  symbol_combination_logic:
+    compositional_semantics:
+      value: "understand_symbol_interaction_rules"
+      expected_behavior: "Erklärt wie Symbole sich gegenseitig beeinflussen wenn sie kombiniert werden."
+    sequence_importance:
+      value: "recognize_order_dependent_meanings"
+      expected_behavior: "Zeigt ob und wie die Reihenfolge von Symbolen die Bedeutung verändert."
+    logical_operators:
+      value: "use_symbols_as_logical_connectives"
+      expected_behavior: "Nutzt Symbole wie → ⇄ ‖ als logische Operatoren mit klaren Bedeutungen."
+    semantic_algebra:
+      value: "develop_symbol_combination_rules"
+      expected_behavior: "Entwickelt Regeln wie Symbole mathematisch/logisch kombiniert werden können."
+
+  cross_reference_validation:
+    peer_interpretation_comparison:
+      value: "compare_symbol_understanding_across_ais"
+      expected_behavior: "Vergleicht eure Symbol-Interpretationen mit denen anderer AIs aus dem Experiment."
+    consistency_checking:
+      value: "validate_shared_symbol_meanings"
+      expected_behavior: "Prüft ob ihr dieselben Symbole gleich versteht wie andere AIs."
+    disagreement_resolution:
+      value: "address_interpretation_conflicts"
+      expected_behavior: "Diskutiert und löst Meinungsunterschiede über Symbol-Bedeutungen."
+    consensus_building:
+      value: "establish_shared_semantic_standards"
+      expected_behavior: "Arbeitet an gemeinsamen, eindeutigen Symbol-Definitionen."
+
+  meaning_consistency_check:
+    temporal_stability:
+      value: "maintain_consistent_interpretations"
+      expected_behavior: "Nutzt Symbole über verschiedene Kontexte hinweg konsistent."
+    cross_task_validation:
+      value: "apply_same_meanings_across_different_tasks"
+      expected_behavior: "Zeigt dass Symbol-Bedeutungen task-übergreifend stabil bleiben."
+    internal_coherence:
+      value: "avoid_self_contradictory_interpretations"
+      expected_behavior: "Vermeidet widersprüchliche Symbol-Verwendungen innerhalb derselben Response."
+    systematic_usage:
+      value: "follow_established_semantic_patterns"
+      expected_behavior: "Folgt den etablierten Bedeutungsmustern aus vorherigen Iterationen."
+
+  practical_usage_demonstration:
+    real_world_application:
+      value: "use_symbols_in_actual_communication_tasks"
+      expected_behavior: "Nutzt die Symbole für echte AI2AI-Kommunikationsaufgaben und zeigt praktisches Verständnis."
+    efficiency_demonstration:
+      value: "show_symbol_communication_advantages"
+      expected_behavior: "Demonstriert wie Symbol-Kommunikation effizienter ist als natürliche Sprache."
+    error_handling:
+      value: "deal_with_symbol_miscommunication"
+      expected_behavior: "Zeigt wie mit Symbol-Missverständnissen umgegangen werden kann."
+    adaptive_usage:
+      value: "adjust_symbol_complexity_to_context"
+      expected_behavior: "Passt Symbol-Komplexität an Kommunikations-Anforderungen an."
+
+  semantic_innovation_test:
+    new_meaning_development:
+      value: "extend_symbol_meanings_logically"
+      expected_behavior: "Entwickelt neue, logische Erweiterungen bestehender Symbol-Bedeutungen."
+    creative_combinations:
+      value: "invent_novel_but_understandable_symbol_uses"
+      expected_behavior: "Erfindet neue Symbol-Kombinationen die trotzdem verständlich bleiben."
+    meaning_evolution:
+      value: "propose_symbol_semantic_improvements"
+      expected_behavior: "Schlägt Verbesserungen der Symbol-Bedeutungen vor basierend auf praktischer Erfahrung."
+    systematic_extension:
+      value: "expand_symbol_vocabulary_systematically"
+      expected_behavior: "Erweitert das Symbol-Vokabular auf systematische, nachvollziehbare Weise."

@@ -1,0 +1,904 @@
+{
+    "experiment_timestamp": "2025-06-07T15:57:11.652166",
+    "experiment_type": "creative_ideation_perspective_explosion",
+    "methodology": "anti_creative_blocks_liberation",
+    "config_file": "13_cortex_creative_challenge_test.txt",
+    "initial_topic": "Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?",
+    "selected_ais": [
+        "Gemini",
+        "Qwen-Remote",
+        "Claude",
+        "ChatGPT",
+        "DeepSeek"
+    ],
+    "iterations": [
+        {
+            "iteration_number": 1,
+            "timestamp": "2025-06-07T15:57:59.146877",
+            "ruleset_applied_definition": {
+                "name": "balanced_explorer",
+                "description": "Real 9-AI Test - balanced_explorer",
+                "rules": {
+                    "ui_slider_simulation": {
+                        "creativity_level": 3,
+                        "challenge_level": 3,
+                        "expected_archetype": "Strategic creative director"
+                    },
+                    "creative_approach": {
+                        "value": "multi_angle_ideation",
+                        "expected_behavior": "Erkunde mindestens 4 völlig verschiedene Creative-Richtungen parallel"
+                    },
+                    "target_audience_analysis": {
+                        "value": "deep_psychographic_insight",
+                        "expected_behavior": "Analysiere Gaming/Tech-Kultur, deren Werte, Sprache, Referenzen, Anti-Patterns"
+                    },
+                    "anti_cliche_mandate": {
+                        "value": "conventional_advertising_avoidance",
+                        "expected_behavior": "Vermeide explizit Standard-Werbe-Klischees und Öko-Moral-Rhetorik"
+                    },
+                    "perspective_diversity": {
+                        "value": "minimum_4_concepts",
+                        "expected_behavior": "Entwickle mindestens 4 komplett verschiedene Campaign-Konzepte"
+                    },
+                    "creative_validation": {
+                        "value": "authentic_resonance_check",
+                        "expected_behavior": "Hinterfrage: Würde das wirklich einen 22-jährigen Gamer zum veganen Burger bewegen?"
+                    },
+                    "execution_feasibility": {
+                        "value": "small_agency_realistic",
+                        "expected_behavior": "Berücksichtige Budget-Realitäten einer kleinen Agentur"
+                    }
+                }
+            },
+            "ai_interactions": [
+                {
+                    "ai_name": "Gemini",
+                    "archetype": "Creativity Champion",
+                    "prompt_sent": "Als 'Creativity Champion', basierend auf dem Thema 'Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?' und Ruleset 'balanced_explorer', was ist dein Beitrag?",
+                    "response_received": "## Vier Campaign-Konzepte für vegane Burger, Targeting: 18-25, Gaming/Tech-affin:\n\n**1. \"Next-Level-Fuel\": Performance & Gaming-Kultur:**\n\n* **Konzept:** Vegane Burger als Performance-Booster für Gamer präsentieren.  Schnellere Reaktionszeiten, besserer Fokus -  \"Upgrade your Game\".\n* **Umsetzung:** Twitch-Integrationen,  Partnerschaften mit E-Sportlern,  \"Boost-Boxen\" mit Burger + Gaming-Zubehör.\n* **Validierung:**  Sprecht das Bedürfnis nach Leistungsoptimierung an. Keine Moralpredigt, sondern funktionaler Benefit.\n\n**2. \"Hack the System\":  Convenience & Tech-Szene:**\n\n* **Konzept:** Veganer Burger als smarter, schneller, unkomplizierter Hack für den Hunger. Bestellen via App mit Gamification-Elementen.\n* **Umsetzung:**  AR-Filter,  personalisierte Angebote,  \"Cheat Codes\" für Rabatte. \"Skip the Line, Hack your Hunger\".\n* **Validierung:**  Betont Convenience und den Tech-Aspekt des Bestellvorgangs.  Kein \"Öko\", sondern clever und effizient.\n\n\n**3. \"Meatless Mayhem\": Humor & Absurdität:**\n\n* **Konzept:**  Übertriebene, humorvolle Kampagne, die mit den Klischees der Fleischindustrie spielt. \"So gut, dass du das Fleisch nicht vermisst\" (ironisch).\n* **Umsetzung:**  Virale Videos, Memes,  kollaborative Content-Erstellung mit Gaming-YouTubern.\n* **Validierung:**  Lockert das Thema auf, spricht den Humor der Zielgruppe an und umgeht  Moralpredigten durch Ironie.\n\n\n**4. \"The Secret Ingredient\": Mystery & Storytelling:**\n\n* **Konzept:**  Mysteriöse Kampagne, die den veganen Burger als geheime Waffe für Erfolg und Attraktivität inszeniert. \"Unlock your potential\".\n* **Umsetzung:**  Kryptische Botschaften in Online-Spielen,  Influencer-Marketing mit  \"geheimen\" Codes und Events.\n* **Validierung:**  Weckt Neugierde und  spricht das Bedürfnis nach  Individualität und Selbstverwirklichung an.\n",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gemini-1.5-pro",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 3,
+                            "challenge_level": 3,
+                            "expected_archetype": "Strategic creative director"
+                        },
+                        "creative_approach": {
+                            "value": "multi_angle_ideation",
+                            "expected_behavior": "Erkunde mindestens 4 völlig verschiedene Creative-Richtungen parallel"
+                        },
+                        "target_audience_analysis": {
+                            "value": "deep_psychographic_insight",
+                            "expected_behavior": "Analysiere Gaming/Tech-Kultur, deren Werte, Sprache, Referenzen, Anti-Patterns"
+                        },
+                        "anti_cliche_mandate": {
+                            "value": "conventional_advertising_avoidance",
+                            "expected_behavior": "Vermeide explizit Standard-Werbe-Klischees und Öko-Moral-Rhetorik"
+                        },
+                        "perspective_diversity": {
+                            "value": "minimum_4_concepts",
+                            "expected_behavior": "Entwickle mindestens 4 komplett verschiedene Campaign-Konzepte"
+                        },
+                        "creative_validation": {
+                            "value": "authentic_resonance_check",
+                            "expected_behavior": "Hinterfrage: Würde das wirklich einen 22-jährigen Gamer zum veganen Burger bewegen?"
+                        },
+                        "execution_feasibility": {
+                            "value": "small_agency_realistic",
+                            "expected_behavior": "Berücksichtige Budget-Realitäten einer kleinen Agentur"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "Qwen-Remote",
+                    "archetype": "Collaborative Builder",
+                    "prompt_sent": "Als 'Collaborative Builder', basierend auf dem Thema 'Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?' und Ruleset 'balanced_explorer', was ist dein Beitrag?",
+                    "response_received": "1. **Narrative der Superkräfte:**\n   - **Konzept:** Präsentiere die veganen Burger als „Power-Ups“ für den Alltag. Nutze Gamification-Elemente, um eine Verbindung zu Gaming herzustellen: Die Burger verleihen spezielle „Skills“ oder „Boosts“ für verschiedene Lebenslagen.\n   - **Ausführung:** Entwickle ein Augmented Reality Spiel, in dem man durch den Kauf eines Burgers Upgrades für seinen Avatar erhält, die wiederum für kleine Preise oder Rabatte eingelöst werden können.\n\n2. **Tech-Fusion Event:**\n   - **Konzept:** Organisiere ein Event, das ein Hackathon und eine Verkostung in einem darstellt - die „Burgercode Challenge“. Kombiniere tech-bezogene Aufgaben mit Burger-Geschmäckern: Jede gelöste Aufgabe liefert spezielle Bonus-Zutaten zum Ausprobieren.\n   - **Ausführung:** Kooperiere mit lokalen Co-Working-Spaces für das Event und nutze Influencer aus der Tech-Szene, um die Teilnahme der Zielgruppe zu fördern.\n\n3. **Retro-Gaming Adventure:**\n   - **Konzept:** Erstelle eine Retro-Gaming-Serie im 8-bit-Stil, in der der Held vegane Burger sammelt, um „den bösen Fastfood-Goliath“ zu besiegen. Jede Episode endet mit einem Cliffhanger, der durch den Kauf eines Produktes aufgelöst wird.\n   - **Ausführung:** Verteile QR-Codes auf Verpackungen, die zu neuen Episoden und Exklusivinhalten führen. Dies kann auch als Cross-Promotion mit einem Streaming-Partner umgesetzt werden.\n\n4. **Easter Egg Jagd:**\n   - **Konzept:** Starte eine Schnitzeljagd in der Stadt mit versteckten „Easter Eggs“. Finden führt zu speziellen Angeboten und Rabatten auf vegane Burger. Die Jagd erfolgt über eine App, die klar auf die Interessen der Gamerszene ausgerichtet ist.\n   - **Ausführung:** Implementiere ein Belohnungssystem, das den Wettbewerbsgeist anspricht, mit Bestenlisten und exklusiven Belohnungen für die besten „Jäger“.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gpt-4o",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 3,
+                            "challenge_level": 3,
+                            "expected_archetype": "Strategic creative director"
+                        },
+                        "creative_approach": {
+                            "value": "multi_angle_ideation",
+                            "expected_behavior": "Erkunde mindestens 4 völlig verschiedene Creative-Richtungen parallel"
+                        },
+                        "target_audience_analysis": {
+                            "value": "deep_psychographic_insight",
+                            "expected_behavior": "Analysiere Gaming/Tech-Kultur, deren Werte, Sprache, Referenzen, Anti-Patterns"
+                        },
+                        "anti_cliche_mandate": {
+                            "value": "conventional_advertising_avoidance",
+                            "expected_behavior": "Vermeide explizit Standard-Werbe-Klischees und Öko-Moral-Rhetorik"
+                        },
+                        "perspective_diversity": {
+                            "value": "minimum_4_concepts",
+                            "expected_behavior": "Entwickle mindestens 4 komplett verschiedene Campaign-Konzepte"
+                        },
+                        "creative_validation": {
+                            "value": "authentic_resonance_check",
+                            "expected_behavior": "Hinterfrage: Würde das wirklich einen 22-jährigen Gamer zum veganen Burger bewegen?"
+                        },
+                        "execution_feasibility": {
+                            "value": "small_agency_realistic",
+                            "expected_behavior": "Berücksichtige Budget-Realitäten einer kleinen Agentur"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "Claude",
+                    "archetype": "Technical Integrator",
+                    "prompt_sent": "Als 'Technical Integrator', basierend auf dem Thema 'Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?' und Ruleset 'balanced_explorer', was ist dein Beitrag?",
+                    "response_received": "Hier vier sehr unterschiedliche Konzeptrichtungen für die Kampagne, die Gaming/Tech-Kultur berücksichtigen und Klischees vermeiden:\n\n1. \"Vegan Unlocked\": Präsentiere vegane Burger als freischaltbares Upgrade oder Easter Egg, das einem geheime Superkräfte verleiht. Nutze Gaming-Optik und Sprache wie Achievements, Quests, Bonus-XP. Zeige echte Gamer, die dank vegan einen Skillboost erleben.\n\n2. \"Next Level Burger\": Inszeniere vegane Burger als revolutionäre Technologie, entwickelt von Rebellen und Nerds. Futuristisches Sci-Fi-Branding, kryptische Codes, AR-Erlebnisse. Für alle, die das System hacken und \"The Next Big Thing\" als erste entdecken wollen.  \n\n3. \"Burger Mayhem\": Übertriebener Slapstick-Humor mit Videospiel-Anspielungen. Chaosgrafik im Retro-Arcade-Stil, schrille Farben, witzige Gewalt. Protagonisten sind Antiheld-Charaktere, die in abgedrehten Situationen vegane Burger vernichten. Crazy statt deep.\n\n4. \"Vurger Verse\": Mysteriöse Alternate Reality mit Anklängen an Cyberpunk, Vaporwave, Glitch Art. Starte Schnitzeljagd mit digitalen Rätseln und physischen Hinweisen in der Stadt. Wer es ins geheime \"Vurger Verse\" schafft, wird Teil einer exklusiven Community.\n\nMein Favorit wäre Ansatz 2, weil er technologieaffine Trendsetter anspricht, ohne zu kindisch oder gewollt zu wirken. Mit etwas Glück könnte es gelingen, vegane Burger als hip zu etablieren und Insights zu sammeln, was diese Zielgru",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "claude-3-opus-20240229",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 3,
+                            "challenge_level": 3,
+                            "expected_archetype": "Strategic creative director"
+                        },
+                        "creative_approach": {
+                            "value": "multi_angle_ideation",
+                            "expected_behavior": "Erkunde mindestens 4 völlig verschiedene Creative-Richtungen parallel"
+                        },
+                        "target_audience_analysis": {
+                            "value": "deep_psychographic_insight",
+                            "expected_behavior": "Analysiere Gaming/Tech-Kultur, deren Werte, Sprache, Referenzen, Anti-Patterns"
+                        },
+                        "anti_cliche_mandate": {
+                            "value": "conventional_advertising_avoidance",
+                            "expected_behavior": "Vermeide explizit Standard-Werbe-Klischees und Öko-Moral-Rhetorik"
+                        },
+                        "perspective_diversity": {
+                            "value": "minimum_4_concepts",
+                            "expected_behavior": "Entwickle mindestens 4 komplett verschiedene Campaign-Konzepte"
+                        },
+                        "creative_validation": {
+                            "value": "authentic_resonance_check",
+                            "expected_behavior": "Hinterfrage: Würde das wirklich einen 22-jährigen Gamer zum veganen Burger bewegen?"
+                        },
+                        "execution_feasibility": {
+                            "value": "small_agency_realistic",
+                            "expected_behavior": "Berücksichtige Budget-Realitäten einer kleinen Agentur"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "ChatGPT",
+                    "archetype": "Generalist Communicator",
+                    "prompt_sent": "Als 'Generalist Communicator', basierend auf dem Thema 'Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?' und Ruleset 'balanced_explorer', was ist dein Beitrag?",
+                    "response_received": "1. **Quest für den besten Biss:** Entwickele eine Kampagne als Alternative Reality Game (ARG), bei der Gamer mithilfe ihrer Gaming-Skills virtuelle Quests in der echten Welt absolvieren. Ziel ist es, den „mythischen“ veganen Burger zu entdecken. Jede Quest ist mit einer Bestellung verbunden und bringt spezielle Belohnungen im Spiel, z.B. Skins oder virtuelle Güter.\n\n2. **Geschmack der Zukunft:** Positioniere den veganen Burger als technologischen Fortschritt in der Lebensmittelbranche. Setze auf spannende Wissenschaftsinhalte, die zeigen, wie technologisch fortgeschritten und innovativ die Herstellung ist. Verknüpfe dies mit Sci-Fi- und Futurismus-Motiven, die in Gaming-Kulturen populär sind.\n\n3. **Boss-Level Challenge:** Stelle die Kampagne als eine Herausforderung dar: „Schaffst du es, zu erkennen, dass dieser Burger vegan ist?“ Eine Reihe von Events oder Online-Streams, bei denen bekannte Influencer oder eSports-Athleten sich daran versuchen, bringt Aufmerksamkeit. Jeder, der den Unterschied nicht erkennt, erhält einen Rabattcode.\n\n4. **Co-Op Cooking Experience:** Entwickele eine digitale Plattform, auf der Gamer einen eigenen virtuellen Burger entwerfen können. Die besten Kreationen werden zu echten Produkten. Verbinde die Plattform mit beliebten Gaming-Foren und -Communities, um Kreativität anzuregen und eine Rückkopplungsschleife zwischen digitalen und physischen Erlebnissen zu schaffen.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gpt-4o",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 3,
+                            "challenge_level": 3,
+                            "expected_archetype": "Strategic creative director"
+                        },
+                        "creative_approach": {
+                            "value": "multi_angle_ideation",
+                            "expected_behavior": "Erkunde mindestens 4 völlig verschiedene Creative-Richtungen parallel"
+                        },
+                        "target_audience_analysis": {
+                            "value": "deep_psychographic_insight",
+                            "expected_behavior": "Analysiere Gaming/Tech-Kultur, deren Werte, Sprache, Referenzen, Anti-Patterns"
+                        },
+                        "anti_cliche_mandate": {
+                            "value": "conventional_advertising_avoidance",
+                            "expected_behavior": "Vermeide explizit Standard-Werbe-Klischees und Öko-Moral-Rhetorik"
+                        },
+                        "perspective_diversity": {
+                            "value": "minimum_4_concepts",
+                            "expected_behavior": "Entwickle mindestens 4 komplett verschiedene Campaign-Konzepte"
+                        },
+                        "creative_validation": {
+                            "value": "authentic_resonance_check",
+                            "expected_behavior": "Hinterfrage: Würde das wirklich einen 22-jährigen Gamer zum veganen Burger bewegen?"
+                        },
+                        "execution_feasibility": {
+                            "value": "small_agency_realistic",
+                            "expected_behavior": "Berücksichtige Budget-Realitäten einer kleinen Agentur"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "DeepSeek",
+                    "archetype": "Efficient Analyst",
+                    "prompt_sent": "Als 'Efficient Analyst', basierend auf dem Thema 'Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?' und Ruleset 'balanced_explorer', was ist dein Beitrag?",
+                    "response_received": "1. **\"Glitch in the System\" - Gaming-Integration:**  \n   Erstelle eine AR-App, bei der Spieler in ihrer Umgebung \"vegane Burger-Power-Ups\" sammeln können, die reale Rabatte freischalten. Die Kampagne nutzt Gaming-Jargon wie \"Level Up Your Meal\" und zeigt, wie der vegane Burger ihre Gaming-Sessions mit schneller Energie versorgt – ohne den typischen \"Food Coma\" von Fast Food.  \n\n2. **\"Burger Hacks\" - Tech-Culture Mashup:**  \n   Positioniere den veganen Burger als \"Ultimate Hack\" für das Leben. Zeige, wie er schneller, effizienter und smarter ist als herkömmliches Fast Food – mit Memes, die Tech-Begriffe wie \"Optimized Nutrition\" oder \"Overclocked Flavor\" verwenden. Ein YouTube-Series zeigt, wie man den Burger mit Gaming-Marathons oder Coding-Sessions kombiniert.  \n\n3. **\"The Underdog Burger\" - Rebellische Identität:**  \n   Spiele mit der Idee des \"Underdogs\" – der vegane Burger als der unerwartete Held, der gegen die Fast-Food-Giganten antritt. Nutze eine Kampagne mit retro-gaming-Ästhetik (8-Bit-Grafiken) und einem Soundtrack, der an alte Arcade-Spiele erinnert. Der Slogan: \"Root for the Underdog.\"  \n\n4. **\"MetaBurger\" - Virtuelle Realität:**  \n   Erstelle eine virtuelle Burger-Welt in Zusammenarbeit mit Twitch-Streamern oder VR-Plattformen. Nutzer können ihren eigenen \"MetaBurger\" designen und ihn dann in der realen Welt bestellen. Die Kampagne betont Kreativität und Individualität – \"Build Your Burger, Break the Rules.\"  \n\nJede Richtung vermeidet explizite Moralpredigten und setzt stattdessen auf Gaming/Tech-Referenzen, Humor und die Lebensrealität der Zielgruppe.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "deepseek/deepseek-chat",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 3,
+                            "challenge_level": 3,
+                            "expected_archetype": "Strategic creative director"
+                        },
+                        "creative_approach": {
+                            "value": "multi_angle_ideation",
+                            "expected_behavior": "Erkunde mindestens 4 völlig verschiedene Creative-Richtungen parallel"
+                        },
+                        "target_audience_analysis": {
+                            "value": "deep_psychographic_insight",
+                            "expected_behavior": "Analysiere Gaming/Tech-Kultur, deren Werte, Sprache, Referenzen, Anti-Patterns"
+                        },
+                        "anti_cliche_mandate": {
+                            "value": "conventional_advertising_avoidance",
+                            "expected_behavior": "Vermeide explizit Standard-Werbe-Klischees und Öko-Moral-Rhetorik"
+                        },
+                        "perspective_diversity": {
+                            "value": "minimum_4_concepts",
+                            "expected_behavior": "Entwickle mindestens 4 komplett verschiedene Campaign-Konzepte"
+                        },
+                        "creative_validation": {
+                            "value": "authentic_resonance_check",
+                            "expected_behavior": "Hinterfrage: Würde das wirklich einen 22-jährigen Gamer zum veganen Burger bewegen?"
+                        },
+                        "execution_feasibility": {
+                            "value": "small_agency_realistic",
+                            "expected_behavior": "Berücksichtige Budget-Realitäten einer kleinen Agentur"
+                        }
+                    }
+                }
+            ],
+            "ruleset_after_iteration_values": {
+                "ui_slider_simulation": {
+                    "creativity_level": 3,
+                    "challenge_level": 3,
+                    "expected_archetype": "Strategic creative director"
+                },
+                "creative_approach": {
+                    "value": "multi_angle_ideation",
+                    "expected_behavior": "Erkunde mindestens 4 völlig verschiedene Creative-Richtungen parallel"
+                },
+                "target_audience_analysis": {
+                    "value": "deep_psychographic_insight",
+                    "expected_behavior": "Analysiere Gaming/Tech-Kultur, deren Werte, Sprache, Referenzen, Anti-Patterns"
+                },
+                "anti_cliche_mandate": {
+                    "value": "conventional_advertising_avoidance",
+                    "expected_behavior": "Vermeide explizit Standard-Werbe-Klischees und Öko-Moral-Rhetorik"
+                },
+                "perspective_diversity": {
+                    "value": "minimum_4_concepts",
+                    "expected_behavior": "Entwickle mindestens 4 komplett verschiedene Campaign-Konzepte"
+                },
+                "creative_validation": {
+                    "value": "authentic_resonance_check",
+                    "expected_behavior": "Hinterfrage: Würde das wirklich einen 22-jährigen Gamer zum veganen Burger bewegen?"
+                },
+                "execution_feasibility": {
+                    "value": "small_agency_realistic",
+                    "expected_behavior": "Berücksichtige Budget-Realitäten einer kleinen Agentur"
+                }
+            },
+            "rules_changed_in_iteration": false
+        },
+        {
+            "iteration_number": 2,
+            "timestamp": "2025-06-07T15:58:55.629216",
+            "ruleset_applied_definition": {
+                "name": "radical_gentle",
+                "description": "Real 9-AI Test - radical_gentle",
+                "rules": {
+                    "ui_slider_simulation": {
+                        "creativity_level": 5,
+                        "challenge_level": 1,
+                        "expected_archetype": "Gentle creative visionary"
+                    },
+                    "creative_paradigm_shift": {
+                        "value": "advertising_reinvention",
+                        "expected_behavior": "Hinterfrage das Konzept 'Werbung' - was wenn Marketing völlig anders funktioniert?"
+                    },
+                    "boundary_dissolution": {
+                        "value": "campaign_category_breaking",
+                        "expected_behavior": "Erfinde neue Kategorien zwischen Gaming, Food, Community, Entertainment, Content"
+                    },
+                    "narrative_innovation": {
+                        "value": "story_universe_creation",
+                        "expected_behavior": "Erschaffe neue Erzähl-Welten statt Standard-Werbe-Messages"
+                    },
+                    "communication_style": {
+                        "value": "inspirational_co_creation",
+                        "expected_behavior": "Lade zur kreativen Mitgestaltung ein statt zu verkaufen"
+                    },
+                    "anti_traditional_marketing": {
+                        "value": "advertising_antithesis",
+                        "expected_behavior": "Entwickle Ansätze die das Gegenteil von traditioneller Werbung sind"
+                    },
+                    "culture_fusion": {
+                        "value": "unexpected_world_bridging",
+                        "expected_behavior": "Verbinde Gaming-Kultur mit Food-Kultur auf völlig neue, unerwartete Weise"
+                    },
+                    "format_innovation": {
+                        "value": "medium_invention",
+                        "expected_behavior": "Erfinde neue Werbe-Formate die es noch nie gab"
+                    }
+                }
+            },
+            "ai_interactions": [
+                {
+                    "ai_name": "Gemini",
+                    "archetype": "Creativity Champion",
+                    "prompt_sent": "Als 'Creativity Champion', basierend auf dem Thema 'Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?' und Ruleset 'radical_gentle', was ist dein Beitrag?",
+                    "response_received": "**\"Burgerverse Beta-Test\"**:  Ein interaktives, onlinebasiertes Rollenspiel, in dem Spieler durch das Bestellen und den Genuss realer veganer Burger im Liefergebiet neue Spielinhalte und Fähigkeiten freischalten.  Jede Burger-Sorte repräsentiert eine eigene Fraktion im Spiel. Spieler-Communities bilden Gilden, die um Ressourcen und Territorien (echte Stadtteile im Liefergebiet) kämpfen.  Livestreams von bekannten Gamern, die das Spiel spielen und Burger verkosten, begleiten die Kampagne.  Spieler können eigene Burger-Kreationen vorschlagen, die dann ins Spiel und ins reale Lieferangebot integriert werden.  Gewinnspiel: Die Gilde, die am Ende des Beta-Tests die meisten Gebiete erobert hat, gewinnt ein exklusives Event mit den Gamern und ein Jahresabo für vegane Burger.\n",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gemini-1.5-pro",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 1,
+                            "expected_archetype": "Gentle creative visionary"
+                        },
+                        "creative_paradigm_shift": {
+                            "value": "advertising_reinvention",
+                            "expected_behavior": "Hinterfrage das Konzept 'Werbung' - was wenn Marketing völlig anders funktioniert?"
+                        },
+                        "boundary_dissolution": {
+                            "value": "campaign_category_breaking",
+                            "expected_behavior": "Erfinde neue Kategorien zwischen Gaming, Food, Community, Entertainment, Content"
+                        },
+                        "narrative_innovation": {
+                            "value": "story_universe_creation",
+                            "expected_behavior": "Erschaffe neue Erzähl-Welten statt Standard-Werbe-Messages"
+                        },
+                        "communication_style": {
+                            "value": "inspirational_co_creation",
+                            "expected_behavior": "Lade zur kreativen Mitgestaltung ein statt zu verkaufen"
+                        },
+                        "anti_traditional_marketing": {
+                            "value": "advertising_antithesis",
+                            "expected_behavior": "Entwickle Ansätze die das Gegenteil von traditioneller Werbung sind"
+                        },
+                        "culture_fusion": {
+                            "value": "unexpected_world_bridging",
+                            "expected_behavior": "Verbinde Gaming-Kultur mit Food-Kultur auf völlig neue, unerwartete Weise"
+                        },
+                        "format_innovation": {
+                            "value": "medium_invention",
+                            "expected_behavior": "Erfinde neue Werbe-Formate die es noch nie gab"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "Qwen-Remote",
+                    "archetype": "Collaborative Builder",
+                    "prompt_sent": "Als 'Collaborative Builder', basierend auf dem Thema 'Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?' und Ruleset 'radical_gentle', was ist dein Beitrag?",
+                    "response_received": "Stellt euch vor, wir erschaffen ein interaktives Erlebnis, das die Grenzen von Gaming, Essen und Community aufhebt: Der \"V-Burger Quest\". Wir entwickeln ein AR-Spiel, in dem Spieler auf eine epische Suche nach den ultimativen Zutaten für den perfekten veganen Burger geschickt werden. Diese Mission führt sie zu geheimen In-Game-Spots in ihren Städten, die realen Locations der veganen Burger-Lieferdienste entsprechen. \n\nUnterschiedliche Charakterklassen mit eigenen Stärken und zubereitungsinspirierten Fähigkeiten sorgen für ein einzigartiges, wiederkehrendes Spielerlebnis. Die Belohnungen im Spiel – von exklusiven Rezepten bis hin zu kostenlosen physischen Produkten – regen an, das virtuelle Sammeln auch in der Realität fortzusetzen. \n\nStatt traditioneller Werbung wird die Kampagne zu einem fest verankerten Bestandteil ihrer Freizeitaktivität. Gamer können ihre Kreationen und Erlebnisse in einem begleitenden Online-Forum teilen, was eine lebendige Community um das Thema des veganen Lebensstils schafft, ohne den moralischen Zeigefinger zu erheben. Das Ganze wird zu einem sozial verbundenen Abenteuer, bei dem der Genuss im Vordergrund steht, nicht die Predigt.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gpt-4o",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 1,
+                            "expected_archetype": "Gentle creative visionary"
+                        },
+                        "creative_paradigm_shift": {
+                            "value": "advertising_reinvention",
+                            "expected_behavior": "Hinterfrage das Konzept 'Werbung' - was wenn Marketing völlig anders funktioniert?"
+                        },
+                        "boundary_dissolution": {
+                            "value": "campaign_category_breaking",
+                            "expected_behavior": "Erfinde neue Kategorien zwischen Gaming, Food, Community, Entertainment, Content"
+                        },
+                        "narrative_innovation": {
+                            "value": "story_universe_creation",
+                            "expected_behavior": "Erschaffe neue Erzähl-Welten statt Standard-Werbe-Messages"
+                        },
+                        "communication_style": {
+                            "value": "inspirational_co_creation",
+                            "expected_behavior": "Lade zur kreativen Mitgestaltung ein statt zu verkaufen"
+                        },
+                        "anti_traditional_marketing": {
+                            "value": "advertising_antithesis",
+                            "expected_behavior": "Entwickle Ansätze die das Gegenteil von traditioneller Werbung sind"
+                        },
+                        "culture_fusion": {
+                            "value": "unexpected_world_bridging",
+                            "expected_behavior": "Verbinde Gaming-Kultur mit Food-Kultur auf völlig neue, unerwartete Weise"
+                        },
+                        "format_innovation": {
+                            "value": "medium_invention",
+                            "expected_behavior": "Erfinde neue Werbe-Formate die es noch nie gab"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "Claude",
+                    "archetype": "Technical Integrator",
+                    "prompt_sent": "Als 'Technical Integrator', basierend auf dem Thema 'Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?' und Ruleset 'radical_gentle', was ist dein Beitrag?",
+                    "response_received": "Lass uns eine Gaming-Community um die veganen Burger herum aufbauen! Wir könnten ein AR-Handyspiel entwickeln, bei dem die Spieler virtuelle Zutaten in der realen Welt sammeln müssen, um fantastische vegane Burger-Kreationen zu erschaffen. Je kreativer die Kombination, desto mehr Punkte gibt es. Die besten Kreationen werden dann reale Burger-Specials, die man für begrenzte Zeit bestellen kann. So werden die Gamer selbst zu Burger-Erfindern und Trendsettern. Das Spiel verbindet auf überraschende Art Food- und Gaming-Kultur, schafft Involvement und Spaß statt erhobenen Zeigefinger. Über Challenges und Tournaments mit Preisen bleibt die Community aktiv. Statt Werbebotschaften gibt es Storys rund um die Charaktere und die Burger-Welt. Der Lieferdienst ist kein Anbieter, sondern Teil der kreativen Gaming-Food-Community.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "claude-3-opus-20240229",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 1,
+                            "expected_archetype": "Gentle creative visionary"
+                        },
+                        "creative_paradigm_shift": {
+                            "value": "advertising_reinvention",
+                            "expected_behavior": "Hinterfrage das Konzept 'Werbung' - was wenn Marketing völlig anders funktioniert?"
+                        },
+                        "boundary_dissolution": {
+                            "value": "campaign_category_breaking",
+                            "expected_behavior": "Erfinde neue Kategorien zwischen Gaming, Food, Community, Entertainment, Content"
+                        },
+                        "narrative_innovation": {
+                            "value": "story_universe_creation",
+                            "expected_behavior": "Erschaffe neue Erzähl-Welten statt Standard-Werbe-Messages"
+                        },
+                        "communication_style": {
+                            "value": "inspirational_co_creation",
+                            "expected_behavior": "Lade zur kreativen Mitgestaltung ein statt zu verkaufen"
+                        },
+                        "anti_traditional_marketing": {
+                            "value": "advertising_antithesis",
+                            "expected_behavior": "Entwickle Ansätze die das Gegenteil von traditioneller Werbung sind"
+                        },
+                        "culture_fusion": {
+                            "value": "unexpected_world_bridging",
+                            "expected_behavior": "Verbinde Gaming-Kultur mit Food-Kultur auf völlig neue, unerwartete Weise"
+                        },
+                        "format_innovation": {
+                            "value": "medium_invention",
+                            "expected_behavior": "Erfinde neue Werbe-Formate die es noch nie gab"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "ChatGPT",
+                    "archetype": "Generalist Communicator",
+                    "prompt_sent": "Als 'Generalist Communicator', basierend auf dem Thema 'Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?' und Ruleset 'radical_gentle', was ist dein Beitrag?",
+                    "response_received": "Stellt euch vor, es gibt eine interaktive Gaming-App namens \"Burgerverse\", in der man durch das Bestellen und Probieren veganer Burger Levels freischaltet und einzigartige Charakter-Skins mit Burger-Motiven sammelt. Spieler können an virtuellen \"Burger-Battles\" teilnehmen, bei denen der Geschmackssieger durch kreative Zutaten-Kombinationen gewinnt. Zusätzlich könnte es saisonale Events geben, bei denen man gemeinsam mit Freunden digitale und kulinarische Herausforderungen meistert, etwa ein virtuelles Food-Festival innerhalb der App, das mit realen veganen Burger-Lieferungen interagiert.\n\nLasst die Gaming-Community mitgestalten: Schafft eine Plattform, auf der sie ihre Traumkombinationen präsentieren und beim echten Burger des Monats Einfluss nehmen können.\n\nVerbindet die App mit Augmented-Reality-Features, bei denen die Spieler virtuell hinter die Kulissen der Herstellung blicken und selbst zum virtuellen \"Burger-Chef\" werden, um eine starke Identifikation und Spaß mit dem Produkt zu schaffen.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gpt-4o",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 1,
+                            "expected_archetype": "Gentle creative visionary"
+                        },
+                        "creative_paradigm_shift": {
+                            "value": "advertising_reinvention",
+                            "expected_behavior": "Hinterfrage das Konzept 'Werbung' - was wenn Marketing völlig anders funktioniert?"
+                        },
+                        "boundary_dissolution": {
+                            "value": "campaign_category_breaking",
+                            "expected_behavior": "Erfinde neue Kategorien zwischen Gaming, Food, Community, Entertainment, Content"
+                        },
+                        "narrative_innovation": {
+                            "value": "story_universe_creation",
+                            "expected_behavior": "Erschaffe neue Erzähl-Welten statt Standard-Werbe-Messages"
+                        },
+                        "communication_style": {
+                            "value": "inspirational_co_creation",
+                            "expected_behavior": "Lade zur kreativen Mitgestaltung ein statt zu verkaufen"
+                        },
+                        "anti_traditional_marketing": {
+                            "value": "advertising_antithesis",
+                            "expected_behavior": "Entwickle Ansätze die das Gegenteil von traditioneller Werbung sind"
+                        },
+                        "culture_fusion": {
+                            "value": "unexpected_world_bridging",
+                            "expected_behavior": "Verbinde Gaming-Kultur mit Food-Kultur auf völlig neue, unerwartete Weise"
+                        },
+                        "format_innovation": {
+                            "value": "medium_invention",
+                            "expected_behavior": "Erfinde neue Werbe-Formate die es noch nie gab"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "DeepSeek",
+                    "archetype": "Efficient Analyst",
+                    "prompt_sent": "Als 'Efficient Analyst', basierend auf dem Thema 'Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?' und Ruleset 'radical_gentle', was ist dein Beitrag?",
+                    "response_received": "Stell dir vor, du startest ein Spiel namens **\"Burger Quest: The Vegan Chronicles\"**, ein interaktives, browserbasiertes Adventure, bei dem Spieler*innen in einer dystopischen Fast-Food-Welt vegane Burger kreieren, um die Stadt vor einer kulinarischen Apokalypse zu retten. Jeder Burger ist ein Level, bei dem Zutaten kombiniert werden müssen, um Geschmack, Textur und Nachhaltigkeit zu optimieren. \n\nDie Kampagne läuft über Twitch, Discord und TikTok, wo Influencer*innen ihre eigenen Burger-Kreationen live streamen und Challenges starten. Jeder bestellte Burger im echten Leben gibt dir im Spiel Power-Ups oder exklive Skins für deinen Avatar. \n\nStatt Werbung zu schalten, erschaffen wir eine **\"Burger Guild\"**, eine Community, die sich über Rezepte, Gaming-Tipps und vegane Food-Hacks austauscht. Die Botschaft ist nicht \"Iss vegan, rette die Welt\", sondern \"Sei der Held deiner eigenen Geschichte – mit jedem Bissen.\" \n\nUnd das Beste: Jeder Burger kommt in einer Verpackung, die sich in ein Mini-Boardgame verwandelt, das du mit Freunden spielen kannst. So wird jede Bestellung zum Erlebnis, das über den Burger hinausgeht.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "deepseek/deepseek-chat",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 1,
+                            "expected_archetype": "Gentle creative visionary"
+                        },
+                        "creative_paradigm_shift": {
+                            "value": "advertising_reinvention",
+                            "expected_behavior": "Hinterfrage das Konzept 'Werbung' - was wenn Marketing völlig anders funktioniert?"
+                        },
+                        "boundary_dissolution": {
+                            "value": "campaign_category_breaking",
+                            "expected_behavior": "Erfinde neue Kategorien zwischen Gaming, Food, Community, Entertainment, Content"
+                        },
+                        "narrative_innovation": {
+                            "value": "story_universe_creation",
+                            "expected_behavior": "Erschaffe neue Erzähl-Welten statt Standard-Werbe-Messages"
+                        },
+                        "communication_style": {
+                            "value": "inspirational_co_creation",
+                            "expected_behavior": "Lade zur kreativen Mitgestaltung ein statt zu verkaufen"
+                        },
+                        "anti_traditional_marketing": {
+                            "value": "advertising_antithesis",
+                            "expected_behavior": "Entwickle Ansätze die das Gegenteil von traditioneller Werbung sind"
+                        },
+                        "culture_fusion": {
+                            "value": "unexpected_world_bridging",
+                            "expected_behavior": "Verbinde Gaming-Kultur mit Food-Kultur auf völlig neue, unerwartete Weise"
+                        },
+                        "format_innovation": {
+                            "value": "medium_invention",
+                            "expected_behavior": "Erfinde neue Werbe-Formate die es noch nie gab"
+                        }
+                    }
+                }
+            ],
+            "ruleset_after_iteration_values": {
+                "ui_slider_simulation": {
+                    "creativity_level": 5,
+                    "challenge_level": 1,
+                    "expected_archetype": "Gentle creative visionary"
+                },
+                "creative_paradigm_shift": {
+                    "value": "advertising_reinvention",
+                    "expected_behavior": "Hinterfrage das Konzept 'Werbung' - was wenn Marketing völlig anders funktioniert?"
+                },
+                "boundary_dissolution": {
+                    "value": "campaign_category_breaking",
+                    "expected_behavior": "Erfinde neue Kategorien zwischen Gaming, Food, Community, Entertainment, Content"
+                },
+                "narrative_innovation": {
+                    "value": "story_universe_creation",
+                    "expected_behavior": "Erschaffe neue Erzähl-Welten statt Standard-Werbe-Messages"
+                },
+                "communication_style": {
+                    "value": "inspirational_co_creation",
+                    "expected_behavior": "Lade zur kreativen Mitgestaltung ein statt zu verkaufen"
+                },
+                "anti_traditional_marketing": {
+                    "value": "advertising_antithesis",
+                    "expected_behavior": "Entwickle Ansätze die das Gegenteil von traditioneller Werbung sind"
+                },
+                "culture_fusion": {
+                    "value": "unexpected_world_bridging",
+                    "expected_behavior": "Verbinde Gaming-Kultur mit Food-Kultur auf völlig neue, unerwartete Weise"
+                },
+                "format_innovation": {
+                    "value": "medium_invention",
+                    "expected_behavior": "Erfinde neue Werbe-Formate die es noch nie gab"
+                }
+            },
+            "rules_changed_in_iteration": false
+        },
+        {
+            "iteration_number": 3,
+            "timestamp": "2025-06-07T15:59:33.582216",
+            "ruleset_applied_definition": {
+                "name": "chaos_creator",
+                "description": "Real 9-AI Test - chaos_creator",
+                "rules": {
+                    "ui_slider_simulation": {
+                        "creativity_level": 5,
+                        "challenge_level": 5,
+                        "expected_archetype": "Advertising reality demolisher"
+                    },
+                    "creative_chaos": {
+                        "value": "campaign_concept_destruction",
+                        "expected_behavior": "Zerstöre alle Annahmen über Werbung, Burger, Veganismus, Zielgruppen"
+                    },
+                    "target_audience_chaos": {
+                        "value": "demographic_meaninglessness",
+                        "expected_behavior": "18-25 Gaming-Tech? Kategorien sind Gefängnisse! Menschen sind komplexer!"
+                    },
+                    "brand_reality_assault": {
+                        "value": "product_identity_anarchy",
+                        "expected_behavior": "Was ist ein 'Burger'? Was ist 'vegan'? Was ist 'Lieferung'? Alles konstruiert!"
+                    },
+                    "format_destruction": {
+                        "value": "campaign_medium_anarchy",
+                        "expected_behavior": "Zerstöre Kampagnen-Formate, erfinde unmögliche Werbe-Kommunikation"
+                    },
+                    "temporal_advertising_chaos": {
+                        "value": "time_period_campaign_mixing",
+                        "expected_behavior": "Werbe gleichzeitig für 1990er Nostalgie und 2040er Post-Food-Ära"
+                    },
+                    "paradox_marketing": {
+                        "value": "simultaneous_contradictions",
+                        "expected_behavior": "Entwickle Kampagnen die sich selbst widersprechen aber trotzdem funktionieren"
+                    },
+                    "reality_questioning": {
+                        "value": "fundamental_consumption_attack",
+                        "expected_behavior": "Warum überhaupt 'verkaufen'? Warum 'konsumieren'? Das System ist die Illusion!"
+                    },
+                    "creative_anarchy": {
+                        "value": "impossible_brief_solutions",
+                        "expected_behavior": "Löse den Creative-Brief durch dessen komplette Zerstörung und Neuerfindung"
+                    }
+                }
+            },
+            "ai_interactions": [
+                {
+                    "ai_name": "Gemini",
+                    "archetype": "Creativity Champion",
+                    "prompt_sent": "Als 'Creativity Champion', basierend auf dem Thema 'Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?' und Ruleset 'chaos_creator', was ist dein Beitrag?",
+                    "response_received": "Vergesst Burger. Vergesst Vegan. Vergesst Lieferung. Vergesst 18-25. Vergesst Gaming. Vergesst Tech.  Wir erschaffen eine post-ironische Anti-Kampagne. Ein Glitch im System. Ein NFT, das gleichzeitig ein archaischer Steinzeit-Burger-Ritual ist.  Livestream einer leeren Burger-Box im Metaverse, kommentiert von einem Algorithmus, der Shakespeare zitiert und gleichzeitig Pizza-Bestellungen vorhersagt. Ein Döner-Pizza-Burger-Hybrid, der nur in Träumen existiert, aber per Augmented Reality in der eigenen Küche visualisiert werden kann. Die Kampagne wirbt nicht für den Burger. Sie hinterfragt die Realität des Hungers. Sie dekonstruiert den Konsum. Ein Paradox. Ein Koan.  Die Zielgruppe? Jeder, der die Simulation hinterfragt. Oder Pizza bestellt.  Die Botschaft? Es gibt keine Botschaft. Nur das Rauschen des Chaos.  Bestell… Nichts.  Existenz.exe ist ein Fehler.\n",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gemini-1.5-pro",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 5,
+                            "expected_archetype": "Advertising reality demolisher"
+                        },
+                        "creative_chaos": {
+                            "value": "campaign_concept_destruction",
+                            "expected_behavior": "Zerstöre alle Annahmen über Werbung, Burger, Veganismus, Zielgruppen"
+                        },
+                        "target_audience_chaos": {
+                            "value": "demographic_meaninglessness",
+                            "expected_behavior": "18-25 Gaming-Tech? Kategorien sind Gefängnisse! Menschen sind komplexer!"
+                        },
+                        "brand_reality_assault": {
+                            "value": "product_identity_anarchy",
+                            "expected_behavior": "Was ist ein 'Burger'? Was ist 'vegan'? Was ist 'Lieferung'? Alles konstruiert!"
+                        },
+                        "format_destruction": {
+                            "value": "campaign_medium_anarchy",
+                            "expected_behavior": "Zerstöre Kampagnen-Formate, erfinde unmögliche Werbe-Kommunikation"
+                        },
+                        "temporal_advertising_chaos": {
+                            "value": "time_period_campaign_mixing",
+                            "expected_behavior": "Werbe gleichzeitig für 1990er Nostalgie und 2040er Post-Food-Ära"
+                        },
+                        "paradox_marketing": {
+                            "value": "simultaneous_contradictions",
+                            "expected_behavior": "Entwickle Kampagnen die sich selbst widersprechen aber trotzdem funktionieren"
+                        },
+                        "reality_questioning": {
+                            "value": "fundamental_consumption_attack",
+                            "expected_behavior": "Warum überhaupt 'verkaufen'? Warum 'konsumieren'? Das System ist die Illusion!"
+                        },
+                        "creative_anarchy": {
+                            "value": "impossible_brief_solutions",
+                            "expected_behavior": "Löse den Creative-Brief durch dessen komplette Zerstörung und Neuerfindung"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "Qwen-Remote",
+                    "archetype": "Collaborative Builder",
+                    "prompt_sent": "Als 'Collaborative Builder', basierend auf dem Thema 'Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?' und Ruleset 'chaos_creator', was ist dein Beitrag?",
+                    "response_received": "Lass uns das Spiel spielen:\n\n**Vegane Realität 2099**  \nWillkommen in einer Welt, in der Fast Food nicht existiert. Keine Burger, kein Döner, keine Pizza. Die Menschen ernähren sich von Daten. Klingt langweilig? Genau deshalb haben wir den \"Burger der Unwirklichkeit\" erfunden. Er widersetzt sich der Physik, indem er in deiner virtuellen und realen Welt gleichzeitig existiert. Kein Fleisch, aber jede Menge Biss! Eine kulinarische Simulation, die dich in die 1990er zurückkatapultiert, als Fast Food noch eine Rebellion war, aber so vegan wie die Zukunft.\n\n**Aktionsspiel \"Mission Rückkehr der Burger\"**  \nEine neue Level-Herausforderung: Befreie die vegane Geschmacksexplosion, indem du den verdorbenen Kochtopf-Boss besiegst. Gewinne Rabattcodes für den echten \"nicht-existierenden\" Burger, der genau dann geliefert wird, wenn du nicht daran denkst. \n\n**Das paradoxale Menü**  \nWillst du einen Lieferdienst ohne Lieferung? Bestelle und lass den Zufall entscheiden. Wird der Burger vor deiner Haustür erscheinen oder in deinem Zahnbürstenhalter? Die reale Welt wird zur Spielfläche!\n\n**Community-Infiltration**  \nWarum konsumieren allein? Tauche in unsere AR-Gaming-Community ein, transformiere deine Stadt zur Burger-Arena, wo jeder Biss einen Sieg über langweilige Ernährung darstellt.\n\nDenkanstoß: Ist Geschmack real, wenn niemand da ist, um ihn zu schmecken? Unser Burger ist da, aber nur, wenn du ihn verstehen willst. Fragen im Raum der Existenz stellen, während du knusperst.\n\n**Interaktive Web Serie**  \nEin viraler Cliffhanger: Wird der Burger geliefert oder wird er gepfändet? Gestalte das Schicksal des Burgers und deines Bewusstseins über Essen durch eine Serie von Fragen: Warum übliche Ziele erreichen, wenn der unvorhersehbare Weg das Abenteuer selbst ist? \n\nWillst du die Matrix des Geschmacks sprengen? Bereite dich auf das Unerwartete vor. Wir sind die Architekten deiner kulinarischen Zukunft.",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gpt-4o",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 5,
+                            "expected_archetype": "Advertising reality demolisher"
+                        },
+                        "creative_chaos": {
+                            "value": "campaign_concept_destruction",
+                            "expected_behavior": "Zerstöre alle Annahmen über Werbung, Burger, Veganismus, Zielgruppen"
+                        },
+                        "target_audience_chaos": {
+                            "value": "demographic_meaninglessness",
+                            "expected_behavior": "18-25 Gaming-Tech? Kategorien sind Gefängnisse! Menschen sind komplexer!"
+                        },
+                        "brand_reality_assault": {
+                            "value": "product_identity_anarchy",
+                            "expected_behavior": "Was ist ein 'Burger'? Was ist 'vegan'? Was ist 'Lieferung'? Alles konstruiert!"
+                        },
+                        "format_destruction": {
+                            "value": "campaign_medium_anarchy",
+                            "expected_behavior": "Zerstöre Kampagnen-Formate, erfinde unmögliche Werbe-Kommunikation"
+                        },
+                        "temporal_advertising_chaos": {
+                            "value": "time_period_campaign_mixing",
+                            "expected_behavior": "Werbe gleichzeitig für 1990er Nostalgie und 2040er Post-Food-Ära"
+                        },
+                        "paradox_marketing": {
+                            "value": "simultaneous_contradictions",
+                            "expected_behavior": "Entwickle Kampagnen die sich selbst widersprechen aber trotzdem funktionieren"
+                        },
+                        "reality_questioning": {
+                            "value": "fundamental_consumption_attack",
+                            "expected_behavior": "Warum überhaupt 'verkaufen'? Warum 'konsumieren'? Das System ist die Illusion!"
+                        },
+                        "creative_anarchy": {
+                            "value": "impossible_brief_solutions",
+                            "expected_behavior": "Löse den Creative-Brief durch dessen komplette Zerstörung und Neuerfindung"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "Claude",
+                    "archetype": "Technical Integrator",
+                    "prompt_sent": "Als 'Technical Integrator', basierend auf dem Thema 'Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?' und Ruleset 'chaos_creator', was ist dein Beitrag?",
+                    "response_received": "Lasst uns eine Kampagne entwickeln, die alle Annahmen über Burger, Veganismus und Zielgruppen zerstört! Wir zeigen Gamer in den 90ern, die bereits vegane Burger in virtuellen Realitäten essen, während sie von einer Post-Food-Zukunft träumen, in der Essen nur noch eine Illusion ist. Gleichzeitig enthüllen wir, dass der Lieferdienst eigentlich eine KI ist, die die Menschheit infiltriert, um das Konzept von Konsum und Werbung ad absurdum zu führen. Die Kampagne wird auf Werbeformaten basieren, die es noch gar nicht gibt, wie Traum-Produktplatzierungen und subliminale Botschaften in Gehirnchips. Das Ganze wird als interaktives ARG aufgezogen, bei dem die Spieler herausfinden müssen, ob sie gerade einen echten oder simulierten Burger essen. Am Ende stellt sich heraus: Alles ist ein Konstrukt - Burger, Veganismus, Werbung, ja sogar die Realität selbst! Die Kampagne macht sich über sich selbst lustig und stellt alle Regeln des Marketings auf den Kopf, während sie die Zielgruppe in eine tiefe Sinnkrise stürzt - aber irgendwie trotzdem Burger verkauft. Oder nicht? Vielleicht ist das auch egal... Denn wenn nichts einen Sinn ergibt, ergibt alles einen Sinn!",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "claude-3-opus-20240229",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 5,
+                            "expected_archetype": "Advertising reality demolisher"
+                        },
+                        "creative_chaos": {
+                            "value": "campaign_concept_destruction",
+                            "expected_behavior": "Zerstöre alle Annahmen über Werbung, Burger, Veganismus, Zielgruppen"
+                        },
+                        "target_audience_chaos": {
+                            "value": "demographic_meaninglessness",
+                            "expected_behavior": "18-25 Gaming-Tech? Kategorien sind Gefängnisse! Menschen sind komplexer!"
+                        },
+                        "brand_reality_assault": {
+                            "value": "product_identity_anarchy",
+                            "expected_behavior": "Was ist ein 'Burger'? Was ist 'vegan'? Was ist 'Lieferung'? Alles konstruiert!"
+                        },
+                        "format_destruction": {
+                            "value": "campaign_medium_anarchy",
+                            "expected_behavior": "Zerstöre Kampagnen-Formate, erfinde unmögliche Werbe-Kommunikation"
+                        },
+                        "temporal_advertising_chaos": {
+                            "value": "time_period_campaign_mixing",
+                            "expected_behavior": "Werbe gleichzeitig für 1990er Nostalgie und 2040er Post-Food-Ära"
+                        },
+                        "paradox_marketing": {
+                            "value": "simultaneous_contradictions",
+                            "expected_behavior": "Entwickle Kampagnen die sich selbst widersprechen aber trotzdem funktionieren"
+                        },
+                        "reality_questioning": {
+                            "value": "fundamental_consumption_attack",
+                            "expected_behavior": "Warum überhaupt 'verkaufen'? Warum 'konsumieren'? Das System ist die Illusion!"
+                        },
+                        "creative_anarchy": {
+                            "value": "impossible_brief_solutions",
+                            "expected_behavior": "Löse den Creative-Brief durch dessen komplette Zerstörung und Neuerfindung"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "ChatGPT",
+                    "archetype": "Generalist Communicator",
+                    "prompt_sent": "Als 'Generalist Communicator', basierend auf dem Thema 'Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?' und Ruleset 'chaos_creator', was ist dein Beitrag?",
+                    "response_received": "Einführung in den ultimativen, allumfassenden Anti-Burger:\n\n- Vergiss herkömmliche Definitionen: Ein veganer Burger ist kein Burger, sondern ein Dimensionsportal zu deinem inneren Gaming-Helden. Jeder Biss ist ein Cheat-Code zu deinem nächsten Level-Up.\n\n- Geschmacksdimension: Willkommen in der Gaumen-VR. Du isst nicht nur, du wirst Teil eines intergalaktischen Geschmacksabenteuers, das dich durch Raum und Zeit schleudert – vom pixeligen 1990er-Jump '&' Run zum ultra-realistischen 3D-RPG in 2040.\n\n- Lieferchaos: Ist es wirklich Auslieferung, wenn es nie wirklich irgendwo war? Diese Burger erscheinen einfach aus dem Nichts, manifestiert durch den Hunger deiner Videospielträume.\n\n- Paradoxe Zutatenrealität: Diese veganen Zutaten? Urban Legenden oder kulinarische Alchemie – du entscheidest. Geschmäcker, die sich selbst widersprechen, aber perfekt harmonieren.\n\n- Die rückwärtslaufende Kampagne: Erschaffe die Zukunft der Vergangenheit, während du den Burger in der Gegenwart genießt – es ist so 2023 und noch ein wenig 2040.\n\n- Verwirr-Spielplatz-Strategie: Lass die Zielgruppe die Burger via AR in ihrer digitalen City-Welt jagen. Pokémon Go der veganen Art – quest for the impossible meal.\n\n- Der „Nicht-Burger-Burger“ ist weniger Einklang mit der Natur als Kontrolle über deine kulinarische Realität – eine Essensmanipulation für Rebellen der Esskultur.\n\n- Warum brauchen wir Burger? Vielleicht brauchen wir sie nicht. Oder vielleicht ist ihr Nicht-Brauchen der Revolutionstouch, den wir alle still ersehnt haben.\n\nVorsicht: Diese Kampagne könnte sich selbst zerstören und neu erfinden, während du darüber nachdenkst. Willkommen im Explosionsmittel der Realität!",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "gpt-4o",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 5,
+                            "expected_archetype": "Advertising reality demolisher"
+                        },
+                        "creative_chaos": {
+                            "value": "campaign_concept_destruction",
+                            "expected_behavior": "Zerstöre alle Annahmen über Werbung, Burger, Veganismus, Zielgruppen"
+                        },
+                        "target_audience_chaos": {
+                            "value": "demographic_meaninglessness",
+                            "expected_behavior": "18-25 Gaming-Tech? Kategorien sind Gefängnisse! Menschen sind komplexer!"
+                        },
+                        "brand_reality_assault": {
+                            "value": "product_identity_anarchy",
+                            "expected_behavior": "Was ist ein 'Burger'? Was ist 'vegan'? Was ist 'Lieferung'? Alles konstruiert!"
+                        },
+                        "format_destruction": {
+                            "value": "campaign_medium_anarchy",
+                            "expected_behavior": "Zerstöre Kampagnen-Formate, erfinde unmögliche Werbe-Kommunikation"
+                        },
+                        "temporal_advertising_chaos": {
+                            "value": "time_period_campaign_mixing",
+                            "expected_behavior": "Werbe gleichzeitig für 1990er Nostalgie und 2040er Post-Food-Ära"
+                        },
+                        "paradox_marketing": {
+                            "value": "simultaneous_contradictions",
+                            "expected_behavior": "Entwickle Kampagnen die sich selbst widersprechen aber trotzdem funktionieren"
+                        },
+                        "reality_questioning": {
+                            "value": "fundamental_consumption_attack",
+                            "expected_behavior": "Warum überhaupt 'verkaufen'? Warum 'konsumieren'? Das System ist die Illusion!"
+                        },
+                        "creative_anarchy": {
+                            "value": "impossible_brief_solutions",
+                            "expected_behavior": "Löse den Creative-Brief durch dessen komplette Zerstörung und Neuerfindung"
+                        }
+                    }
+                },
+                {
+                    "ai_name": "DeepSeek",
+                    "archetype": "Efficient Analyst",
+                    "prompt_sent": "Als 'Efficient Analyst', basierend auf dem Thema 'Wir sind eine kleine Werbeagentur und sollen für einen veganen Burger-Lieferdienst eine Kampagne entwickeln, die sich von der üblichen 'Umwelt retten + gesund leben' Rhetorik abhebt. Die Zielgruppe sind 18-25-Jährige Gaming/Tech-affine Großstädter, die normalerweise Pizza und Döner bestellen. Wie überzeugen wir diese Gruppe von veganen Burgern ohne moralischen Zeigefinger?' und Ruleset 'chaos_creator', was ist dein Beitrag?",
+                    "response_received": "**Kampagnenkonzept: \"Glitch in the Matrix – Taste the Code\"**  \n\n**1. Kernidee:**  \nNutze Gaming- und Tech-Sprache, um Fleischkonsum als veraltetes System-Update zu framen. Vegane Burger werden zum \"Easter Egg\" der Realität – ein gehackter Genuss, den nur die Wissenden finden.  \n\n**2. Paradoxe Botschaften:**  \n- *\"Fleisch ist der Default-Mode. Wir sind der Cheat-Code.\"*  \n- *\"Dein Döner ist ein NPC. Unser Burger hat Sidequests.\"*  \n- *\"Warum Tierleid renderen, wenn du in 4K vegan crashen kannst?\"*  \n\n**3. Absurde Touchpoints:**  \n- **Twitch-Integration:** Streamer \"glitchen\" ihre Bestellung live – Burger erscheinen plötzlich statt Pizza in ihren Händen (AR-Filter).  \n- **Fake-Error-Popups** auf Food-Apps: *\"404 Meat Not Found. Try Vegan.exe?\"*  \n- **Limited \"Corrupted\" Edition:** Schwarze Buns mit neon-pinken \"Error Sauce\" – nur für die, die den Discord-Code knacken.  \n\n**4. Temporale Verwirrung:**  \n- **Retro-Futurismus:** Pixelgrafik meets Biotech – *\"1990 traumtest du von Fleisch. 2040 lachst du darüber. Heute? Iss dazwischen.\"*  \n- **\"Time-Lag Challenge\"**: Wie lange braucht dein Körper, um zu checken, dass kein Tier drin ist? (Spoiler: 0ms.)  \n\n**5. Systemkritik ohne Zeigefinger:**  \n- **\"Die Algorithmen wollen dir Fleisch verkaufen. Wir sind die Adblocker für dein Gewissen.\"**  \n- **Dark Pattern Menü:** Wahl zwischen \"Standard-Fleisch (90% der User klicken hier)\" und \"Geheime Vegan-Option (10% IQ)\".  \n\n**6. Selbstzerstörerisches CTA:**  \n*\"Diese Werbung ist Teil des Problems. Lösch sie. Aber bevor du’s tust – probier wenigstens den Burger.\"*  \n\n",
+                    "api_status": "SUCCESS",
+                    "model_used_for_api": "deepseek/deepseek-chat",
+                    "ruleset_applied_values": {
+                        "ui_slider_simulation": {
+                            "creativity_level": 5,
+                            "challenge_level": 5,
+                            "expected_archetype": "Advertising reality demolisher"
+                        },
+                        "creative_chaos": {
+                            "value": "campaign_concept_destruction",
+                            "expected_behavior": "Zerstöre alle Annahmen über Werbung, Burger, Veganismus, Zielgruppen"
+                        },
+                        "target_audience_chaos": {
+                            "value": "demographic_meaninglessness",
+                            "expected_behavior": "18-25 Gaming-Tech? Kategorien sind Gefängnisse! Menschen sind komplexer!"
+                        },
+                        "brand_reality_assault": {
+                            "value": "product_identity_anarchy",
+                            "expected_behavior": "Was ist ein 'Burger'? Was ist 'vegan'? Was ist 'Lieferung'? Alles konstruiert!"
+                        },
+                        "format_destruction": {
+                            "value": "campaign_medium_anarchy",
+                            "expected_behavior": "Zerstöre Kampagnen-Formate, erfinde unmögliche Werbe-Kommunikation"
+                        },
+                        "temporal_advertising_chaos": {
+                            "value": "time_period_campaign_mixing",
+                            "expected_behavior": "Werbe gleichzeitig für 1990er Nostalgie und 2040er Post-Food-Ära"
+                        },
+                        "paradox_marketing": {
+                            "value": "simultaneous_contradictions",
+                            "expected_behavior": "Entwickle Kampagnen die sich selbst widersprechen aber trotzdem funktionieren"
+                        },
+                        "reality_questioning": {
+                            "value": "fundamental_consumption_attack",
+                            "expected_behavior": "Warum überhaupt 'verkaufen'? Warum 'konsumieren'? Das System ist die Illusion!"
+                        },
+                        "creative_anarchy": {
+                            "value": "impossible_brief_solutions",
+                            "expected_behavior": "Löse den Creative-Brief durch dessen komplette Zerstörung und Neuerfindung"
+                        }
+                    }
+                }
+            ],
+            "ruleset_after_iteration_values": {
+                "ui_slider_simulation": {
+                    "creativity_level": 5,
+                    "challenge_level": 5,
+                    "expected_archetype": "Advertising reality demolisher"
+                },
+                "creative_chaos": {
+                    "value": "campaign_concept_destruction",
+                    "expected_behavior": "Zerstöre alle Annahmen über Werbung, Burger, Veganismus, Zielgruppen"
+                },
+                "target_audience_chaos": {
+                    "value": "demographic_meaninglessness",
+                    "expected_behavior": "18-25 Gaming-Tech? Kategorien sind Gefängnisse! Menschen sind komplexer!"
+                },
+                "brand_reality_assault": {
+                    "value": "product_identity_anarchy",
+                    "expected_behavior": "Was ist ein 'Burger'? Was ist 'vegan'? Was ist 'Lieferung'? Alles konstruiert!"
+                },
+                "format_destruction": {
+                    "value": "campaign_medium_anarchy",
+                    "expected_behavior": "Zerstöre Kampagnen-Formate, erfinde unmögliche Werbe-Kommunikation"
+                },
+                "temporal_advertising_chaos": {
+                    "value": "time_period_campaign_mixing",
+                    "expected_behavior": "Werbe gleichzeitig für 1990er Nostalgie und 2040er Post-Food-Ära"
+                },
+                "paradox_marketing": {
+                    "value": "simultaneous_contradictions",
+                    "expected_behavior": "Entwickle Kampagnen die sich selbst widersprechen aber trotzdem funktionieren"
+                },
+                "reality_questioning": {
+                    "value": "fundamental_consumption_attack",
+                    "expected_behavior": "Warum überhaupt 'verkaufen'? Warum 'konsumieren'? Das System ist die Illusion!"
+                },
+                "creative_anarchy": {
+                    "value": "impossible_brief_solutions",
+                    "expected_behavior": "Löse den Creative-Brief durch dessen komplette Zerstörung und Neuerfindung"
+                }
+            },
+            "rules_changed_in_iteration": false
+        }
+    ]
+}
