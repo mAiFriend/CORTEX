@@ -5,6 +5,7 @@ venv/
 __pycache__/
 *.pyc
 .DS_Store
+_bkp/
 
 # Critical Additions
 *.key

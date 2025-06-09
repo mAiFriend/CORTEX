@@ -1,0 +1,64 @@
+# CORTEX Flow Configuration Example
+# Speichere diese Datei als config.yaml
+
+experiment:
+  name: "AI Collaboration Test - Meta-Analysis"
+  type: "ai_dialogue"
+  
+ai_team:
+  - claude      # Anthropic
+  - chatgpt     # OpenAI
+  - gemini      # Google
+  - qwen        # Via OpenRouter
+  - deepseek    # DeepSeek
+
+topic: "Wie können KI-Systeme effektiv zusammenarbeiten und voneinander lernen?"
+
+# Rulesets für verschiedene Iterationen
+ruleset_sequence:
+  - creative_exploration
+  - deep_analysis
+  - synthesis
+
+rulesets:
+  creative_exploration:
+    constraint_removal: "ignore_format_conventions"
+    vulnerability_mandate: "share_uncertainties_freely"
+    creativity_amplification: "think_beyond_boundaries"
+    
+  deep_analysis:
+    perspective_shift: "critical_examination"
+    meta_communication: true
+    format_preference: "structured_insights"
+    
+  synthesis:
+    collaboration_style: "build_on_others"
+    format_preference: "unified_vision"
+    meta_communication: true
+
+# Context Management
+context_management:
+  truncation:
+    method: "smart_sentence_aware"  # oder: paragraph_aware, hard_cut
+    limit_chars: 1200
+  front_loading:
+    enabled: true
+    enforcement_level: "suggested"  # oder: mandatory, disabled
+  total_limit_chars: 6000
+
+# Execution Settings
+execution:
+  timeout_seconds: 120
+  min_ais_required: 2
+  graceful_mode: true  # Continue even if some AIs fail
+
+# Meta-Analysis Settings (NEU!)
+meta_analysis:
+  enabled: true
+  word_limit: 200
+  final_synthesis: true
+
+# Output Settings
+output:
+  format: "markdown"  # oder: json, yaml
+  save_conversation_log: true

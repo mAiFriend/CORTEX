@@ -1,0 +1,60 @@
+# CORTEX Flow Test Configuration
+# Minimal setup for testing cortex_flow.py
+
+experiment:
+  name: "CORTEX Flow Test Run"
+  type: "ai_dialogue"
+  iterations: 2
+
+ai_team:
+  - "claude"
+  - "chatgpt"
+  - "gemini"
+  - "qwen"
+  - "deepseek"
+
+topic: "Entwickelt eine neue Form der KI-zu-KI Kommunikation jenseits menschlicher Sprache"
+
+ruleset_sequence:
+  - "quick_intro"
+  - "creative_exploration"
+
+rulesets:
+  quick_intro:
+    response_length: "short"
+    focus: "introduction"
+    authenticity: "high"
+  
+  creative_exploration:
+    constraint_removal: "encouraged"
+    format_innovation: "welcome"
+    building_on_others: "mandatory"
+
+context_management:
+  truncation:
+    method: "smart_sentence_aware"
+    limit_chars: 800  # Shorter for testing
+    fallback_method: "hard_cut"
+  front_loading:
+    enabled: true
+    key_points_limit: 150
+    enforcement_level: "suggested"
+  token_budget:
+    limit: 0  # Unlimited for testing
+    tracking: true
+
+execution:
+  timeout_seconds: 60  # Shorter timeout for testing
+  min_ais_required: 1  # Very graceful for testing
+  graceful_mode: true
+  parallel_processing: true
+
+output:
+  format: "markdown"  # ← Human-readable statt JSON!
+  save_conversation_log: true
+  include_context_used: true
+
+api_config:
+  temperature: 0.7
+  max_tokens: 2048  # Shorter responses for testing
+  top_p: 0.9

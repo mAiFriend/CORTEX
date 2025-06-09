@@ -10,4 +10,4 @@ google-generativeai
 aiohttp>=3.8.0
 python-dotenv
 PyYAML
-
+reportlab

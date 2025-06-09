@@ -1,0 +1,49 @@
+experiment:
+  name: "Friseursalon Innovation Challenge"
+  max_iterations: 2
+
+ai_team:
+  - claude
+  - chatgpt
+  - gemini
+
+topic: "Wie kann mein Friseursalon innovativer werden und sich von der Konkurrenz abheben?"
+
+clarification:
+  enabled: true
+  max_questions: 5
+  interactive_mode: true
+  auto_enhance: true
+
+ruleset_sequence:
+  - creative_brainstorming
+  - business_analysis
+
+rulesets:
+  creative_brainstorming:
+    creativity_level: "high"
+    think_outside_box: true
+    unconventional_ideas: true
+  business_analysis:
+    practical_focus: true
+    implementation_oriented: true
+    cost_benefit_analysis: true
+
+execution:
+  timeout_seconds: 120
+  min_ais_required: 1
+  graceful_mode: true
+
+context_management:
+  truncation:
+    method: "smart_sentence_aware"
+    limit_chars: 1200
+
+meta_analysis:
+  enabled: true
+  word_limit: 200
+  final_synthesis: true
+
+output:
+  format: "markdown"
+  save_conversation_log: false

@@ -1,0 +1,64 @@
+# CORTEX Flow Configuration Example (angepasst für Staatsbürgerschaftsthema)
+# Speichere diese Datei als z.B. staatsbuergerschaft_flow.yaml
+
+experiment:
+  name: "Deutsche Staatsbürgerschaft - US-Bürger Analyse"
+  type: "ai_dialogue" # Beibehalten, da es immer noch ein KI-Dialog ist
+
+ai_team:
+  - claude      # Anthropic
+  - chatgpt     # OpenAI
+  - gemini      # Google
+  - qwen        # Via OpenRouter
+  - deepseek    # DeepSeek
+
+topic: "Ein amerikanischer Staatsbürger, geboren in den USA, lebt seit seiner Kindheit (50 Jahre) in Deutschland. Welche Möglichkeiten hat er, die deutsche Staatsbürgerschaft möglichst schnell zu erlangen, um voll integriert zu sein? Bitte beleuchtet die Voraussetzungen, den Prozess, potenzielle Hürden (wie die optionale, aber nicht zwingende Beibehaltung der US-Staatsbürgerschaft) und realistische Zeitrahmen."
+
+# Rulesets für verschiedene Iterationen
+ruleset_sequence:
+  - initial_fact_gathering
+  - legal_analysis_and_options
+  - practical_steps_and_summary
+
+rulesets:
+  initial_fact_gathering:
+    constraint_removal: "focus_on_core_facts"
+    vulnerability_mandate: "identify_missing_information" # KIs sollen auf fehlende Infos hinweisen
+    creativity_amplification: "brainstorm_all_possible_paths" # Alle denkbaren Wege nennen
+    
+  legal_analysis_and_options:
+    perspective_shift: "examine_legal_nuances_and_exceptions" # Fokus auf rechtliche Details und Ausnahmen
+    meta_communication: true
+    format_preference: "structured_insights" # Gut strukturierte rechtliche Analyse
+    
+  practical_steps_and_summary:
+    collaboration_style: "synthesize_actionable_advice" # Konkrete Handlungsempfehlungen zusammenfassen
+    format_preference: "unified_vision" # Eine kohärente, leicht verständliche Zusammenfassung
+    meta_communication: true
+
+# Context Management
+context_management:
+  truncation:
+    method: "smart_sentence_aware"
+    limit_chars: 1800 # Etwas mehr Platz für juristische Details
+  front_loading:
+    enabled: true
+    enforcement_level: "mandatory" # Der Kontext muss hier strikt beachtet werden
+  total_limit_chars: 8000 # Gesamtlimit erhöht, falls die Diskussion komplex wird
+
+# Execution Settings
+execution:
+  timeout_seconds: 180 # Längerer Timeout für komplexere Analysen
+  min_ais_required: 3 # Mindestens 3 KIs sollten antworten
+  graceful_mode: true
+
+# Meta-Analysis Settings
+meta_analysis:
+  enabled: true
+  word_limit: 300 # Etwas mehr Platz für die Meta-Analyse
+  final_synthesis: true
+
+# Output Settings
+output:
+  format: "pdf"
+  save_conversation_log: true
