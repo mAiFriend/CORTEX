@@ -464,3 +464,18 @@ decision_support.yaml          # Multi-criteria decision analysis
 ---
 
 **Ready for enterprise deployment, research collaboration, and scaling validation.**
+
+---
+
+## 📄 **License**
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### **MIT License Summary:**
+- ✅ **Commercial Use** - Use in commercial applications
+- ✅ **Modification** - Modify and distribute modified versions
+- ✅ **Distribution** - Distribute original or modified versions
+- ✅ **Private Use** - Use privately without restrictions
+- ⚠️ **Attribution Required** - Include original license and copyright notice
+
+**Free for everyone to use, modify, and contribute to the advancement of AI collaboration research.**
