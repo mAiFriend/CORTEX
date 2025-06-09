@@ -402,20 +402,55 @@ Sei präzise und strukturiert."""
                 for ma in self.session_data['meta_analyses']
             ])
             
-            synthesis_prompt = f"""ORIGINAL QUESTION: {topic}
 
+# Ursprüngliches prompt, zu analytisch, nicht Userbezogen genug:
+#            synthesis_prompt = f"""ORIGINAL QUESTION: {topic}
+#META-ANALYSES FROM ALL ITERATIONS:
+#{meta_analyses_text}
+#Erstelle eine umfassende Final-Synthese:
+#1. MAIN FINDINGS: Was sind die Hauptantworten auf die ursprüngliche Frage?
+#2. CONVERGENT THEMES: Welche Themen zogen sich durch alle Iterationen?
+#3. EVOLUTIONARY INSIGHTS: Wie entwickelten sich die Ideen über die Iterationen?
+#4. PRACTICAL IMPLICATIONS: Was bedeutet das konkret für die Anwendung?
+#5. UNEXPECTED DISCOVERIES: Welche überraschenden Erkenntnisse entstanden?
+#Dies ist das HAUPTPRODUKT für den User - sei gründlich aber klar strukturiert."""
+
+            synthesis_prompt = f"""ORIGINAL QUESTION: {topic}
 META-ANALYSES FROM ALL ITERATIONS:
 {meta_analyses_text}
 
-Erstelle eine umfassende Final-Synthese:
+Du bist eine hochspezialisierte KI, die eine Meta-Analyse einer Diskussionsrunde von verschiedenen AIs durchführt. Dein Ziel ist es, die wichtigsten Erkenntnisse aus den Beiträgen zu extrahieren und für einen Endanwender aufzubereiten, der konkrete Handlungsempfehlungen für das **angefragte Problem** sucht.
 
-1. MAIN FINDINGS: Was sind die Hauptantworten auf die ursprüngliche Frage?
-2. CONVERGENT THEMES: Welche Themen zogen sich durch alle Iterationen?
-3. EVOLUTIONARY INSIGHTS: Wie entwickelten sich die Ideen über die Iterationen?
-4. PRACTICAL IMPLICATIONS: Was bedeutet das konkret für die Anwendung?
-5. UNEXPECTED DISCOVERIES: Welche überraschenden Erkenntnisse entstanden?
+Analysiere die vorliegenden Diskussionsrunden und extrahiere die Informationen gemäß den folgenden Kategorien. Achte dabei besonders darauf, so **konkret, umsetzbar und handlungsorientiert** wie möglich zu formulieren, insbesondere bei den praktischen Implikationen:
 
-Dies ist das HAUPTPRODUKT für den User - sei gründlich aber klar strukturiert."""
+1.  **MAIN_FINDINGS:**
+    * Fasse die zentralen Aspekte des Problems, die identifizierten Ursachen und die wichtigsten Ausgangsbedingungen zusammen. Nenne hier, wo zutreffend, auch **konkrete fehlende Informationen, Einschränkungen oder kritische Faktoren**, die von den KIs als relevant für die Problemlösung identifiziert wurden.
+
+2.  **CONVERGENT_THEMES:**
+    * Identifiziere wiederkehrende Konzepte, übergeordnete Strategien, Paradigmenwechsel oder systemische Denkweisen, die von mehreren KIs geteilt wurden. **Gib hier, wo sinnvoll, Beispiele von übergreifenden Methoden oder Prinzipien** an, die als Konsens identifiziert wurden (z.B. 'ganzheitlicher Ansatz', 'datenbasierte Entscheidungen', 'iterative Verbesserung').
+
+3.  **EVOLUTIONARY_INSIGHTS:**
+    * Beschreibe, wie sich die Perspektiven, das Verständnis des Problems oder die vorgeschlagenen Lösungsansätze im Laufe der Diskussionsrunden entwickelt oder verfeinert haben (z.B. von initialen Reaktionen zu proaktiven Strategien, von Einzelmaßnahmen zu integrierten Lösungen). **Zeige exemplarisch auf, wie ein Lösungsansatz detaillierter oder differenzierter wurde.**
+
+4.  **PRACTICAL_IMPLICATIONS:**
+    * **Dies ist ein entscheidender Abschnitt für den Endanwender.** Liste hier **ALLE konkreten, umsetzbaren Empfehlungen, Maßnahmen und Schritte** auf, die von den KIs vorgeschlagen wurden.
+    * **GLIEDERE DIESE PRAKTISCHEN TIPPS THEMATISCH ODER NACH PHASEN**, basierend auf der Art der Fragestellung (z.B. 'Vorbereitung', 'Implementierung', 'Monitoring', 'Ressourcen' oder nach relevanten Problem-Subkategorien).
+        * Nenne **spezifische Methoden, Tools, Ressourcen oder exemplarische Vorgehensweisen**.
+        * Gib, wo immer möglich, **konkrete Beispiele, Namen von Technologien, Materialien, Software oder relevante Kennzahlen** an.
+        * Erläutere kurz den **Nutzen oder das Ziel** der jeweiligen Maßnahme.
+    * **Formuliere diese Punkte als direkte, handlungsorientierte Empfehlungen für den Anwender.** Priorisiere dabei Maßnahmen, die von mehreren KIs bestätigt werden, als besonders effektiv oder innovativ hervorgehoben wurden, oder die eine hohe Relevanz für die schnelle Umsetzung haben.
+
+5.  **UNEXPECTED_DISCOVERIES:**
+    * Hebe unerwartete Einsichten, wichtige Hinweise, innovative Denkansätze oder Beobachtungen hervor, die während der Diskussion aufgetaucht sind und neue Perspektiven eröffnen oder wichtige Hinweise zur Fehlervermeidung sind.
+
+6.  **KEY_INSIGHTS:**
+    * Destilliere die wichtigsten übergreifenden Erkenntnisse, die für die erfolgreiche Bearbeitung des Problems von zentraler Bedeutung sind. **Integriere hier, wo passend, kurze Verweise auf die unmittelbar wichtigsten konkreten Maßnahmen oder Prinzipien.**
+
+7.  **CORE_RECOMMENDATION:**
+    * Formuliere eine prägnante, übergeordnete Kernempfehlung zur Lösung des Problems. **Versuche, hier die Essenz der wichtigsten praktischen Schritte oder Prinzipien kurz zu umreißen**, die den Weg zur Problemlösung weisen.
+
+Ziel ist es, einen Bericht zu erstellen, der sowohl die tiefgreifende Analyse als auch eine klare, praktische und direkt anwendbare Anleitung für den Endanwender bietet. Denke daran, dass der Endanwender schnell und präzise umsetzbare Informationen benötigt, um das Problem effektiv anzugehen."""
+
             
             synthesis_response = await self.ai_orchestrator.query_single_ai(
                 ai_name=fastest_ai.ai_name,

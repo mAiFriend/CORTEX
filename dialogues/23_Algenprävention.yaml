@@ -1,0 +1,45 @@
+# Komplette Production Configuration
+experiment:
+  name: "Algenprävention"
+  max_iterations: 3
+  
+ai_team:
+  - claude
+  - chatgpt  
+  - gemini
+  - qwen
+  - deepseek
+
+topic: "Ein 5-Jahre alter Natur-Schimmteich mit seperatem bepflanztem Filterbecken bekommt bei diesem Wetter wieder massiv Algen. Wie dämme ich das Wachstum biologisch vertretbar ein, da auch Frösche etc. den Teich nutzen?"
+
+# NEUE Clarification System Features
+clarification:
+  enabled: true              # Aktiviert Iteration 0
+  max_questions: 5           # Anzahl konsolidierter Fragen
+  interactive_mode: true     # true = User Input, false = Auto-Beispiele
+  auto_enhance: true         # Topic Enhancement mit Antworten
+
+# Enhanced Reporting
+nutshell:
+  strategy: "intelligent"    # 4-Strategie intelligente Zusammenfassung
+  ai_generated: false
+
+output:
+  format: "pdf"             # Vollständige PDF-Unterstützung
+  save_conversation_log: true
+
+# Bewährte Rulesets
+ruleset_sequence:
+  - creative_exploration    # Divergente Denkphase
+  - analytical_synthesis    # Konvergente Analysephase
+
+rulesets:
+  creative_exploration:
+    creativity_level: "high"
+    challenge_assumptions: true
+    perspective: "innovative"
+    
+  analytical_synthesis:
+    synthesis_focus: true
+    practical_implications: true
+    evidence_based: true
